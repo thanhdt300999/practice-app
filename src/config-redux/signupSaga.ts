@@ -3,7 +3,6 @@ import authService from '../modules/auth/redux/service'
 import AsyncStorage from '@react-native-community/async-storage';
 
 function* saveTokenToStore(data) {
-    console.log("save",data)
     yield AsyncStorage.multiSet(
         [['AccessToken', data.token], ['puk', data.puk], ['user', data.user]],
         err => {
@@ -16,7 +15,6 @@ function* postLoginAction(data, email) {
 
     try {
         let response = yield call(authService.login, data, email); // Gọi API Login ở đây.
-        console.log(response)
         yield call(saveTokenToStore, response.data); // Nếu API gọi thành công. Save access_token và Store
         yield put({ type: 'LOGIN_SUCCESS', payload: response.data }); // Gọi action LOGIN_SUCCESS
     } catch (err) {

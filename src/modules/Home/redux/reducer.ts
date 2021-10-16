@@ -2,28 +2,27 @@ import { navigate } from '../../../navigationRef'
 
 
 const initState = {
-    accessToken: '',
     isLoading: false,
     error: '',
+    listCountries: []
 };
-const authReducer = (state = initState, { type, payload }) => {
+const signupReducer = (state = initState, { type, payload }) => {
     switch (type) {
-        case 'HANDLE_LOGIN':
-            return {
-                ...state,
-                isLoading: true
-            }
-        case 'LOGIN_SUCCESS':
-            navigate("Home");
-            console.log("reducer login success")
+        case 'GET_COUNTRIES_SUCCESS':
             return {
                 ...state,
                 isLoading: false,
-                accessToken: payload.access_token
+                listCountries: payload
+            }
+        case 'GET_COUNTRIES_FAILURE':
+            return {
+                ...state,
+                isLoading: false,
+                error: payload
             }
         default:
             return state;
     }
 
 }
-export default authReducer;
+export default signupReducer;

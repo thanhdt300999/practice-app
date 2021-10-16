@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ImageBackground, Image, TouchableOpacityBase, TouchableOpacity, Pressable, Alert, Modal } from 'react-native';
 import { Button } from 'react-native-paper'
-import Text from '../../assets/AppText'
-import MyAppText from '../../assets/AppText';
-import AuthForm from '../components/AuthForm';
+import Text from '../../../../assets/AppText'
+import AuthForm from './AuthForm';
 export interface Props {
     title?: String
 };
 
-const HomeScreen: React.FC<Props> = ({ }) => {
+const LogIn: React.FC<Props> = ({ }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
 
 
@@ -33,10 +32,10 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                     </View>
                 </View>
             </Modal>
-            <ImageBackground source={require('../../image/Capture.png')} style={styles.image}>
+            <ImageBackground source={require('../../../../image/Capture.png')} style={styles.image}>
                 <Image
                     style={styles.tinyLogo}
-                    source={require('../../image/logo-large.png')}
+                    source={require('../../../../image/logo-large.png')}
                 />
                 <View style={styles.footer}>
                     <TouchableOpacity
@@ -45,7 +44,7 @@ const HomeScreen: React.FC<Props> = ({ }) => {
                         <Text style={styles.text}>SE CONNECTER</Text>
                     </TouchableOpacity>
                     <Button mode="contained" color='green' uppercase={false} contentStyle={styles.buttonStyle} style={styles.button} onPress={() => console.log('Pressed')}>
-                        <Text>INSCRIPTION GRATUITE</Text>{"\n"}
+                        <Text>INSCRIPTION GRATUITE</Text>
                         <Text>en 1 min</Text>
                     </Button>
                 </View>
@@ -126,4 +125,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default HomeScreen;
+export default LogIn;

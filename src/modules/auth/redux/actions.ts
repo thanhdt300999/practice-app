@@ -1,11 +1,12 @@
 import { authContants } from "./contants";
-export const actionLogin = payload => ({
-  type: authContants.HANDLE_LOGIN,
-  payload,
-});
+export const actionLogin = (payload) => {
+  return {
+    type: authContants.HANDLE_LOGIN,
+    payload,
+  }
+}
 
 export const loginSuccess = (payload) => {
-  console.log(payload)
   return {
     type: authContants.LOGIN_SUCCESS,
     payload,

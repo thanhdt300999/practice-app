@@ -5,19 +5,22 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Provider as StoreProvider } from 'react-redux'
 import { setNavigator } from './src/navigationRef';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
-import HomeScreen from './src/modules/auth/component/HomeScreen';
-import HomeComponent from './src/modules/Home/components/HomeComponent';
+import LogIn from './src/modules/auth/component/LogIn';
+import SigninScreen from './src/modules/Home/components/SignUpScreen';
+import BirthdayForm from './src/modules/Home/components/BirthdayForm';
+
+
 import redux from './src/config-redux/configureStore';
 
 const switchNavigator = createSwitchNavigator({
   // ResolveAuth: ResolveAuthScreen,
-  HomeScreen: HomeScreen,
+  // LogIn: LogIn,
   // Signin: SigninScreen,
   // loginFlow: createStackNavigator({
-  //   HomeScreen: HomeScreen,
+  // HomeScreen: HomeScreen,
   // }),
   // mainFlow: createBottomTabNavigator({
-  //   Home: HomeComponent,
+  Home: SigninScreen,
   //   // Account: AccountScreen,
   // }),
 });
