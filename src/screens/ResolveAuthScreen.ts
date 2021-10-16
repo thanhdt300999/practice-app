@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 
 const ResolveAuthScreen = () => {
+ 
   useEffect(() => {
     // tryLocalSignin();
   }, []);

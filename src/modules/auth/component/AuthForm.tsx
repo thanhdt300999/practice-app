@@ -15,9 +15,10 @@ type PersonData = {
 };
 
 const AuthForm1: React.FC<Props> = ({ }) => {
-    const user = useSelector((state: any) => state.user);
+    const state = useSelector((state: any) => state.auth);
+    console.log("state", state)
     const dispatch = useDispatch()
-    // Note action
+    // Note action 
 
     const { control, handleSubmit, formState: { errors } } = useForm<PersonData>();
     const onSubmit = (data) => {
@@ -68,12 +69,13 @@ const AuthForm1: React.FC<Props> = ({ }) => {
                         onChangeText={onChange}
                         value={value}
                         autoCapitalize="none"
-                        secureTextEntry={true}
+                        // secureTextEntry={true}
                     />
                 )}
                 name="password"
                 defaultValue=""
             />
+
             <Text style={styles.contactText}> Nous contacter ou Aida</Text>
             <Button color="#24cf5f" style={styles.buttonStyle} mode="contained" onPress={handleSubmit(onSubmit)}>
                 <Text style={styles.buttonText}>ME CONNECTER</Text>
