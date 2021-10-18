@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, Image, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
-import { RadioButton, TextInput } from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import { useForm, Controller } from "react-hook-form";
 import Icon from 'react-native-vector-icons/Feather';
 import ButtonBack from './ButtonBack';

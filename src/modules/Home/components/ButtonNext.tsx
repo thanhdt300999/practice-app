@@ -27,7 +27,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         bottom: 0,
-        marginTop: 0
+        marginTop: 0,
+        position: 'absolute',
+        alignSelf: 'center',
+        marginBottom: 30
         // marginBottom: 36
     }
 });
