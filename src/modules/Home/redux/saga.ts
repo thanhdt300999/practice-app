@@ -1,19 +1,28 @@
-import { call, put, select } from 'redux-saga/effects';
-import signUpService from './service'
+import { call, put, select, takeEvery } from 'redux-saga/effects';
+import signUpService from './service';
 import AsyncStorage from '@react-native-community/async-storage';
 import actions from './action';
 
 function* saveTokenToStore(data) {
     yield AsyncStorage.multiSet(
-        [['AccessToken', data.token], ['puk', data.puk], ['user', data.user]],
-        err => {
+        [
+            ['AccessToken', data.token],
+            ['puk', data.puk],
+            ['user', data.user],
+        ],
+        (err) => {
             console.log('ERROR saveTokenToStore: ', err);
-        },
+        }
     );
 }
-
-function* getCountries() {
-
+//country
+export function* watchGetCountries() {
+    yield takeEvery('GET_COUNTRIES_REQUEST', handleGetCountries);
+}
+export function* handleGetCountries(action) {
+    yield call(getCountries);
+}
+export function* getCountries() {
     try {
         let response = yield call(signUpService.getCountries);
         yield put(actions.getCountriesSucess(response.listCountries));
@@ -21,7 +30,36 @@ function* getCountries() {
         yield put(actions.getCountriesFailure(err));
     }
 }
+//region
+export function* watchGetRegions() {
+    yield takeEvery('GET_REGIONS_REQUEST', handleGetRegions);
+}
+export function* handleGetRegions(action) {
+    yield call(getRegions, action.payload);
+}
+export function* getRegions(data) {
+    try {
+        let response = yield call(signUpService.getRegions, data);
+        yield put(actions.getRegionsSuccess(response.listRegions));
+    } catch (err) {
+        yield put(actions.getRegionsFailure(err));
+    }
+}
 
-export default function* (action) {
-    yield call(getCountries);
+
+//city
+export function* watchGetCitiesByRegion() {
+    yield takeEvery('GET_CITIES_BY_REGION_REQUEST', handleGetCitiesByRegion);
+}
+export function* handleGetCitiesByRegion(action) {
+    console.log("saga", action)
+    yield call(getCitiesByRegion, action.payload);
+}
+export function* getCitiesByRegion(data) {
+    try {
+        let response = yield call(signUpService.getCitiesByRegion, data);
+        yield put(actions.getCitiesByRegionSuccess(response.listRegions));
+    } catch (err) {
+        yield put(actions.getCitiesByRegionFailure(err));
+    }
 }

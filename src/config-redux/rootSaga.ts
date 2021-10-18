@@ -1,10 +1,12 @@
 import { fork, all, takeLatest, takeEvery, take } from 'redux-saga/effects';
 import loginSaga from '../modules/auth/redux/saga';
-import signUpSaga from '../modules/Home/redux/saga';
+import { watchGetCitiesByRegion, watchGetCountries, watchGetRegions } from '../modules/Home/redux/saga';
 const sagas = function* () {
-  yield all([
-    takeLatest('HANDLE_LOGIN', loginSaga),
-    takeEvery('GET_COUNTRIES_REQUEST', signUpSaga)
-  ]);
+    yield all([
+        takeLatest('HANDLE_LOGIN', loginSaga),
+        watchGetCountries(),
+        watchGetRegions(),
+        watchGetCitiesByRegion()
+    ]);
 };
 export default sagas;
