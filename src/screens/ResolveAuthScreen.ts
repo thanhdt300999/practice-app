@@ -1,12 +1,11 @@
 import React, { useEffect, useContext } from 'react';
 
-const ResolveAuthScreen = () => {
- 
-  useEffect(() => {
-    // tryLocalSignin();
-  }, []);
+const ResolveAuthScreen = ({ navigation }) => {
+    useEffect(() => {
+        navigation.navigate('Signin');
+    }, []);
 
-  return null;
+    return null;
 };
 
 export default ResolveAuthScreen;

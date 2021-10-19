@@ -26,11 +26,9 @@ function getRegions(data) {
 }
 
 function getCitiesByRegion(data) {
-    console.log("data", data)
     return api
         .get(`/v4/atlas/${data.countryId}/${data.regionId}/cities`)
         .then((response) => {
-            console.log(response)
             return {
                 listCities: response.data.CONTENT.ALL.cities,
             };
@@ -39,8 +37,25 @@ function getCitiesByRegion(data) {
             console.log(err);
         });
 }
+
+function getCitiesByZipcode(data) {
+    return api
+        .get(`/v4/atlas/${data.countryId}/${data.zipcode}/zipcode/cities`)
+        .then((response) => {
+            console.log("service", response.data.CONTENT.cities)
+            return {
+                listCities: response.data.CONTENT.cities,
+            };
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+
 export default {
     getCountries,
     getRegions,
     getCitiesByRegion,
+    getCitiesByZipcode
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    Text,
     View,
     StyleSheet,
     Image,
@@ -9,6 +8,7 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
 } from 'react-native';
+import Text from '../../../../assets/AppText';
 import { TextInput, Checkbox } from 'react-native-paper';
 import { useForm, Controller } from 'react-hook-form';
 import ButtonBack from './ButtonBack';
@@ -30,8 +30,11 @@ const SignUpForm: React.FC<Props> = ({ submitSignupForm, setRender }) => {
     } = useForm();
 
     const onSubmit = (data) => {
-        submitSignupForm(data);
+        console.log(data)
+        // submitSignupForm(data);
     };
+
+    const emailRegex = new RegExp('^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : null}
@@ -60,6 +63,10 @@ const SignUpForm: React.FC<Props> = ({ submitSignupForm, setRender }) => {
                                 value: true,
                                 message: 'Field is required!',
                             },
+                            pattern: {
+                                value: emailRegex,
+                                message: 'Invalid email'
+                            }
                         }}
                         name="email"
                         defaultValue=""
@@ -93,6 +100,7 @@ const SignUpForm: React.FC<Props> = ({ submitSignupForm, setRender }) => {
                                 onChangeText={onChange}
                                 value={value}
                                 placeholder="Mot de passe"
+                                secureTextEntry={true}
                             />
                         )}
                         rules={{
@@ -120,7 +128,7 @@ const SignUpForm: React.FC<Props> = ({ submitSignupForm, setRender }) => {
                     />
                 </View>
             </TouchableWithoutFeedback>
-            <ButtonNext onPress={handleSubmit(onSubmit)} disable={false} />
+            <ButtonNext onPress={handleSubmit(onSubmit)} disable={false} signup={true} />
         </KeyboardAvoidingView>
     );
 };

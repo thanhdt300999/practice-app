@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import Text from '../../../../assets/AppText';
 import { TextInput } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/Entypo';
 import { useForm, Controller } from 'react-hook-form';
-// import Geolocation from 'react-native-geolocation-service';
+import Geolocation from 'react-native-geolocation-service';
 import ButtonBack from './ButtonBack';
 import ButtonNext from './ButtonNext';
 const FromForm = ({ setRender, submitFrom }) => {
@@ -11,24 +12,22 @@ const FromForm = ({ setRender, submitFrom }) => {
     const {
         control,
         handleSubmit,
-        formState: { errors },
-    } = useForm();
+        formState: { errors, isValid },
+    } = useForm({ mode: 'onBlur' });
     const onSubmit = () => {
         setRender('country');
         submitFrom(checked);
     };
-    const handleOnPress = () => {
-        console.log('pressed');
-    };
+    const handleOnPress = () => {};
     return (
         <>
             <View style={{ height: 550, alignSelf: 'stretch' }}>
                 <ButtonBack onPress={() => setRender('origin')} />
                 <View style={styles.header}>
                     <View style={styles.iconStyle}>
-                        <Icon name="folder" size={40} color="#900" />
+                        <Icon name="location-pin" size={40} color="#900" />
                     </View>
-                    <Text style={styles.textStyle}>From Form:</Text>
+                    <Text style={styles.textStyle}>Ou habitez-vous ?</Text>
                 </View>
                 <View style={styles.scrollView}>
                     <Controller
@@ -63,7 +62,7 @@ const FromForm = ({ setRender, submitFrom }) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <ButtonNext onPress={handleSubmit(onSubmit)} disable={false} />
+            <ButtonNext onPress={handleSubmit(onSubmit)} disable={!isValid} />
         </>
     );
 };

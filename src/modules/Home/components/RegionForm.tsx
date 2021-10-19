@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, StyleSheet, ScrollView, FlatList } from 'react-native';
+import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
+import Text from '../../../../assets/AppText';
 import { RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,11 +21,18 @@ const RegionForm: React.FC<Props> = ({ setRender, submitRegion, countryId }) => 
     const dispatch = useDispatch();
     const [region, setRegion] = React.useState<region>({
         id: '',
-        name: ''
+        name: '',
     });
     const onSubmit = () => {
         submitRegion(region);
         setRender('city');
+    };
+    const handleBack = () => {
+        setRender('country');
+        submitRegion({
+            id: '',
+            name: '',
+        });
     };
     React.useEffect(() => {
         dispatch(actions.getRegionsRequest(countryId));
@@ -32,12 +40,12 @@ const RegionForm: React.FC<Props> = ({ setRender, submitRegion, countryId }) => 
     return (
         <>
             <View style={{ height: 550, alignSelf: 'stretch' }}>
-                <ButtonBack onPress={() => setRender('country')} />
+                <ButtonBack onPress={handleBack} />
                 <View style={styles.header}>
                     <View style={styles.iconStyle}>
                         <Icon name="city" size={40} color="#900" />
                     </View>
-                    <Text style={styles.textStyle}>Region Form </Text>
+                    <Text style={styles.textStyle}>Quelle est votre region ? </Text>
                 </View>
                 <View style={styles.scrollView}>
                     <FlatList

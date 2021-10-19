@@ -16,7 +16,6 @@ type PersonData = {
 
 const AuthForm1: React.FC<Props> = ({ }) => {
     const state = useSelector((state: any) => state.auth);
-    console.log("state", state)
     const dispatch = useDispatch()
     // Note action 
 

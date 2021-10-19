@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import Text from '../../../../assets/AppText';
 import { Checkbox } from 'react-native-paper';
 
 function CheckBox({ label, status, onPress }) {
@@ -18,11 +19,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderColor: '#ffffff',
         marginHorizontal: 15,
-        marginTop: 30
+        marginTop: 30,
     },
     textStyle: {
         flexWrap: 'wrap',
-        flex: 1
+        flex: 1,
     },
 });
 export default CheckBox;
