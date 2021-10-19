@@ -46,20 +46,34 @@ export function* getRegions(data) {
     }
 }
 
-
 //city
 export function* watchGetCitiesByRegion() {
     yield takeEvery('GET_CITIES_BY_REGION_REQUEST', handleGetCitiesByRegion);
 }
 export function* handleGetCitiesByRegion(action) {
-    console.log("saga", action)
     yield call(getCitiesByRegion, action.payload);
 }
 export function* getCitiesByRegion(data) {
     try {
         let response = yield call(signUpService.getCitiesByRegion, data);
-        yield put(actions.getCitiesByRegionSuccess(response.listRegions));
+        yield put(actions.getCitiesByRegionSuccess(response.listCities));
     } catch (err) {
         yield put(actions.getCitiesByRegionFailure(err));
+    }
+}
+
+export function* watchGetCitiesByZipcode() {
+    yield takeEvery('GET_CITIES_BY_ZIPCODE_REQUEST', hanldeGetCitiesByZipcode);
+}
+export function* hanldeGetCitiesByZipcode(action) {
+    yield call(getCitiesByZipcode, action.payload);
+}
+export function* getCitiesByZipcode(data) {
+    try {
+        console.log("abc")
+        let response = yield call(signUpService.getCitiesByZipcode, data);
+        yield put(actions.getCitiesByZipcodeSuccess(response.listCities));
+    } catch (err) {
+        yield put(actions.getCitiesByZipcodeFailure(err));
     }
 }

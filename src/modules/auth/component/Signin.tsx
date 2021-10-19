@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ImageBackground, Image, TouchableOpacityBase, TouchableOpacity, Pressable, Alert, Modal } from 'react-native';
-import { Button } from 'react-native-paper'
-import Text from '../../../../assets/AppText'
+import {
+    View,
+    StyleSheet,
+    ImageBackground,
+    Image,
+    TouchableOpacityBase,
+    TouchableOpacity,
+    Pressable,
+    Alert,
+    Modal,
+} from 'react-native';
+import { Button } from 'react-native-paper';
+import Text from '../../../../assets/AppText';
+import { withNavigation } from 'react-navigation';
 import AuthForm from './AuthForm';
 export interface Props {
-    title?: String
-};
+    navigation?: any;
+}
 
-const LogIn: React.FC<Props> = ({ }) => {
+const SigninScreen: React.FC<Props> = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-
-
+    const handlePress = () => {
+        navigation.navigate('Signup');
+    };
     return (
         <View style={styles.container}>
             <Modal
@@ -18,17 +30,19 @@ const LogIn: React.FC<Props> = ({ }) => {
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
+                    Alert.alert('Modal has been closed.');
                     setModalVisible(!modalVisible);
                 }}
             >
-                
                 <View style={styles.centeredView}>
-                
                     <View style={styles.modalView}>
-                    <Button style={styles.buttonClose}  onPress={() => setModalVisible(!modalVisible)}>X</Button>
-                        <AuthForm
-                        />
+                        <Button
+                            style={styles.buttonClose}
+                            onPress={() => setModalVisible(!modalVisible)}
+                        >
+                            X
+                        </Button>
+                        <AuthForm />
                     </View>
                 </View>
             </Modal>
@@ -39,11 +53,20 @@ const LogIn: React.FC<Props> = ({ }) => {
                 />
                 <View style={styles.footer}>
                     <TouchableOpacity
-                        onPress={() => { setModalVisible(true)}}
+                        onPress={() => {
+                            setModalVisible(true);
+                        }}
                     >
                         <Text style={styles.text}>SE CONNECTER</Text>
                     </TouchableOpacity>
-                    <Button mode="contained" color='green' uppercase={false} contentStyle={styles.buttonStyle} style={styles.button} onPress={() => console.log('Pressed')}>
+                    <Button
+                        mode="contained"
+                        color="green"
+                        uppercase={false}
+                        contentStyle={styles.buttonStyle}
+                        style={styles.button}
+                        onPress={handlePress}
+                    >
                         <Text>INSCRIPTION GRATUITE</Text>
                         <Text>en 1 min</Text>
                     </Button>
@@ -51,7 +74,7 @@ const LogIn: React.FC<Props> = ({ }) => {
             </ImageBackground>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -64,14 +87,14 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 300,
         height: null,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     },
     image: {
-        height: "100%",
-        width: "100%"
+        height: '100%',
+        width: '100%',
     },
     text: {
-        color: "white",
+        color: 'white',
         textDecorationLine: 'underline',
         fontSize: 16,
         fontWeight: 'bold',
@@ -80,49 +103,49 @@ const styles = StyleSheet.create({
         marginBottom: 250,
         flexDirection: 'row',
         alignSelf: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     button: {
         marginLeft: 30,
         color: 'green',
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     buttonStyle: {
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
     },
     centeredView: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: 22,
     },
     modalView: {
         marginTop: 400,
-        backgroundColor: "white",
+        backgroundColor: 'white',
         borderRadius: 20,
-        width: "100%",
-        height:"100%",
+        width: '100%',
+        height: '100%',
         padding: 35,
-        alignItems: "center",
+        alignItems: 'center',
     },
     buttonOpen: {
-        backgroundColor: "#F194FF",
+        backgroundColor: '#F194FF',
     },
     buttonClose: {
-        backgroundColor: "#2196F3",
+        backgroundColor: '#2196F3',
         fontSize: 50,
         alignSelf: 'flex-end',
-        borderRadius: 25
+        borderRadius: 25,
     },
     textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
     modalText: {
         marginBottom: 15,
-        textAlign: "center"
-    }
+        textAlign: 'center',
+    },
 });
 
-export default LogIn;
+export default withNavigation(SigninScreen);

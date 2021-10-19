@@ -44,6 +44,18 @@ const signupReducer = (state = initState, { type, payload }) => {
                 isLoading: false,
                 error: payload,
             };
+        case 'GET_CITIES_BY_ZIPCODE_SUCCESS':
+            return {
+                ...state,
+                isLoading: false,
+                listCities: payload,
+            };
+        case 'GET_CITIES_BY_ZIPCODE_FAILURE':
+            return {
+                ...state,
+                isLoading: false,
+                error: payload,
+            };
         default:
             return state;
     }

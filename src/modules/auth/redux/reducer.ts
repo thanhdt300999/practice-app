@@ -15,7 +15,6 @@ const authReducer = (state = initState, { type, payload }) => {
             }
         case 'LOGIN_SUCCESS':
             navigate("Home");
-            console.log("reducer login success")
             return {
                 ...state,
                 isLoading: false,

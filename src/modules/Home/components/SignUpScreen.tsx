@@ -13,14 +13,13 @@ import RegionForm from './RegionForm';
 import ZipCodeForm from './ZipCodeForm';
 import CityForm from './CityForm';
 import SignUpForm from './SignUpForm';
+import Discovery from './Discovery';
 
-interface Props {
-    navigation: Object;
-}
+interface Props {}
 interface birthday {
-    date: number;
-    month: number;
-    year: number;
+    date: string;
+    month: string;
+    year: string;
 }
 
 interface region {
@@ -32,17 +31,36 @@ interface signup {
     password: string;
     firstName: string;
 }
-const HomeScreen: React.FC<Props> = ({ navigation }) => {
-    const [birthday, setBirthday] = React.useState({});
+
+interface city {
+    id: string;
+    name: string;
+}
+interface origin {
+    id: string;
+    name: string;
+}
+const SignupScreen: React.FC<Props> = ({}) => {
+    const [birthday, setBirthday] = React.useState<birthday>({
+        date: '',
+        month: '',
+        year: '',
+    });
     const [entity, setEntity] = React.useState<string>('');
-    const [origin, setOrigin] = React.useState<string>('');
+    const [origin, setOrigin] = React.useState<origin>({
+        id: '',
+        name: '',
+    });
     const [from, setFrom] = React.useState<string>('');
     const [region, setRegion] = React.useState<region>({
         id: '',
         name: '',
     });
     const [zipcode, setZipCode] = React.useState<string>('');
-    const [city, setCity] = React.useState<string>('');
+    const [city, setCity] = React.useState<city>({
+        id: '',
+        name: '',
+    });
     const [signup, setSignup] = React.useState<signup>({
         email: '',
         password: '',
@@ -66,18 +84,31 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         'city',
         'signup',
     ];
-    const [nextScreen, setNextScreen] = React.useState('signup');
+    const [nextScreen, setNextScreen] = React.useState('discovery');
     const handleNextScreen = (screen) => {
         setNextScreen(screen);
     };
+    const handleSignup = async (data) => {
+        let payload = {
+            firstName: data.firstName,
+            email: data.email,
+            password: data.password,
+            affiliate: 1,
+            mailing: 1,
+            birthday: `${birthday.year}-${birthday.month}-${birthday.date}`,
+            gender: entity === 'Female' ? 2 : 1,
+            origin: origin.id,
+            geoname_id: city.id,
+        };
+        console.log('payload', payload);
+    };
     React.useEffect(() => {
-        console.log(region);
         if (country.zipFormat && country.zipRegex) {
             setCheckZipCode(true);
         } else {
             setCheckZipCode(false);
         }
-    }, [country, region]);
+    }, [signup]);
     return (
         <LinearGradient colors={['#FF3359', '#FF7A2D', '#FF59F4', '#FF5978']} style={styles.body}>
             {nextScreen === 'entity' && (
@@ -133,14 +164,18 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                     checkzipcode={checkZipCode}
                     submitCity={setCity}
                     countryId={country.id}
-                    regionId={region.id}
+                    params={checkZipCode ? zipcode : region.id}
                     setRender={(screen) => handleNextScreen(screen)}
                 />
             )}
             {nextScreen === 'signup' && (
                 <SignUpForm
-                    submitSignupForm={setSignup}
+                    submitSignupForm={handleSignup}
                     setRender={(screen) => handleNextScreen(screen)}
+                />
+            )}
+            {nextScreen === 'discovery' && (
+                <Discovery
                 />
             )}
         </LinearGradient>
@@ -178,4 +213,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomeScreen;
+export default SignupScreen;

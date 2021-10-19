@@ -37,7 +37,6 @@ export const getRegionsFailure = (payload) => ({
 });
 
 export const getCitiesByRegionRequest = (payload) => {
-    console.log("action", payload)
     return {
         type: signupContants.GET_CITIES_BY_REGION_REQUEST,
         payload: payload,
@@ -56,6 +55,27 @@ export const getCitiesByRegionFailure = (payload) => ({
     payload,
 });
 
+
+
+export const getCitiesByZipcodeRequest = (payload) => {
+    return {
+        type: signupContants.GET_CITIES_BY_ZIPCODE_REQUEST,
+        payload: payload,
+    };
+};
+
+export const getCitiesByZipcodeSuccess = (payload) => {
+    return {
+        type: signupContants.GET_CITIES_BY_ZIPCODE_SUCCESS,
+        payload,
+    };
+};
+
+export const getCitiesByZipcodeFailure = (payload) => ({
+    type: signupContants.GET_CITIES_BY_ZIPCODE_FAILURE,
+    payload,
+});
+
 export default {
     getCountries,
     getCountriesSucess,
@@ -65,5 +85,8 @@ export default {
     getRegionsSuccess,
     getCitiesByRegionRequest,
     getCitiesByRegionSuccess,
-    getCitiesByRegionFailure
+    getCitiesByRegionFailure,
+    getCitiesByZipcodeRequest,
+    getCitiesByZipcodeSuccess,
+    getCitiesByZipcodeFailure
 };

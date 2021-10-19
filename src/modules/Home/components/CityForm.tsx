@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
+import Text from '../../../../assets/AppText';
 import { RadioButton } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -11,40 +12,38 @@ interface Props {
     setRender;
     checkzipcode: boolean;
     countryId: string;
-    regionId?: string;
+    params: string;
 }
 
-const CityForm: React.FC<Props> = ({
-    submitCity,
-    setRender,
-    checkzipcode,
-    countryId,
-    regionId,
-}) => {
+interface city {
+    id: string;
+    name: string;
+}
+const CityForm: React.FC<Props> = ({ submitCity, setRender, checkzipcode, countryId, params }) => {
     const listCities = useSelector((state: any) => state.signup.listCities);
-    console.log("listCities",listCities)
     const dispatch = useDispatch();
-    const [checked, setChecked] = React.useState('unchecked');
+    const [city, setCity] = React.useState<city>({
+        id: '',
+        name: '',
+    });
     const handleSubmit = () => {
         setRender('signup');
-        submitCity(checked);
+        submitCity(city);
     };
 
     React.useEffect(() => {
-        let zipcode = null;
-        if (regionId) {
+        if (!checkzipcode) {
             let payload = {
                 countryId,
-                regionId,
+                regionId: params,
             };
             dispatch(actions.getCitiesByRegionRequest(payload));
-        }
-        if (zipcode) {
+        } else {
             let payload = {
                 countryId,
-                regionId,
+                zipcode: params,
             };
-            // dispatch(actions.getCitiesByZipcodeRequest(payload));
+            dispatch(actions.getCitiesByZipcodeRequest(payload));
         }
     }, []);
 
@@ -58,48 +57,32 @@ const CityForm: React.FC<Props> = ({
                     <View style={styles.iconStyle}>
                         <Icon name="folder" size={40} color="#900" />
                     </View>
-                    <Text style={styles.textStyle}>City Form:</Text>
+                    <Text style={styles.textStyle}>Quelle est votre ville ?</Text>
                 </View>
                 <View style={styles.scrollView}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                        <View style={styles.styleCheckbox}>
-                            <Text style={styles.textCheckBox}>Bac Ninh:</Text>
-                            <View style={styles.radio}>
-                                <RadioButton
-                                    color="#FFFFFF"
-                                    uncheckedColor="#FFFFFF"
-                                    value="BN"
-                                    status={checked === 'BN' ? 'checked' : 'unchecked'}
-                                    onPress={() => setChecked('BN')}
-                                />
-                            </View>
-                        </View>
-                        <View style={styles.styleCheckbox}>
-                            <Text style={styles.textCheckBox}>Ha Noi:</Text>
-                            <RadioButton
-                                color="#FFFFFF"
-                                value="HN"
-                                uncheckedColor="#FFFFFF"
-                                status={checked === 'HN' ? 'checked' : 'unchecked'}
-                                onPress={() => setChecked('HN')}
-                            />
-                        </View>
-                        <View style={styles.styleCheckbox}>
-                            <Text style={styles.textCheckBox}>TP Ho Chi Minh:</Text>
-                            <View style={styles.radio}>
-                                <RadioButton
-                                    color="#FFFFFF"
-                                    uncheckedColor="#FFFFFF"
-                                    value="HCM"
-                                    status={checked === 'HCM' ? 'checked' : 'unchecked'}
-                                    onPress={() => setChecked('HCM')}
-                                />
-                            </View>
-                        </View>
-                    </ScrollView>
+                    <FlatList
+                        data={listCities}
+                        renderItem={({ item }) => {
+                            return (
+                                <View style={styles.styleCheckbox}>
+                                    <Text style={styles.textCheckBox}>{item.name}:</Text>
+                                    <View style={styles.radio}>
+                                        <RadioButton
+                                            color="#FFFFFF"
+                                            uncheckedColor="#FFFFFF"
+                                            value={item.name}
+                                            status={city.id === item.id ? 'checked' : 'unchecked'}
+                                            onPress={() => setCity(item)}
+                                        />
+                                    </View>
+                                </View>
+                            );
+                        }}
+                        keyExtractor={(item) => item.id.toString()}
+                    />
                 </View>
             </View>
-            <ButtonNext onPress={handleSubmit} disable={false} />
+            <ButtonNext onPress={handleSubmit} disable={city.id ? false : true} />
         </>
     );
 };
