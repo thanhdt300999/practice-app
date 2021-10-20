@@ -1,92 +1,27 @@
-import { signupContants } from './contants';
-export const getCountries = () => {
+import { homeContants } from './contant';
+export const getUsersRequest = () => {
+    console.log("action")
     return {
-        type: signupContants.GET_COUNTRIES_REQUEST,
+        type: homeContants.GET_USERS_REQUEST,
     };
 };
 
-export const getCountriesSucess = (payload) => {
+export const getUsersSuccess = (payload) => {
     return {
-        type: signupContants.GET_COUNTRIES_SUCCESS,
+        type: homeContants.GET_USERS_SUCCESS,
         payload,
     };
 };
 
-export const getCountriesFailure = (payload) => ({
-    type: signupContants.GET_COUNTRIES_FAILURE,
-    payload,
-});
-
-export const getRegionsRequest = (payload) => {
+export const getUsersFailure = (payload) => {
     return {
-        type: signupContants.GET_REGIONS_REQUEST,
-        payload: payload,
-    };
-};
-
-export const getRegionsSuccess = (payload) => {
-    return {
-        type: signupContants.GET_REGIONS_SUCCESS,
+        type: homeContants.GET_USERS_FAILURE, 
         payload,
     };
 };
-
-export const getRegionsFailure = (payload) => ({
-    type: signupContants.GET_REGIONS_FAILURE,
-    payload,
-});
-
-export const getCitiesByRegionRequest = (payload) => {
-    return {
-        type: signupContants.GET_CITIES_BY_REGION_REQUEST,
-        payload: payload,
-    };
-};
-
-export const getCitiesByRegionSuccess = (payload) => {
-    return {
-        type: signupContants.GET_CITIES_BY_REGION_SUCCESS,
-        payload,
-    };
-};
-
-export const getCitiesByRegionFailure = (payload) => ({
-    type: signupContants.GET_CITIES_BY_REGION_FAILURE,
-    payload,
-});
-
-
-
-export const getCitiesByZipcodeRequest = (payload) => {
-    return {
-        type: signupContants.GET_CITIES_BY_ZIPCODE_REQUEST,
-        payload: payload,
-    };
-};
-
-export const getCitiesByZipcodeSuccess = (payload) => {
-    return {
-        type: signupContants.GET_CITIES_BY_ZIPCODE_SUCCESS,
-        payload,
-    };
-};
-
-export const getCitiesByZipcodeFailure = (payload) => ({
-    type: signupContants.GET_CITIES_BY_ZIPCODE_FAILURE,
-    payload,
-});
 
 export default {
-    getCountries,
-    getCountriesSucess,
-    getCountriesFailure,
-    getRegionsRequest,
-    getRegionsFailure,
-    getRegionsSuccess,
-    getCitiesByRegionRequest,
-    getCitiesByRegionSuccess,
-    getCitiesByRegionFailure,
-    getCitiesByZipcodeRequest,
-    getCitiesByZipcodeSuccess,
-    getCitiesByZipcodeFailure
+    getUsersRequest,
+    getUsersSuccess,
+    getUsersFailure,
 };

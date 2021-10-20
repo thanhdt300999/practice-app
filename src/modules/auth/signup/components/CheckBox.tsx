@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import Text from '../../../../assets/AppText';
+import Text from '../../../../../assets/AppText';
 import { Checkbox } from 'react-native-paper';
 
 function CheckBox({ label, status, onPress }) {

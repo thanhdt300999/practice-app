@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Image, FlatList } from 'react-native';
-import Text from '../../../../assets/AppText';
+import Text from '../../../../../assets/AppText';
 import { RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import ButtonBack from './ButtonBack';

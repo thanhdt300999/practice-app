@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
-import { IconButton, Checkbox, RadioButton, Button } from 'react-native-paper';
-import Text from '../../../../assets/AppText';
+import Text from '../../../../../assets/AppText';
 import EntityForm from './EntityForm';
 import BirthdayForm from './BirthdayForm';
 import OriginForm from './OriginForm';
@@ -13,7 +13,9 @@ import RegionForm from './RegionForm';
 import ZipCodeForm from './ZipCodeForm';
 import CityForm from './CityForm';
 import SignUpForm from './SignUpForm';
-import Discovery from './Discovery';
+import Discovery from '../../../Home/components/Discovery';
+import actions from '../redux/action';
+import { RootState } from '../../../../config-redux/rootReducer';
 
 interface Props {}
 interface birthday {
@@ -41,6 +43,12 @@ interface origin {
     name: string;
 }
 const SignupScreen: React.FC<Props> = ({}) => {
+
+    const state = useSelector((state: RootState) => {
+        state.signup
+    })
+    const dispatch = useDispatch();
+
     const [birthday, setBirthday] = React.useState<birthday>({
         date: '',
         month: '',
@@ -84,23 +92,46 @@ const SignupScreen: React.FC<Props> = ({}) => {
         'city',
         'signup',
     ];
-    const [nextScreen, setNextScreen] = React.useState('discovery');
+    function convertDateandMonth(value) {
+        return value < 10 ? '0' + value.toString() : value.toString();
+    }
+    const [nextScreen, setNextScreen] = React.useState('entity');
     const handleNextScreen = (screen) => {
         setNextScreen(screen);
     };
+    const convertYearMonthDate = (birthday) => {
+        return `${birthday.year}-${convertDateandMonth(birthday.month)}-${convertDateandMonth(
+            birthday.date
+        )}`;
+    };
+    const convertSex = (gender) => {
+        return gender === 'Female' ? 2 : 1;
+    };
     const handleSignup = async (data) => {
-        let payload = {
-            firstName: data.firstName,
-            email: data.email,
-            password: data.password,
-            affiliate: 1,
-            mailing: 1,
-            birthday: `${birthday.year}-${birthday.month}-${birthday.date}`,
-            gender: entity === 'Female' ? 2 : 1,
-            origin: origin.id,
-            geoname_id: city.id,
-        };
-        console.log('payload', payload);
+        const formData = new FormData();
+
+        formData.append('firstName', data.firstName);
+        formData.append('email', data.email);
+        formData.append('password', data.password);
+        formData.append('affiliate', 1);
+        formData.append('mailing', 1);
+        formData.append('birthday', convertYearMonthDate(birthday));
+        formData.append('gender', convertSex(entity));
+        formData.append('origin', origin.id);
+        formData.append('geoname_id', city.id);
+
+        dispatch(actions.postSignupRequest(formData));
+        // let payload = {
+        //     firstName: data.firstName,
+        //     email: data.email,
+        //     password: data.password,
+        //     affiliate: 1,
+        //     mailing: 1,
+        //     birthday: ,
+        //     gender: entity === 'Female' ? 2 : 1,
+        //     origin: origin.id,
+        //     geoname_id: city.id,
+        // };
     };
     React.useEffect(() => {
         if (country.zipFormat && country.zipRegex) {
@@ -174,10 +205,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
                     setRender={(screen) => handleNextScreen(screen)}
                 />
             )}
-            {nextScreen === 'discovery' && (
-                <Discovery
-                />
-            )}
+            {nextScreen === 'discovery' && <Discovery />}
         </LinearGradient>
     );
 };

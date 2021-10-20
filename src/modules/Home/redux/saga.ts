@@ -1,5 +1,5 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
-import signUpService from './service';
+import homeServices from './service';
 import AsyncStorage from '@react-native-community/async-storage';
 import actions from './action';
 
@@ -16,64 +16,17 @@ function* saveTokenToStore(data) {
     );
 }
 //country
-export function* watchGetCountries() {
-    yield takeEvery('GET_COUNTRIES_REQUEST', handleGetCountries);
+export function* watchGetUsers() {
+    yield takeEvery('GET_USERS_REQUEST', handleGetUsers);
 }
-export function* handleGetCountries(action) {
-    yield call(getCountries);
+export function* handleGetUsers() {
+    yield call(getUsers);
 }
-export function* getCountries() {
+export function* getUsers() {
     try {
-        let response = yield call(signUpService.getCountries);
-        yield put(actions.getCountriesSucess(response.listCountries));
+        let response = yield call(homeServices.getUsers);
+        yield put(actions.getUsersSuccess(response));
     } catch (err) {
-        yield put(actions.getCountriesFailure(err));
-    }
-}
-//region
-export function* watchGetRegions() {
-    yield takeEvery('GET_REGIONS_REQUEST', handleGetRegions);
-}
-export function* handleGetRegions(action) {
-    yield call(getRegions, action.payload);
-}
-export function* getRegions(data) {
-    try {
-        let response = yield call(signUpService.getRegions, data);
-        yield put(actions.getRegionsSuccess(response.listRegions));
-    } catch (err) {
-        yield put(actions.getRegionsFailure(err));
-    }
-}
-
-//city
-export function* watchGetCitiesByRegion() {
-    yield takeEvery('GET_CITIES_BY_REGION_REQUEST', handleGetCitiesByRegion);
-}
-export function* handleGetCitiesByRegion(action) {
-    yield call(getCitiesByRegion, action.payload);
-}
-export function* getCitiesByRegion(data) {
-    try {
-        let response = yield call(signUpService.getCitiesByRegion, data);
-        yield put(actions.getCitiesByRegionSuccess(response.listCities));
-    } catch (err) {
-        yield put(actions.getCitiesByRegionFailure(err));
-    }
-}
-
-export function* watchGetCitiesByZipcode() {
-    yield takeEvery('GET_CITIES_BY_ZIPCODE_REQUEST', hanldeGetCitiesByZipcode);
-}
-export function* hanldeGetCitiesByZipcode(action) {
-    yield call(getCitiesByZipcode, action.payload);
-}
-export function* getCitiesByZipcode(data) {
-    try {
-        console.log("abc")
-        let response = yield call(signUpService.getCitiesByZipcode, data);
-        yield put(actions.getCitiesByZipcodeSuccess(response.listCities));
-    } catch (err) {
-        yield put(actions.getCitiesByZipcodeFailure(err));
+        yield put(actions.getUsersFailure(err));
     }
 }

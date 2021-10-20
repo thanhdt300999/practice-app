@@ -1,7 +1,7 @@
-import api from '../../../api/api'
+import api from '../../../../api/api'
 
 function login(data, email) {
-    return api.post(`${email}.json`, data)
+    return api.post(`/${email}.json`, data)
         .then(response => {
             return {
                 access_token: response.data.CONTENT.token,
@@ -10,7 +10,7 @@ function login(data, email) {
             };
         })
         .catch(err => {
-            console.log("api login fail");
+            console.log(err);
         });
 }
 

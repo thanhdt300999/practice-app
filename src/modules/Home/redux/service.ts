@@ -1,61 +1,41 @@
-import api from '../../../api/api';
-
-function getCountries() {
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+const api = axios.create({
+    baseURL: 'https://api.ltservices2.ovh/v4',
+});
+const getAuthData = async () => {
+    try {
+        let token = await AsyncStorage.getItem('token');
+        let puk = await AsyncStorage.getItem('puk');
+        return {
+            token,
+            puk,
+        };
+    } catch (error) {
+        return {
+            error: error,
+        };
+    }
+};
+const getUsers = async () => {
+    const { token, puk } = await getAuthData();
     return api
-        .get('/v4/atlas/countries')
+        .get('/users/pool', {
+            headers: {
+                'x-asgard-puk': puk,
+                'x-asgard-token': token,
+            },
+        })
         .then((response) => {
             return {
-                listCountries: response.data.CONTENT.ALL.countries,
+                listUsers: response.data.CONTENT.USERS,
             };
         })
         .catch((err) => {
             console.log(err);
         });
-}
-function getRegions(data) {
-    return api
-        .get(`/v4/atlas/${data}/regions`)
-        .then((response) => {
-            return {
-                listRegions: response.data.CONTENT.regions,
-            };
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
-function getCitiesByRegion(data) {
-    return api
-        .get(`/v4/atlas/${data.countryId}/${data.regionId}/cities`)
-        .then((response) => {
-            return {
-                listCities: response.data.CONTENT.ALL.cities,
-            };
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
-function getCitiesByZipcode(data) {
-    return api
-        .get(`/v4/atlas/${data.countryId}/${data.zipcode}/zipcode/cities`)
-        .then((response) => {
-            console.log("service", response.data.CONTENT.cities)
-            return {
-                listCities: response.data.CONTENT.cities,
-            };
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
+};
 
 export default {
-    getCountries,
-    getRegions,
-    getCitiesByRegion,
-    getCitiesByZipcode
+    getUsers,
 };

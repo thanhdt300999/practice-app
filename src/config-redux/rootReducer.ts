@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux'
-import authReducer from '../modules/auth/redux/reducer';
-import signupReducer from '../modules/Home/redux/reducer';
+import signinReducer from '../modules/auth/signin/redux/reducer';
+import signupReducer from '../modules/auth/signup/redux/reducer';
+import homeReducer from '../modules/Home/redux/reducer';
 export const rootReducer = combineReducers({
-    auth: authReducer,
-    signup: signupReducer
+    signin: signinReducer,
+    signup: signupReducer,
+    home: homeReducer
 });
+
+export type RootState = ReturnType<typeof rootReducer>

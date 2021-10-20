@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
-import Text from '../../../../assets/AppText';
+import Text from '../../../../../assets/AppText';
 import { RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSelector, useDispatch } from 'react-redux';
 import ButtonNext from './ButtonNext';
 import actions from '../redux/action';
 import ButtonBack from './ButtonBack';
+import { RootState } from '../../../../config-redux/rootReducer';
 interface Props {
     submitCountry?: any;
     setRender?: any;
@@ -19,7 +20,7 @@ interface checked {
 }
 
 const CountryForm: React.FC<Props> = ({ submitCountry, setRender }) => {
-    const listCountries = useSelector((state: any) => state.signup.listCountries);
+    const state = useSelector((state: RootState) => state.signup);
     const dispatch = useDispatch();
     const [country, setCountry] = React.useState<checked>({
         id: '',
@@ -52,28 +53,30 @@ const CountryForm: React.FC<Props> = ({ submitCountry, setRender }) => {
                     <Text style={styles.textStyle}>Quel est votre pays ?</Text>
                 </View>
                 <View style={styles.scrollView}>
-                    <FlatList
-                        data={listCountries}
-                        renderItem={({ item }) => {
-                            return (
-                                <View style={styles.styleCheckbox}>
-                                    <Text style={styles.textCheckBox}>{item.name}:</Text>
-                                    <View style={styles.radio}>
-                                        <RadioButton
-                                            color="#FFFFFF"
-                                            uncheckedColor="#FFFFFF"
-                                            value={item.name}
-                                            status={
-                                                country.id === item.id ? 'checked' : 'unchecked'
-                                            }
-                                            onPress={() => setCountry(item)}
-                                        />
+                    {state.isLoading === false && (
+                        <FlatList
+                            data={state.listCountries}
+                            renderItem={({ item }) => {
+                                return (
+                                    <View style={styles.styleCheckbox}>
+                                        <Text style={styles.textCheckBox}>{item.name}:</Text>
+                                        <View style={styles.radio}>
+                                            <RadioButton
+                                                color="#FFFFFF"
+                                                uncheckedColor="#FFFFFF"
+                                                value={item.name}
+                                                status={
+                                                    country.id === item.id ? 'checked' : 'unchecked'
+                                                }
+                                                onPress={() => setCountry(item)}
+                                            />
+                                        </View>
                                     </View>
-                                </View>
-                            );
-                        }}
-                        keyExtractor={(item) => item.id}
-                    />
+                                );
+                            }}
+                            keyExtractor={(item) => item.id}
+                        />
+                    )}
                 </View>
             </View>
             <ButtonNext onPress={onSubmit} disable={country.id ? false : true} />

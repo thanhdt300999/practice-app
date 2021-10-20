@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
-import Text from '../../../../assets/AppText';
+import Text from '../../../../../assets/AppText';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from './ButtonNext';
 import { useForm, Controller } from 'react-hook-form';
