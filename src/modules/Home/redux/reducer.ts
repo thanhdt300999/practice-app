@@ -1,56 +1,22 @@
-import { navigate } from '../../../navigationRef';
-import action from './action';
-
 const initState = {
     isLoading: false,
     error: '',
-    listCountries: [],
+    listUsers: {},
 };
-const signupReducer = (state = initState, { type, payload }) => {
+const homeReducer = (state = initState, { type, payload }) => {
     switch (type) {
-        case 'GET_COUNTRIES_SUCCESS':
+        case 'GET_USERS_REQUEST':
+            return {
+                ...state,
+                isLoading: true,
+            };
+        case 'GET_USERS_SUCCESS':
             return {
                 ...state,
                 isLoading: false,
-                listCountries: payload,
+                listUsers: payload.listUsers,
             };
-        case 'GET_COUNTRIES_FAILURE':
-            return {
-                ...state,
-                isLoading: false,
-                error: payload,
-            };
-        case 'GET_REGIONS_SUCCESS':
-            return {
-                ...state,
-                isLoading: false,
-                listRegions: payload,
-            };
-        case 'GET_REGIONS_FAILURE':
-            return {
-                ...state,
-                isLoading: false,
-                error: payload,
-            };
-        case 'GET_CITIES_BY_REGION_SUCCESS':
-            return {
-                ...state,
-                isLoading: false,
-                listCities: payload,
-            };
-        case 'GET_CITIES_BY_REGION_FAILURE':
-            return {
-                ...state,
-                isLoading: false,
-                error: payload,
-            };
-        case 'GET_CITIES_BY_ZIPCODE_SUCCESS':
-            return {
-                ...state,
-                isLoading: false,
-                listCities: payload,
-            };
-        case 'GET_CITIES_BY_ZIPCODE_FAILURE':
+        case 'GET_USERS_FAILURE':
             return {
                 ...state,
                 isLoading: false,
@@ -60,4 +26,4 @@ const signupReducer = (state = initState, { type, payload }) => {
             return state;
     }
 };
-export default signupReducer;
+export default homeReducer;

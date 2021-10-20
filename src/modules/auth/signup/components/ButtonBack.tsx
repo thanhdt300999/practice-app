@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import Text from '../../../../assets/AppText';
+import Text from '../../../../../assets/AppText';
 import { IconButton } from 'react-native-paper';
 import { withNavigation } from 'react-navigation';
 interface Props {

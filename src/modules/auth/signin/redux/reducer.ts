@@ -1,12 +1,12 @@
-import { navigate } from '../../../navigationRef'
-
+import { navigate } from '../../../../navigationRef'
 
 const initState = {
     accessToken: '',
     isLoading: false,
     error: '',
+    auth: {}
 };
-const authReducer = (state = initState, { type, payload }) => {
+const signinReducer = (state = initState, { type, payload }) => {
     switch (type) {
         case 'HANDLE_LOGIN':
             return {
@@ -14,7 +14,7 @@ const authReducer = (state = initState, { type, payload }) => {
                 isLoading: true
             }
         case 'LOGIN_SUCCESS':
-            navigate("Home");
+           console.log("reducer")
             return {
                 ...state,
                 isLoading: false,
@@ -25,4 +25,4 @@ const authReducer = (state = initState, { type, payload }) => {
     }
 
 }
-export default authReducer;
+export default signinReducer;

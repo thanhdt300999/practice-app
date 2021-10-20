@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
-import Text from '../../../../assets/AppText'
+import Text from '../../../../../assets/AppText';
 import { useForm, Controller } from 'react-hook-form'
-import api from "../../../api/api";
+import api from "../../../../api/api";
 import { useSelector, useDispatch } from 'react-redux'
 import actions from '../redux/actions'
+import { RootState } from '../../../../config-redux/rootReducer';
 type Props = {
 
 }
@@ -15,7 +16,7 @@ type PersonData = {
 };
 
 const AuthForm1: React.FC<Props> = ({ }) => {
-    const state = useSelector((state: any) => state.auth);
+    const state = useSelector((state: RootState) => state.signin);
     const dispatch = useDispatch()
     // Note action 
 
@@ -30,7 +31,6 @@ const AuthForm1: React.FC<Props> = ({ }) => {
             email: data.email
         } 
         dispatch(actions.actionLogin(payload))
-        // const signIn = (data: any, email: string) => dispatch(signIn(formData, data.email))
     }
     return (
         <View>

@@ -11,18 +11,26 @@ import {
     Modal,
 } from 'react-native';
 import { Button } from 'react-native-paper';
-import Text from '../../../../assets/AppText';
+import Text from '../../../../../assets/AppText';
 import { withNavigation } from 'react-navigation';
+import AsyncStorage from '@react-native-community/async-storage';
 import AuthForm from './AuthForm';
+import { useSelector } from 'react-redux';
 export interface Props {
     navigation?: any;
 }
 
 const SigninScreen: React.FC<Props> = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const [abc, setAbc] = React.useState('');
+    const state = useSelector((state: any) => state.signin);
     const handlePress = () => {
         navigation.navigate('Signup');
     };
+   
+    React.useEffect(() => {
+    }, [abc]);
+
     return (
         <View style={styles.container}>
             <Modal
@@ -46,10 +54,13 @@ const SigninScreen: React.FC<Props> = ({ navigation }) => {
                     </View>
                 </View>
             </Modal>
-            <ImageBackground source={require('../../../../image/Capture.png')} style={styles.image}>
+            <ImageBackground
+                source={require('../../../../../image/Capture.png')}
+                style={styles.image}
+            >
                 <Image
                     style={styles.tinyLogo}
-                    source={require('../../../../image/logo-large.png')}
+                    source={require('../../../../../image/logo-large.png')}
                 />
                 <View style={styles.footer}>
                     <TouchableOpacity

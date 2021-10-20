@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
-import Text from '../../../../assets/AppText';
+import Text from '../../../../../assets/AppText';
 import { RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from '../redux/action';
 import ButtonBack from './ButtonBack';
 import ButtonNext from './ButtonNext';
+import { RootState } from '../../../../config-redux/rootReducer';
 interface Props {
     setRender: any;
     submitRegion: any;
@@ -17,7 +18,7 @@ interface region {
     name: string;
 }
 const RegionForm: React.FC<Props> = ({ setRender, submitRegion, countryId }) => {
-    const listRegions = useSelector((state: any) => state.signup.listRegions);
+    const state = useSelector((state: RootState) => state.signup);
     const dispatch = useDispatch();
     const [region, setRegion] = React.useState<region>({
         id: '',
@@ -48,29 +49,33 @@ const RegionForm: React.FC<Props> = ({ setRender, submitRegion, countryId }) => 
                     <Text style={styles.textStyle}>Quelle est votre region ? </Text>
                 </View>
                 <View style={styles.scrollView}>
-                    <FlatList
-                        data={listRegions}
-                        renderItem={({ item }) => {
-                            return (
-                                <View style={styles.styleCheckbox}>
-                                    <Text style={styles.textCheckBox}>{item.name}:</Text>
-                                    <View style={styles.radio}>
-                                        <RadioButton
-                                            color="#FFFFFF"
-                                            uncheckedColor="#FFFFFF"
-                                            value={item.name}
-                                            status={region.id === item.id ? 'checked' : 'unchecked'}
-                                            onPress={() => setRegion(item)}
-                                        />
+                    {state.isLoading === false && (
+                        <FlatList
+                            data={state.listRegions}
+                            renderItem={({ item }) => {
+                                return (
+                                    <View style={styles.styleCheckbox}>
+                                        <Text style={styles.textCheckBox}>{item.name}:</Text>
+                                        <View style={styles.radio}>
+                                            <RadioButton
+                                                color="#FFFFFF"
+                                                uncheckedColor="#FFFFFF"
+                                                value={item.name}
+                                                status={
+                                                    region.id === item.id ? 'checked' : 'unchecked'
+                                                }
+                                                onPress={() => setRegion(item)}
+                                            />
+                                        </View>
                                     </View>
-                                </View>
-                            );
-                        }}
-                        keyExtractor={(item) => item.id}
-                    />
+                                );
+                            }}
+                            keyExtractor={(item) => item.id}
+                        />
+                    )}
                 </View>
             </View>
-            <ButtonNext onPress={onSubmit} disable={false} />
+            <ButtonNext onPress={onSubmit} disable={region.id === "" ? true : false} />
         </>
     );
 };

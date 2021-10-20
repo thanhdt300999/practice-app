@@ -8,7 +8,7 @@ import {
     KeyboardAvoidingView,
     Platform,
 } from 'react-native';
-import Text from '../../../../assets/AppText';
+import Text from '../../../../../assets/AppText';
 import { TextInput } from 'react-native-paper';
 import { useForm, Controller } from 'react-hook-form';
 import Icon from 'react-native-vector-icons/Feather';
