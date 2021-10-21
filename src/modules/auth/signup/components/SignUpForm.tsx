@@ -35,11 +35,13 @@ const SignUpForm: React.FC<Props> = ({ submitSignupForm, setRender }) => {
     } = useForm();
 
     const onSubmit = (data) => {
-        submitSignupForm(data)
+        submitSignupForm(data);
     };
     const emailRegex = new RegExp(
         '^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$'
     );
+    const nameRegex = new RegExp('^\\w{4,15}$');
+    const passwordRegex = new RegExp('.{8,}');
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : null}
@@ -93,6 +95,10 @@ const SignUpForm: React.FC<Props> = ({ submitSignupForm, setRender }) => {
                                     value: true,
                                     message: 'Field is required!',
                                 },
+                                pattern: {
+                                    value: nameRegex,
+                                    message: 'Name must have 4 to 15 characters',
+                                },
                             }}
                             name="firstName"
                             defaultValue=""
@@ -114,6 +120,10 @@ const SignUpForm: React.FC<Props> = ({ submitSignupForm, setRender }) => {
                                     value: true,
                                     message: 'Field is required!',
                                 },
+                                pattern: {
+                                    value: passwordRegex,
+                                    message: 'Password must more than 8 characters'
+                                }
                             }}
                             name="password"
                             defaultValue=""

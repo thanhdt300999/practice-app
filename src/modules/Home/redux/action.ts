@@ -1,6 +1,5 @@
 import { homeContants } from './contant';
 export const getUsersRequest = () => {
-    console.log("action")
     return {
         type: homeContants.GET_USERS_REQUEST,
     };

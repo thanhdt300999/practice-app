@@ -5,6 +5,7 @@ import {
     watchGetCitiesByZipcode,
     watchGetCountries,
     watchGetRegions,
+    watchPostSignup,
 } from '../modules/auth/signup/redux/saga';
 import { watchGetUsers } from '../modules/Home/redux/saga';
 const sagas = function* () {
@@ -15,6 +16,7 @@ const sagas = function* () {
         watchGetCitiesByRegion(),
         watchGetCitiesByZipcode(),
         watchGetUsers(),
+        watchPostSignup(),
     ]);
 };
 export default sagas;

@@ -2,7 +2,6 @@ import { call, put, select, takeEvery } from 'redux-saga/effects';
 import signUpService from './service';
 import AsyncStorage from '@react-native-community/async-storage';
 import actions from './action';
-
 function* saveTokenToStore(data) {
     yield AsyncStorage.multiSet(
         [
@@ -70,10 +69,25 @@ export function* hanldeGetCitiesByZipcode(action) {
 }
 export function* getCitiesByZipcode(data) {
     try {
-        console.log("abc")
         let response = yield call(signUpService.getCitiesByZipcode, data);
         yield put(actions.getCitiesByZipcodeSuccess(response.listCities));
     } catch (err) {
         yield put(actions.getCitiesByZipcodeFailure(err));
+    }
+}
+
+export function* watchPostSignup() {
+    yield takeEvery('POST_SIGN_UP_REQUEST', handlePostSignup);
+}
+export function* handlePostSignup(action) {
+    yield call(postSignup, action.payload);
+}
+export function* postSignup(data) {
+    try {
+        let response = yield call(signUpService.postSignup, data);
+        // yield call(saveTokenToStore, response)
+        yield put(actions.postSignupSuccess(response.listCities));
+    } catch (err) {
+        yield put(actions.postSignupFailure(err));
     }
 }
