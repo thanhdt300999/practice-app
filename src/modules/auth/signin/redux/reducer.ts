@@ -1,28 +1,35 @@
-import { navigate } from '../../../../navigationRef'
+import NavigationService from "../../../../../NavigationService";
 
 const initState = {
     accessToken: '',
     isLoading: false,
     error: '',
-    auth: {}
+    auth: {},
+    isLogged: false
 };
 const signinReducer = (state = initState, { type, payload }) => {
     switch (type) {
         case 'HANDLE_LOGIN':
             return {
                 ...state,
-                isLoading: true
-            }
+                isLoading: true,
+            };
         case 'LOGIN_SUCCESS':
-           console.log("reducer")
             return {
                 ...state,
                 isLoading: false,
-                accessToken: payload.access_token
-            }
+                accessToken: payload.access_token,
+                isLogged: true,
+                error: '',
+            };
+        case 'LOGIN_FAILURE':
+            return {
+                ...state,
+                isLoading: false,
+                error: payload,
+            };
         default:
             return state;
     }
-
-}
+};
 export default signinReducer;

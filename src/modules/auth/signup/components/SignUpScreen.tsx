@@ -110,7 +110,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
     const handleSignup = async (data) => {
         const formData = new FormData();
 
-        formData.append('firstName', data.firstName);
+        formData.append('firstname', data.firstName);
         formData.append('email', data.email);
         formData.append('password', data.password);
         formData.append('affiliate', 1);

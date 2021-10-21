@@ -22,14 +22,13 @@ export interface Props {
 
 const SigninScreen: React.FC<Props> = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const [abc, setAbc] = React.useState('');
+    
     const state = useSelector((state: any) => state.signin);
     const handlePress = () => {
         navigation.navigate('Signup');
     };
-   
     React.useEffect(() => {
-    }, [abc]);
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -143,7 +142,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#F194FF',
     },
     buttonClose: {
-        backgroundColor: '#2196F3',
+        position: 'absolute',
+        top: 0,
+        backgroundColor: 'transparent',
         fontSize: 50,
         alignSelf: 'flex-end',
         borderRadius: 25,

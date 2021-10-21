@@ -8,8 +8,6 @@ import {
     ScrollView,
     RefreshControl,
     LogBox,
-    Animated,
-    SafeAreaView,
 } from 'react-native';
 import { Dimensions } from 'react-native';
 import Text from '../../../../assets/AppText';
@@ -20,9 +18,9 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/Entypo';
 import { RootState } from '../../../config-redux/rootReducer';
 import action from '../redux/action';
+import actions from '../../auth/signin/redux/actions';
 
 interface Props {}
-
 const Item = ({ title, url, age, location }) => (
     <View style={styles.shadowProp}>
         <View style={styles.userBox}>
@@ -45,19 +43,9 @@ const Item = ({ title, url, age, location }) => (
         </View>
     </View>
 );
-const Discovery: React.FC<Props> = ({}) => {
+const MessageScreen: React.FC<Props> = ({}) => {
     const [checked, setChecked] = React.useState('unchecked');
     const [isFetching, setFetching] = React.useState(false);
-    const [showHeader, setShowHeader] = React.useState(false);
-    const [trigger, setTrigger] = React.useState(false);
-    const scrollY = new Animated.Value(0);
-    const dispatch = useDispatch();
-    const state = useSelector((state: RootState) => state.home);
-    const translateY = scrollY.interpolate({
-        inputRange: [0, 280],
-        outputRange: [0, 60],
-        extrapolate: 'clamp',
-    });
     const renderItem = ({ item }) => (
         <Item url={item.thumbnail} age={item.age} location={item.country} title={item.name} />
     );
@@ -66,7 +54,9 @@ const Discovery: React.FC<Props> = ({}) => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-
+    const [x, setX] = React.useState(0);
+    const dispatch = useDispatch();
+    const state = useSelector((state: RootState) => state.home);
     const getItemLayout = (data, index) => ({
         length: 70,
         offset: 70 * index,
@@ -81,55 +71,7 @@ const Discovery: React.FC<Props> = ({}) => {
     };
     return (
         <>
-            <SafeAreaView>
-                {showHeader && (
-                    <View style={[styles.bar]}>
-                        <Text style={styles.title}>Title</Text>
-                    </View>
-                )}
-
-                <ScrollView
-                    refreshControl={
-                        <RefreshControl onRefresh={onRefresh} refreshing={state.isLoading} />
-                    }
-                    scrollEventThrottle={16}
-                    onScroll={(e) => {
-                        if (e.nativeEvent.contentOffset.y > 280 && trigger == false) {
-                            setShowHeader(true);
-                            setTrigger(true);
-                        }
-                        if (e.nativeEvent.contentOffset.y < 280 && trigger == true) {
-                            setShowHeader(false);
-                            setTrigger(false);
-                        }
-                    }}
-                >
-                    <Image style={styles.image} source={require('../../../../image/menuBar.jpg')} />
-                    <View style={styles.banner}>
-                        <Text style={styles.textHeader}>Votre Recherche</Text>
-                        <TouchableOpacity style={styles.headerButton}>
-                            <Icon name="linechart" color="#ffffff" size={25} />
-                            <Text style={styles.textButton}>CRITERES</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ alignItems: 'center' }}>
-                        <FlatList
-                            scrollEnabled={false}
-                            nestedScrollEnabled
-                            numColumns={2}
-                            data={state.listUsers}
-                            renderItem={renderItem}
-                            keyExtractor={(item) => item.uuid.toString()}
-                            getItemLayout={getItemLayout}
-                            removeClippedSubviews={true}
-                            initialNumToRender={2} // Reduce initial render amount
-                            maxToRenderPerBatch={1} // Reduce number in each render batch
-                            updateCellsBatchingPeriod={100} // Increase time between renders
-                            windowSize={7} // Reduce the window size
-                        />
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
+            <Text>Message Screen</Text>
         </>
     );
 };
@@ -198,16 +140,6 @@ const styles = StyleSheet.create({
 
         elevation: 5,
     },
-    bar: {
-        height: 60,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    title: {
-        backgroundColor: 'transparent',
-        color: 'white',
-        fontSize: 18,
-    },
 });
 
-export default withNavigation(Discovery);
+export default withNavigation(MessageScreen);

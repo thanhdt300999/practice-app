@@ -2,6 +2,9 @@ import axios from 'axios';
 const api = axios.create({
     baseURL: 'https://api.ltservices2.ovh',
 });
+const api2 = axios.create({
+    baseURL: 'https://apiv2.ltservices2.ovh',
+});
 function getCountries() {
     return api
         .get('/v4/atlas/countries')
@@ -41,7 +44,7 @@ function getCitiesByRegion(data) {
 }
 
 function getCitiesByZipcode(data) {
-    return axios
+    return api
         .get(`/v4/atlas/${data.countryId}/${data.zipcode}/zipcode/cities`)
         .then((response) => {
             return {
@@ -54,16 +57,13 @@ function getCitiesByZipcode(data) {
 }
 
 function postSignup(data) {
-    return axios
-        .post(`/v4/api/pool/.json`, {
-            params: {
-                new_key_signup: true,
-            },
-            data: data,
-        })
+    console.log(data)
+    return api2
+        .post(`/pool/.json?new_key_signup=true`, data)
         .then((response) => {
+            console.log(response.data.CONTENT)
             return {
-                listCities: response.data.CONTENT.cities,
+               
             };
         })
         .catch((err) => {
