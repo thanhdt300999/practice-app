@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/Entypo';
 import { RootState } from '../../../config-redux/rootReducer';
+import { MaterialIcons, Entypo, FontAwesome } from 'react-native-vector-icons';
 import action from '../redux/action';
 
 interface Props {}
@@ -26,12 +27,17 @@ interface Props {}
 const Item = ({ title, url, age, location }) => (
     <View style={styles.shadowProp}>
         <View style={styles.userBox}>
-            <Image
-                style={styles.userImage}
-                source={{
-                    uri: url,
-                }}
-            />
+            <View>
+                <Image
+                    style={styles.userImage}
+                    source={{
+                        uri: url,
+                    }}
+                />
+                <View style={styles.icon}>
+                    <FontAwesome name="circle" color="#8cff12" size={15} />
+                </View>
+            </View>
             <Text style={{ fontSize: 20 }}>{title}</Text>
             <View style={styles.userInfo}>
                 <View style={styles.userAge}>
@@ -53,8 +59,8 @@ const Discovery: React.FC<Props> = ({}) => {
     const scrollY = new Animated.Value(0);
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state.home);
-    const translateY = scrollY.interpolate({
-        inputRange: [0, 280],
+    const translateY: any = scrollY.interpolate({
+        inputRange: [230, 281],
         outputRange: [0, 60],
         extrapolate: 'clamp',
     });
@@ -81,30 +87,36 @@ const Discovery: React.FC<Props> = ({}) => {
     };
     return (
         <>
-            <SafeAreaView>
-                {showHeader && (
-                    <View style={[styles.bar]}>
-                        <Text style={styles.title}>Title</Text>
-                    </View>
-                )}
+            <Animated.View
+                style={[
+                    styles.header,
+                    { height: translateY, transform: [{ translateY: translateY }] },
+                ]}
+            >
+                <View style={{ marginLeft: 15, flexDirection: 'row', alignItems: 'center' }}>
+                    <MaterialIcons name="settings-backup-restore" size={30} />
+                    <Text>Reset</Text>
+                </View>
+                <Text style={{ fontSize: 25 }}> Decouvir </Text>
+                <View style={{ flexDirection: 'row', marginRight: 15 }}>
+                    <Entypo name="save" size={30} color="green" />
+                    <FontAwesome name="sort-amount-desc" color="green" size={30} />
+                </View>
+            </Animated.View>
 
+            <SafeAreaView>
                 <ScrollView
                     refreshControl={
                         <RefreshControl onRefresh={onRefresh} refreshing={state.isLoading} />
                     }
                     scrollEventThrottle={16}
                     onScroll={(e) => {
-                        if (e.nativeEvent.contentOffset.y > 280 && trigger == false) {
-                            setShowHeader(true);
-                            setTrigger(true);
-                        }
-                        if (e.nativeEvent.contentOffset.y < 280 && trigger == true) {
-                            setShowHeader(false);
-                            setTrigger(false);
-                        }
+                        scrollY.setValue(e.nativeEvent.contentOffset.y);
                     }}
+                    style={{ backgroundColor: '#f7fff0' }}
                 >
                     <Image style={styles.image} source={require('../../../../image/menuBar.jpg')} />
+
                     <View style={styles.banner}>
                         <Text style={styles.textHeader}>Votre Recherche</Text>
                         <TouchableOpacity style={styles.headerButton}>
@@ -167,7 +179,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 8,
         paddingVertical: 15,
-        borderWidth: 1,
+        backgroundColor: '#ffffff'
     },
     userImage: {
         width: 140,
@@ -187,17 +199,7 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         flexDirection: 'row',
     },
-    shadowProp: {
-        shadowColor: '#000000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.4,
-        shadowRadius: 3.84,
-
-        elevation: 5,
-    },
+    shadowProp: {},
     bar: {
         height: 60,
         alignItems: 'center',
@@ -207,6 +209,31 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         color: 'white',
         fontSize: 18,
+    },
+    header: {
+        zIndex: 3,
+        marginTop: -10,
+        backgroundColor: '#ffffff',
+        shadowColor: '#000',
+        shadowOffset: { width: 1, height: 1 },
+        shadowOpacity: 0.4,
+        shadowRadius: 3,
+        elevation: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        overflow: 'hidden'
+    },
+    icon: {
+        position: 'absolute',
+        bottom: 0,
+        alignSelf: 'flex-end',
+        backgroundColor: '#ffffff',
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
 

@@ -6,7 +6,8 @@ import ButtonNext from './ButtonNext';
 import { useForm, Controller } from 'react-hook-form';
 import ButtonBack from './ButtonBack';
 import { withNavigation } from 'react-navigation';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { SafeAreaView } from 'react-native-safe-area-context';
 interface Props {
     setRender: any;
     submitEntity;
@@ -27,38 +28,40 @@ const EntityForm: React.FC<Props> = ({ submitEntity, setRender, navigation }) =>
     };
     return (
         <>
-            <View style={{ height: 550, alignSelf: 'stretch' }}>
-                <ButtonBack onPress={() => navigation.navigate('Signin')} />
-                <View style={styles.header}>
-                <View style={styles.iconStyle}>
-                        <Icon name="intersex" size={40} color="#900" />
+            <SafeAreaView>
+                <View style={{ height: 550, alignSelf: 'stretch' }}>
+                    <ButtonBack onPress={() => navigation.navigate('Signin')} />
+                    <View style={styles.header}>
+                        <View style={styles.iconStyle}>
+                            <Icon name="intersex" size={40} color="#900" />
+                        </View>
+                        <Text style={styles.textStyle}>Vous etes</Text>
                     </View>
-                    <Text style={styles.textStyle}>Vous etes</Text>
-                </View>
-                <View style={styles.styleCheckbox}>
-                    <Text style={styles.textCheckBox}>Homme:</Text>
-                    <View style={styles.radio}>
+                    <View style={styles.styleCheckbox}>
+                        <Text style={styles.textCheckBox}>Homme:</Text>
+                        <View style={styles.radio}>
+                            <RadioButton
+                                color="#FFFFFF"
+                                uncheckedColor="#FFFFFF"
+                                value="Female"
+                                status={checked === 'Female' ? 'checked' : 'unchecked'}
+                                onPress={() => setChecked('Female')}
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.styleCheckbox}>
+                        <Text style={styles.textCheckBox}>Male:</Text>
                         <RadioButton
                             color="#FFFFFF"
+                            value="Male"
                             uncheckedColor="#FFFFFF"
-                            value="Female"
-                            status={checked === 'Female' ? 'checked' : 'unchecked'}
-                            onPress={() => setChecked('Female')}
+                            status={checked === 'Male' ? 'checked' : 'unchecked'}
+                            onPress={() => setChecked('Male')}
                         />
                     </View>
                 </View>
-                <View style={styles.styleCheckbox}>
-                    <Text style={styles.textCheckBox}>Male:</Text>
-                    <RadioButton
-                        color="#FFFFFF"
-                        value="Male"
-                        uncheckedColor="#FFFFFF"
-                        status={checked === 'Male' ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked('Male')}
-                    />
-                </View>
-            </View>
-            <ButtonNext onPress={onSubmit} disable={checked === 'unchecked' ? true : false} />
+                <ButtonNext onPress={onSubmit} disable={checked === 'unchecked' ? true : false} />
+            </SafeAreaView>
         </>
     );
 };
