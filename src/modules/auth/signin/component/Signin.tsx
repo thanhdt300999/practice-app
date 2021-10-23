@@ -22,13 +22,12 @@ export interface Props {
 
 const SigninScreen: React.FC<Props> = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    
+
     const state = useSelector((state: any) => state.signin);
     const handlePress = () => {
         navigation.navigate('Signup');
     };
-    React.useEffect(() => {
-    }, []);
+    React.useEffect(() => {}, []);
 
     return (
         <View style={styles.container}>
@@ -69,17 +68,10 @@ const SigninScreen: React.FC<Props> = ({ navigation }) => {
                     >
                         <Text style={styles.text}>SE CONNECTER</Text>
                     </TouchableOpacity>
-                    <Button
-                        mode="contained"
-                        color="green"
-                        uppercase={false}
-                        contentStyle={styles.buttonStyle}
-                        style={styles.button}
-                        onPress={handlePress}
-                    >
-                        <Text>INSCRIPTION GRATUITE</Text>
-                        <Text>en 1 min</Text>
-                    </Button>
+                    <TouchableOpacity style={styles.button} onPress={handlePress}>
+                        <Text style={{ color: '#ffffff' }}>INSCRIPTION GRATUITE</Text>
+                        <Text style={{ color: '#ffffff' }}>EN 1 MIN</Text>
+                    </TouchableOpacity>
                 </View>
             </ImageBackground>
         </View>
@@ -114,11 +106,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'center',
         justifyContent: 'center',
+        alignItems: 'center'
     },
     button: {
         marginLeft: 30,
-        color: 'green',
-        flexDirection: 'row',
+        backgroundColor: 'green',
+        height: 50,
+        borderRadius: 5,
+        width: 200,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     buttonStyle: {
         flexWrap: 'wrap',

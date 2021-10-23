@@ -7,6 +7,7 @@ import api from '../../../../api/api';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from '../redux/actions';
 import { RootState } from '../../../../config-redux/rootReducer';
+import { AntDesign } from 'react-native-vector-icons';
 type Props = {};
 type PersonData = {
     email: string;
@@ -70,27 +71,33 @@ const AuthForm1: React.FC<Props> = ({}) => {
                 name="email"
                 defaultValue=""
             />
-            <Controller
-                control={control}
-                rules={{
-                    required: true,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        label="Password"
-                        mode="outlined"
-                        style={styles.formPassword}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        autoCapitalize="none"
-                        // secureTextEntry={true}
-                    />
-                )}
-                name="password"
-                defaultValue=""
-            />
-
+            <View style={{ justifyContent: 'center' }}>
+                <Controller
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            label="Password"
+                            mode="outlined"
+                            style={styles.formPassword}
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            value={value}
+                            autoCapitalize="none"
+                            // secureTextEntry={true}
+                        />
+                    )}
+                    name="password"
+                    defaultValue=""
+                />
+                <AntDesign
+                    name="eyeo"
+                    style={{ position: 'absolute', alignSelf: 'flex-end', marginRight: 10 }}
+                    size={25}
+                />
+            </View>
             <Text style={styles.contactText}> Nous contacter ou Aida</Text>
             <Button
                 color="#24cf5f"
@@ -102,7 +109,7 @@ const AuthForm1: React.FC<Props> = ({}) => {
             </Button>
 
             <Text style={styles.footerText}>
-                Vous n'avez pas de compte?{' '}
+                Vous n'avez pas de compte?{''}
                 <Text style={styles.footerSpecialText}>Incrivez vous gratuitement</Text>
             </Text>
         </View>
@@ -148,6 +155,7 @@ const styles = StyleSheet.create({
     footerSpecialText: {
         color: '#24cf5f',
         textDecorationLine: 'underline',
+        
     },
 });
 
