@@ -1,10 +1,9 @@
-
 const initState = {
     isLoading: false,
     error: '',
     listCountries: [],
     listRegions: [],
-    listCities: []
+    listCities: [],
 };
 const signupReducer = (state = initState, { type, payload }) => {
     switch (type) {
@@ -71,6 +70,23 @@ const signupReducer = (state = initState, { type, payload }) => {
                 listCities: payload,
             };
         case 'GET_CITIES_BY_ZIPCODE_FAILURE':
+            return {
+                ...state,
+                isLoading: false,
+                error: payload,
+            };
+        case 'POST_SIGN_UP_REQUEST':
+            return {
+                ...state,
+                isLoading: true,
+            };
+        case 'POST_SIGN_UP_SUCCESS':
+            return {
+                ...state,
+                isLoading: false,
+                uuid: payload,
+            };
+        case 'POST_SIGN_UP_FAILURE':
             return {
                 ...state,
                 isLoading: false,

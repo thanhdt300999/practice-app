@@ -2,18 +2,8 @@ import { call, put, select, takeEvery } from 'redux-saga/effects';
 import signUpService from './service';
 import AsyncStorage from '@react-native-community/async-storage';
 import actions from './action';
-function* saveTokenToStore(data) {
-    yield AsyncStorage.multiSet(
-        [
-            ['AccessToken', data.token],
-            ['puk', data.puk],
-            ['user', data.user],
-        ],
-        (err) => {
-            console.log('ERROR saveTokenToStore: ', err);
-        }
-    );
-}
+import { saveTokenToStore } from '../../signin/redux/saga';
+import NavigationService from '../../../../../NavigationService';
 //country
 export function* watchGetCountries() {
     yield takeEvery('GET_COUNTRIES_REQUEST', handleGetCountries);
@@ -85,8 +75,10 @@ export function* handlePostSignup(action) {
 export function* postSignup(data) {
     try {
         let response = yield call(signUpService.postSignup, data);
-        // yield call(saveTokenToStore, response)
-        yield put(actions.postSignupSuccess(response.listCities));
+        // console.log("respone", response)
+        yield call(saveTokenToStore, response)
+        yield put(actions.postSignupSuccess(response.uuid));
+        yield call(NavigationService.navigate, "Home")
     } catch (err) {
         yield put(actions.postSignupFailure(err));
     }

@@ -27,21 +27,27 @@ const width = Dimensions.get('window').width; //full width
 const SignUpForm: React.FC<Props> = ({ submitSignupForm, setRender }) => {
     const [first, setCheckFrist] = React.useState(false);
     const [second, setCheckSecond] = React.useState(false);
-    const [toggleCheckBox, setToggleCheckBox] = React.useState(false);
     const {
         control,
         handleSubmit,
-        formState: { errors },
-    } = useForm();
+        formState: { errors, isValid },
+        getValues,
+    } = useForm({ mode: 'onBlur' });
 
     const onSubmit = (data) => {
         submitSignupForm(data);
     };
-    const emailRegex = new RegExp(
-        '^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$'
-    );
+    const emailRegex = new RegExp('^w+@[a-zA-Z_]+?.[a-zA-Z]{2,}$');
     const nameRegex = new RegExp('^\\w{4,15}$');
     const passwordRegex = new RegExp('.{8,}');
+
+    const checkValid = () => {
+        if (isValid && first == true && second == true) {
+            return true;
+        } else {
+            return false;
+        }
+    };
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : null}
@@ -73,7 +79,7 @@ const SignUpForm: React.FC<Props> = ({ submitSignupForm, setRender }) => {
                                 },
                                 // pattern: {
                                 //     value: emailRegex,
-                                //     message: 'Invalid email',
+                                //     message: 'Email is incorrect',
                                 // },
                             }}
                             name="email"
@@ -122,8 +128,8 @@ const SignUpForm: React.FC<Props> = ({ submitSignupForm, setRender }) => {
                                 },
                                 pattern: {
                                     value: passwordRegex,
-                                    message: 'Password must more than 8 characters'
-                                }
+                                    message: 'Password must more than 8 characters',
+                                },
                             }}
                             name="password"
                             defaultValue=""
@@ -143,7 +149,14 @@ const SignUpForm: React.FC<Props> = ({ submitSignupForm, setRender }) => {
                             }}
                         />
                     </View>
-                    <TouchableOpacity style={styles.connectButton} onPress={handleSubmit(onSubmit)}>
+                    <TouchableOpacity
+                        style={[
+                            styles.connectButton,
+                            { backgroundColor: checkValid() ? '#ff2c2c' : 'gray' },
+                        ]}
+                        disabled={false}
+                        onPress={handleSubmit(onSubmit)}
+                    >
                         <Icon name="check" size={30} color="#ffffff" />
                         <Text
                             style={{

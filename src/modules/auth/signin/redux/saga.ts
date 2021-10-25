@@ -4,9 +4,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import actions from './actions';
 import NavigationService from '../../../../../NavigationService';
 
-async function saveTokenToStore(data) {
+export async function saveTokenToStore(data) {
     try {
-        await AsyncStorage.setItem("token", data.access_token)
+        await AsyncStorage.setItem("token", data.token)
         await AsyncStorage.setItem("puk", data.puk)
     } catch (error) {
         console.log(error)

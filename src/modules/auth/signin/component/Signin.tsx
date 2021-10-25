@@ -36,7 +36,6 @@ const SigninScreen: React.FC<Props> = ({ navigation }) => {
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
                     setModalVisible(!modalVisible);
                 }}
             >
@@ -48,7 +47,7 @@ const SigninScreen: React.FC<Props> = ({ navigation }) => {
                         >
                             X
                         </Button>
-                        <AuthForm />
+                        <AuthForm modalVisible={modalVisible} />
                     </View>
                 </View>
             </Modal>
@@ -106,7 +105,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'center',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     button: {
         marginLeft: 30,
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: 200,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     buttonStyle: {
         flexWrap: 'wrap',

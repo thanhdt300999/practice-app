@@ -28,40 +28,38 @@ const EntityForm: React.FC<Props> = ({ submitEntity, setRender, navigation }) =>
     };
     return (
         <>
-            <SafeAreaView>
-                <View style={{ height: 550, alignSelf: 'stretch' }}>
-                    <ButtonBack onPress={() => navigation.navigate('Signin')} />
-                    <View style={styles.header}>
-                        <View style={styles.iconStyle}>
-                            <Icon name="intersex" size={40} color="#900" />
-                        </View>
-                        <Text style={styles.textStyle}>Vous etes</Text>
+            <View style={{ height: 550, alignSelf: 'stretch' }}>
+                <ButtonBack onPress={() => navigation.navigate('Signin')} />
+                <View style={styles.header}>
+                    <View style={styles.iconStyle}>
+                        <Icon name="intersex" size={40} color="#900" />
                     </View>
-                    <View style={styles.styleCheckbox}>
-                        <Text style={styles.textCheckBox}>Homme:</Text>
-                        <View style={styles.radio}>
-                            <RadioButton
-                                color="#FFFFFF"
-                                uncheckedColor="#FFFFFF"
-                                value="Female"
-                                status={checked === 'Female' ? 'checked' : 'unchecked'}
-                                onPress={() => setChecked('Female')}
-                            />
-                        </View>
-                    </View>
-                    <View style={styles.styleCheckbox}>
-                        <Text style={styles.textCheckBox}>Male:</Text>
+                    <Text style={styles.textStyle}>Vous etes</Text>
+                </View>
+                <View style={styles.styleCheckbox}>
+                    <Text style={styles.textCheckBox}>Homme:</Text>
+                    <View style={styles.radio}>
                         <RadioButton
                             color="#FFFFFF"
-                            value="Male"
                             uncheckedColor="#FFFFFF"
-                            status={checked === 'Male' ? 'checked' : 'unchecked'}
-                            onPress={() => setChecked('Male')}
+                            value="Female"
+                            status={checked === 'Female' ? 'checked' : 'unchecked'}
+                            onPress={() => setChecked('Female')}
                         />
                     </View>
                 </View>
-                <ButtonNext onPress={onSubmit} disable={checked === 'unchecked' ? true : false} />
-            </SafeAreaView>
+                <View style={styles.styleCheckbox}>
+                    <Text style={styles.textCheckBox}>Male:</Text>
+                    <RadioButton
+                        color="#FFFFFF"
+                        value="Male"
+                        uncheckedColor="#FFFFFF"
+                        status={checked === 'Male' ? 'checked' : 'unchecked'}
+                        onPress={() => setChecked('Male')}
+                    />
+                </View>
+            </View>
+            <ButtonNext onPress={onSubmit} disable={checked === 'unchecked' ? true : false} />
         </>
     );
 };
