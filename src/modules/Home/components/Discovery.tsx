@@ -23,10 +23,13 @@ import { RootState } from '../../../config-redux/rootReducer';
 import { MaterialIcons, Entypo, FontAwesome } from 'react-native-vector-icons';
 import action from '../redux/action';
 import { LinearGradient } from 'expo-linear-gradient';
+import Constants from 'expo-constants';
+
 const HEADER_MAX_HEIGHT = 200;
 const HEADER_MIN_HEIGHT = 60;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 const width: number = Dimensions.get('window').width; //full width
+const statusBarHeight = Constants.statusBarHeight;
 interface Props {}
 
 const Item = ({ title, url, age, location }) => (
@@ -121,6 +124,8 @@ const Discovery: React.FC<Props> = ({}) => {
     React.useEffect(() => {
         dispatch(action.getUsersRequest());
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+        LogBox.ignoreLogs(['fontFamily']);
+        console.log(state.listUsers)
     }, []);
     const onRefresh = () => {
         dispatch(action.getUsersRequest());
@@ -129,14 +134,18 @@ const Discovery: React.FC<Props> = ({}) => {
     const flatListRef = React.useRef();
     const onReset = () => {
         dispatch(action.getUsersRequest());
-        flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
     };
     return (
         <>
+        {console.log(state.listUsers)}
             <SafeAreaView style={{ flex: 1 }}>
-                <View style={{ alignItems: 'center' }}>
+                <View
+                    style={{
+                        alignItems: 'center',
+                        marginTop: Platform.OS === 'ios' ? '0' : statusBarHeight,
+                    }}
+                >
                     <FlatList
-                        ref={flatListRef}
                         ListHeaderComponent={listHeaderComponent}
                         showsHorizontalScrollIndicator={false}
                         numColumns={2}
@@ -152,10 +161,10 @@ const Discovery: React.FC<Props> = ({}) => {
                         onScroll={(e) => {
                             scrollY.setValue(e.nativeEvent.contentOffset.y);
                         }}
-                        // initialNumToRender={2} // Reduce initial render amount
-                        // maxToRenderPerBatch={1} // Reduce number in each render batch
+                        initialNumToRender={2} // Reduce initial render amount
+                        maxToRenderPerBatch={1} // Reduce number in each render batch
                         updateCellsBatchingPeriod={100} // Increase time between renders
-                        // windowSize={7} // Reduce the window size
+                        windowSize={7} // Reduce the window size
                     />
                 </View>
                 <Animated.View style={[styles.header, { height: headerHeight }]}>
@@ -222,7 +231,7 @@ const styles = StyleSheet.create({
     },
     userBox: {
         marginTop: 25,
-        margin: 15,
+        margin: 20,
         borderRadius: 10,
         paddingHorizontal: 8,
         paddingVertical: 15,
@@ -256,9 +265,6 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
 
         elevation: 5,
-    },
-    title: {
-        backgroundColor: 'transparent',
         color: 'white',
         fontSize: 18,
     },
@@ -276,7 +282,7 @@ const styles = StyleSheet.create({
 
     header: {
         position: 'absolute',
-        top: 40,
+        top: Platform.OS === 'ios' ? 40 : 24,
         left: 0,
         right: 0,
         backgroundColor: '#ffffff',

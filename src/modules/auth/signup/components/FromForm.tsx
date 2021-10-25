@@ -1,5 +1,15 @@
 import React from 'react';
-import { View, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    Image,
+    ScrollView,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+} from 'react-native';
 import Text from '../../../../../assets/AppText';
 import { TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -20,50 +30,57 @@ const FromForm = ({ setRender, submitFrom }) => {
     };
     const handleOnPress = () => {};
     return (
-        <>
-            <View style={{ height: 550, alignSelf: 'stretch' }}>
-                <ButtonBack onPress={() => setRender('origin')} />
-                <View style={styles.header}>
-                    <View style={styles.iconStyle}>
-                        <Icon name="location-pin" size={40} color="#900" />
-                    </View>
-                    <Text style={styles.textStyle}>Ou habitez-vous ?</Text>
-                </View>
-                <View style={styles.scrollView}>
-                    <Controller
-                        control={control}
-                        render={({ field: { onChange, onBlur, value } }) => (
-                            <TextInput
-                                style={styles.textInput}
-                                onBlur={onBlur}
-                                onChangeText={onChange}
-                                value={value}
-                                placeholder="From"
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : null}
+            style={styles.container}
+        >
+            <ScrollView>
+                <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+                    <View style={{ height: 550, alignSelf: 'stretch' }}>
+                        <ButtonBack onPress={() => setRender('origin')} />
+                        <View style={styles.header}>
+                            <View style={styles.iconStyle}>
+                                <Icon name="location-pin" size={40} color="#900" />
+                            </View>
+                            <Text style={styles.textStyle}>Ou habitez-vous ?</Text>
+                        </View>
+                        <View style={styles.scrollView}>
+                            <Controller
+                                control={control}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <TextInput
+                                        style={styles.textInput}
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        placeholder="From"
+                                    />
+                                )}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: 'Field is required!',
+                                    },
+                                }}
+                                name="zipcode"
+                                defaultValue=""
                             />
-                        )}
-                        rules={{
-                            required: {
-                                value: true,
-                                message: 'Field is required!',
-                            },
-                            // pattern: {
-                            //     value: regex,
-                            //     message: 'invalid zipcode',
-                            // },
-                        }}
-                        name="zipcode"
-                        defaultValue=""
-                    />
-                    <TouchableOpacity
-                        onPress={handleOnPress}
-                        style={{ marginTop: 10, alignSelf: 'flex-end', marginHorizontal: 20 }}
-                    >
-                        <Text>Geo location</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <ButtonNext onPress={handleSubmit(onSubmit)} disable={!isValid} />
-        </>
+                            <TouchableOpacity
+                                onPress={handleOnPress}
+                                style={{
+                                    marginTop: 10,
+                                    alignSelf: 'flex-end',
+                                    marginHorizontal: 20,
+                                }}
+                            >
+                                <Text>Geo location</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </TouchableWithoutFeedback>
+                <ButtonNext onPress={handleSubmit(onSubmit)} disable={!isValid} />
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -113,6 +130,16 @@ const styles = StyleSheet.create({
     textInput: {
         backgroundColor: 'transparent',
         marginHorizontal: 20,
+    },
+    inputStyle: {
+        alignSelf: 'center',
+        flexDirection: 'row',
+        width: 200,
+        justifyContent: 'space-between',
+    },
+    container: {
+        flex: 1,
+        alignItems: 'center',
     },
 });
 export default FromForm;

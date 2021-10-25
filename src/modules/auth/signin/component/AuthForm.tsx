@@ -1,5 +1,12 @@
 import React from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+    KeyboardAvoidingView,
+    Platform,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+    Dimensions,
+} from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import Text from '../../../../../assets/AppText';
 import { useForm, Controller } from 'react-hook-form';
@@ -8,6 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import actions from '../redux/actions';
 import { RootState } from '../../../../config-redux/rootReducer';
 import { AntDesign } from 'react-native-vector-icons';
+const fullWidth = Dimensions.get('window').width - 60; //full width
 type Props = {
     modalVisible: boolean;
 };
@@ -145,11 +153,11 @@ const AuthForm1: React.FC<Props> = ({ modalVisible }) => {
 };
 const styles = StyleSheet.create({
     form: {
-        width: 300,
+        width: fullWidth,
         height: 55,
     },
     formPassword: {
-        width: 300,
+        width: fullWidth,
         height: 55,
         marginTop: 5,
     },
