@@ -13,6 +13,7 @@ import Text from '../../../../../assets/AppText';
 import { Button, TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useForm, Controller } from 'react-hook-form';
+import { Header } from 'react-navigation-stack';
 import ButtonNext from './ButtonNext';
 import ButtonBack from './ButtonBack';
 interface Props {
@@ -36,7 +37,7 @@ const BirthdayForm: React.FC<Props> = ({ submitBirthday, setRender }) => {
     const yearRegex = new RegExp('^\\d{4}$');
     return (
         <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            behavior={'padding'}
             style={styles.container}
         >
             <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
@@ -58,6 +59,7 @@ const BirthdayForm: React.FC<Props> = ({ submitBirthday, setRender }) => {
                                     onChangeText={onChange}
                                     value={value}
                                     placeholder="DD"
+                                    keyboardType='number-pad'
                                 />
                             )}
                             rules={{
@@ -83,6 +85,7 @@ const BirthdayForm: React.FC<Props> = ({ submitBirthday, setRender }) => {
                                     onChangeText={onChange}
                                     value={value}
                                     placeholder="MM"
+                                    keyboardType='number-pad'
                                 />
                             )}
                             rules={{
@@ -108,6 +111,7 @@ const BirthdayForm: React.FC<Props> = ({ submitBirthday, setRender }) => {
                                     onChangeText={onChange}
                                     value={value}
                                     placeholder="YY"
+                                    keyboardType='number-pad'
                                 />
                             )}
                             rules={{
