@@ -57,13 +57,14 @@ function getCitiesByZipcode(data) {
 }
 
 function postSignup(data) {
-    console.log(data)
+
     return api2
         .post(`/pool/.json?new_key_signup=true`, data)
         .then((response) => {
-            console.log(response.data.CONTENT)
             return {
-               
+               puk: response.data.CONTENT.AUTH.puk,
+               token: response.data.CONTENT.AUTH.token,
+               uuid: response.data.CONTENT.AUTH.uuid
             };
         })
         .catch((err) => {

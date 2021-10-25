@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import Text from '../../../../../assets/AppText';
 import { useForm, Controller } from 'react-hook-form';
@@ -8,22 +8,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import actions from '../redux/actions';
 import { RootState } from '../../../../config-redux/rootReducer';
 import { AntDesign } from 'react-native-vector-icons';
-type Props = {};
+type Props = {
+    modalVisible: boolean;
+};
 type PersonData = {
     email: string;
     password: string;
 };
 
-const AuthForm1: React.FC<Props> = ({}) => {
+const AuthForm1: React.FC<Props> = ({ modalVisible }) => {
     const state = useSelector((state: RootState) => state.signin);
     const dispatch = useDispatch();
+    const [showPassword, setShowPassword] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<string>('');
     // Note action
 
     const {
         control,
         handleSubmit,
         formState: { errors },
+        watch,
     } = useForm<PersonData>();
+    const showEye = watch('password');
     const onSubmit = (data) => {
         let formData = new FormData();
         formData.append('login', data.email);
@@ -35,43 +41,32 @@ const AuthForm1: React.FC<Props> = ({}) => {
         };
         dispatch(actions.actionLogin(payload));
     };
+
+    React.useEffect(() => {
+        setError(state.error);
+    }, [state.error]);
+    React.useEffect(() => {
+        setError('');
+    }, []);
     return (
-        <View>
-            <Text style={styles.loginText}> SE connecter a Mektoube</Text>
-            {state.error !== '' && (
-                <View
-                    style={{
-                        backgroundColor: '#b5e0e8',
-                        height: 40,
-                        justifyContent: 'center',
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        paddingLeft: 10,
-                        marginVertical: 10,
-                    }}
-                >
-                    <Text style={{ color: 'red' }}>Email or password is incorrect</Text>
-                </View>
-            )}
-            <Controller
-                control={control}
-                rules={{
-                    required: true,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        label="Email"
-                        mode="outlined"
-                        style={styles.form}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                    />
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <View>
+                <Text style={styles.loginText}> Connextion</Text>
+                {error !== '' && (
+                    <View
+                        style={{
+                            backgroundColor: '#b5e0e8',
+                            height: 40,
+                            justifyContent: 'center',
+                            borderRadius: 10,
+                            alignItems: 'center',
+                            paddingLeft: 10,
+                            marginVertical: 10,
+                        }}
+                    >
+                        <Text style={{ color: 'red' }}>Email or password is incorrect</Text>
+                    </View>
                 )}
-                name="email"
-                defaultValue=""
-            />
-            <View style={{ justifyContent: 'center' }}>
                 <Controller
                     control={control}
                     rules={{
@@ -79,40 +74,73 @@ const AuthForm1: React.FC<Props> = ({}) => {
                     }}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
-                            label="Password"
+                            label="Email"
                             mode="outlined"
-                            style={styles.formPassword}
+                            style={styles.form}
                             onBlur={onBlur}
                             onChangeText={onChange}
                             value={value}
-                            autoCapitalize="none"
-                            // secureTextEntry={true}
                         />
                     )}
-                    name="password"
+                    name="email"
                     defaultValue=""
                 />
-                <AntDesign
-                    name="eyeo"
-                    style={{ position: 'absolute', alignSelf: 'flex-end', marginRight: 10 }}
-                    size={25}
-                />
-            </View>
-            <Text style={styles.contactText}> Nous contacter ou Aida</Text>
-            <Button
-                color="#24cf5f"
-                style={styles.buttonStyle}
-                mode="contained"
-                onPress={handleSubmit(onSubmit)}
-            >
-                <Text style={styles.buttonText}>ME CONNECTER</Text>
-            </Button>
+                <View style={{ justifyContent: 'center' }}>
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                label="Password"
+                                mode="outlined"
+                                style={styles.formPassword}
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                                autoCapitalize="none"
+                                secureTextEntry={!showPassword}
+                            />
+                        )}
+                        name="password"
+                        defaultValue=""
+                    />
+                    <TouchableOpacity
+                        onPress={() => setShowPassword(!showPassword)}
+                        style={{
+                            position: 'absolute',
+                            alignSelf: 'flex-end',
+                            paddingRight: 15,
+                            paddingTop: 8,
+                        }}
+                    >
+                        <Text style={{ fontSize: 10, color: 'green' }}>Mot de passe oublie ?</Text>
+                        {showEye !== undefined && (
+                            <AntDesign
+                                name="eyeo"
+                                style={{ alignSelf: 'center', marginTop: 7 }}
+                                size={25}
+                            />
+                        )}
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.contactText}> Nous contacter ou Aida</Text>
+                <Button
+                    color="#24cf5f"
+                    style={styles.buttonStyle}
+                    mode="contained"
+                    onPress={handleSubmit(onSubmit)}
+                >
+                    <Text style={styles.buttonText}>ME CONNECTER</Text>
+                </Button>
 
-            <Text style={styles.footerText}>
-                Vous n'avez pas de compte?{''}
-                <Text style={styles.footerSpecialText}>Incrivez vous gratuitement</Text>
-            </Text>
-        </View>
+                <Text style={styles.footerText}>
+                    Vous n'avez pas de compte?{''}
+                    <Text style={styles.footerSpecialText}>Incrivez vous gratuitement</Text>
+                </Text>
+            </View>
+        </KeyboardAvoidingView>
     );
 };
 const styles = StyleSheet.create({
@@ -155,7 +183,6 @@ const styles = StyleSheet.create({
     footerSpecialText: {
         color: '#24cf5f',
         textDecorationLine: 'underline',
-        
     },
 });
 

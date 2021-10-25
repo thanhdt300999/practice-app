@@ -43,10 +43,9 @@ interface origin {
     name: string;
 }
 const SignupScreen: React.FC<Props> = ({}) => {
-
     const state = useSelector((state: RootState) => {
-        state.signup
-    })
+        state.signup;
+    });
     const dispatch = useDispatch();
 
     const [birthday, setBirthday] = React.useState<birthday>({
@@ -141,7 +140,13 @@ const SignupScreen: React.FC<Props> = ({}) => {
         }
     }, [signup]);
     return (
-        <LinearGradient colors={['#FF3359', '#FF7A2D', '#FF59F4', '#FF5978']} style={styles.body}>
+        <LinearGradient
+            colors={['#FF59F4', '#FF5978']}
+            style={styles.body}
+            useAngle={true}
+            angle={45}
+            angleCenter={{ x: 0, y: 1 }}
+        >
             {nextScreen === 'entity' && (
                 <EntityForm
                     submitEntity={setEntity}
