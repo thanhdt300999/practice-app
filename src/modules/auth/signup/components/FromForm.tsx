@@ -34,13 +34,12 @@ const FromForm = ({ setRender, submitFrom }) => {
             behavior={Platform.OS === 'ios' ? 'padding' : null}
             style={styles.container}
         >
-            <ScrollView>
                 <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
                     <View style={{ height: 550, alignSelf: 'stretch' }}>
                         <ButtonBack onPress={() => setRender('origin')} />
                         <View style={styles.header}>
                             <View style={styles.iconStyle}>
-                                <Icon name="location-pin" size={40} color="#900" />
+                                <Icon name="location-pin" size={40} color="#fff" />
                             </View>
                             <Text style={styles.textStyle}>Ou habitez-vous ?</Text>
                         </View>
@@ -79,7 +78,6 @@ const FromForm = ({ setRender, submitFrom }) => {
                     </View>
                 </TouchableWithoutFeedback>
                 <ButtonNext onPress={handleSubmit(onSubmit)} disable={!isValid} />
-            </ScrollView>
         </KeyboardAvoidingView>
     );
 };
@@ -104,6 +102,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingVertical: 10
     },
     textCheckBox: {
         fontSize: 20,
@@ -118,14 +119,15 @@ const styles = StyleSheet.create({
         height: 300,
     },
     iconStyle: {
-        height: 90,
-        width: 90,
+        height: 75,
+        width: 75,
         borderRadius: 70,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#ffffff',
         borderWidth: 2,
+        marginBottom: 40
     },
     textInput: {
         backgroundColor: 'transparent',

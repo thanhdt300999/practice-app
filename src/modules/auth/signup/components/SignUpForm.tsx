@@ -198,6 +198,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingVertical: 10
     },
     textCheckBox: {
         fontSize: 20,
@@ -209,8 +212,8 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
     },
     iconStyle: {
-        height: 90,
-        width: 90,
+        height: 75,
+        width: 75,
         borderRadius: 70,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         justifyContent: 'center',

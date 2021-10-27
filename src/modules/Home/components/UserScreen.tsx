@@ -13,15 +13,15 @@ import {
 import { Dimensions } from 'react-native';
 import Text from '../../../../assets/AppText';
 import { useForm, Controller } from 'react-hook-form';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Button } from 'react-native-paper';
 
 interface Props {
-    navigation;
 }
 
-const UserScreen: React.FC<Props> = ({ navigation }) => {
+const UserScreen: React.FC<Props> = ({ }) => {
+    const navigation = useNavigation()
     const onPress = async () => {
         try {
             await AsyncStorage.removeItem('token');
@@ -45,4 +45,4 @@ const UserScreen: React.FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({});
 
-export default withNavigation(UserScreen);
+export default UserScreen;

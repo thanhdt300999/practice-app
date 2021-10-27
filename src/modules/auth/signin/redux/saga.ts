@@ -1,5 +1,5 @@
 import { call, put, select } from 'redux-saga/effects';
-import authService from './service';
+import authService from '../../../../redux/service/signin.service';
 import AsyncStorage from '@react-native-community/async-storage';
 import actions from './actions';
 import NavigationService from '../../../../../NavigationService';

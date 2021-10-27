@@ -1,0 +1,14 @@
+com/mektoube/ReactNativeFlipper.java
+ com.mektoube.ReactNativeFlipper
+ com.mektoube.ReactNativeFlipper$1
+ com.mektoube.ReactNativeFlipper$2
+ com.mektoube.ReactNativeFlipper$2$1
+com/mektoube/MainApplication.java
+ com.mektoube.MainApplication
+ com.mektoube.MainApplication$1
+com/mektoube/MainActivity.java
+ com.mektoube.MainActivity
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList
+com/mektoube/BuildConfig.java
+ com.mektoube.BuildConfig

@@ -5,17 +5,17 @@ import { RadioButton } from 'react-native-paper';
 import ButtonNext from './ButtonNext';
 import { useForm, Controller } from 'react-hook-form';
 import ButtonBack from './ButtonBack';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { SafeAreaView } from 'react-native-safe-area-context';
 interface Props {
     setRender: any;
     submitEntity;
-    navigation;
 }
 
-const EntityForm: React.FC<Props> = ({ submitEntity, setRender, navigation }) => {
+const EntityForm: React.FC<Props> = ({ submitEntity, setRender }) => {
     const [checked, setChecked] = React.useState('unchecked');
+    const navigation = useNavigation();
     const {
         control,
         handleSubmit,
@@ -32,7 +32,7 @@ const EntityForm: React.FC<Props> = ({ submitEntity, setRender, navigation }) =>
                 <ButtonBack onPress={() => navigation.navigate('Signin')} />
                 <View style={styles.header}>
                     <View style={styles.iconStyle}>
-                        <Icon name="intersex" size={40} color="#900" />
+                        <Icon name="intersex" size={30} color="#fff" />
                     </View>
                     <Text style={styles.textStyle}>Vous etes</Text>
                 </View>
@@ -66,14 +66,15 @@ const EntityForm: React.FC<Props> = ({ submitEntity, setRender, navigation }) =>
 
 const styles = StyleSheet.create({
     iconStyle: {
-        height: 90,
-        width: 90,
+        height: 75,
+        width: 75,
         borderRadius: 70,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#ffffff',
         borderWidth: 2,
+        marginBottom: 40
     },
     header: {
         alignItems: 'center',
@@ -89,6 +90,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingVertical: 10
     },
     textCheckBox: {
         fontSize: 20,
@@ -101,4 +105,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default withNavigation(EntityForm);
+export default EntityForm;

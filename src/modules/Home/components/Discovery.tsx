@@ -15,21 +15,21 @@ import {
 import { Dimensions } from 'react-native';
 import Text from '../../../../assets/AppText';
 import { useForm, Controller } from 'react-hook-form';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/Entypo';
-import { RootState } from '../../../config-redux/rootReducer';
+import { RootState } from '../../../redux/config-redux/rootReducer';
 import { MaterialIcons, Entypo, FontAwesome } from 'react-native-vector-icons';
 import action from '../redux/action';
-import { LinearGradient } from 'expo-linear-gradient';
-import Constants from 'expo-constants';
+import LinearGradient from 'react-native-linear-gradient';
 
 const HEADER_MAX_HEIGHT = 200;
 const HEADER_MIN_HEIGHT = 60;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 const width: number = Dimensions.get('window').width; //full width
-const statusBarHeight = Constants.statusBarHeight;
+const statusBarHeight = 10
+const MARGIN = (width - 312) /4
 interface Props {}
 
 const Item = ({ title, url, age, location }) => (
@@ -62,7 +62,7 @@ const Item = ({ title, url, age, location }) => (
 const Discovery: React.FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state.home);
-
+    const navigation = useNavigation();
     const scrollY: any = new Animated.Value(0);
     const translateY: any = scrollY.interpolate({
         inputRange: [230, 281],
@@ -111,11 +111,6 @@ const Discovery: React.FC<Props> = ({}) => {
             </View>
         </View>
     );
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
     const getItemLayout = (data, index) => ({
         length: 70,
         offset: 70 * index,
@@ -125,19 +120,15 @@ const Discovery: React.FC<Props> = ({}) => {
         dispatch(action.getUsersRequest());
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
         LogBox.ignoreLogs(['fontFamily']);
-        console.log(state.listUsers)
     }, []);
     const onRefresh = () => {
         dispatch(action.getUsersRequest());
     };
-
-    const flatListRef = React.useRef();
     const onReset = () => {
         dispatch(action.getUsersRequest());
     };
     return (
         <>
-        {console.log(state.listUsers)}
             <SafeAreaView style={{ flex: 1 }}>
                 <View
                     style={{
@@ -231,7 +222,7 @@ const styles = StyleSheet.create({
     },
     userBox: {
         marginTop: 25,
-        margin: 20,
+        margin: MARGIN,
         borderRadius: 10,
         paddingHorizontal: 8,
         paddingVertical: 15,
@@ -300,4 +291,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default withNavigation(Discovery);
+export default Discovery;

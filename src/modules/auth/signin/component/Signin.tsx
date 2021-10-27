@@ -12,17 +12,15 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import Text from '../../../../../assets/AppText';
-import { withNavigation } from 'react-navigation';
-import AsyncStorage from '@react-native-community/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import AuthForm from './AuthForm';
 import { useSelector } from 'react-redux';
 export interface Props {
-    navigation?: any;
 }
 
-const SigninScreen: React.FC<Props> = ({ navigation }) => {
+const SigninScreen: React.FC<Props> = ({ }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-
+    const navigation = useNavigation();
     const state = useSelector((state: any) => state.signin);
     const handlePress = () => {
         navigation.navigate('Signup');
@@ -59,13 +57,16 @@ const SigninScreen: React.FC<Props> = ({ navigation }) => {
                     style={styles.tinyLogo}
                     source={require('../../../../../image/logo-large.png')}
                 />
+                <Text style={styles.textBanner}>
+                    L'application numero 1 de la rencontre Musulmane et Maghrebine
+                </Text>
                 <View style={styles.footer}>
                     <TouchableOpacity
                         onPress={() => {
                             setModalVisible(true);
                         }}
                     >
-                        <Text style={styles.text}>SE CONNECTER</Text>
+                        <Text style={styles.textSignin}>SE CONNECTER</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={handlePress}>
                         <Text style={{ color: '#ffffff' }}>INSCRIPTION GRATUITE</Text>
@@ -85,27 +86,31 @@ const styles = StyleSheet.create({
     },
     tinyLogo: {
         alignSelf: 'center',
-        flex: 1,
         width: 300,
-        height: null,
         resizeMode: 'contain',
+        marginTop: 300
     },
     image: {
         height: '100%',
         width: '100%',
     },
-    text: {
+    textBanner: {
+        color: '#ffffff',
+        fontSize: 20,
+        textAlign: 'center',
+    },
+    textSignin: {
         color: 'white',
         textDecorationLine: 'underline',
         fontSize: 16,
-        fontWeight: 'bold',
     },
     footer: {
-        marginBottom: 250,
         flexDirection: 'row',
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'absolute',
+        bottom: 35,
     },
     button: {
         marginLeft: 30,
@@ -156,4 +161,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default withNavigation(SigninScreen);
+export default SigninScreen;

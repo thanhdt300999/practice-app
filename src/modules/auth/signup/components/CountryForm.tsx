@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ButtonNext from './ButtonNext';
 import actions from '../redux/action';
 import ButtonBack from './ButtonBack';
-import { RootState } from '../../../../config-redux/rootReducer';
+import { RootState } from '../../../../redux/config-redux/rootReducer';
 interface Props {
     submitCountry?: any;
     setRender?: any;
@@ -48,7 +48,7 @@ const CountryForm: React.FC<Props> = ({ submitCountry, setRender }) => {
                 <ButtonBack onPress={() => setRender('from')} />
                 <View style={styles.header}>
                     <View style={styles.iconStyle}>
-                        <Icon name="location-arrow" size={40} color="#900" />
+                        <Icon name="location-arrow" size={40} color="#fff" />
                     </View>
                     <Text style={styles.textStyle}>Quel est votre pays ?</Text>
                 </View>
@@ -89,14 +89,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     iconStyle: {
-        height: 90,
-        width: 90,
+        height: 75,
+        width: 75,
         borderRadius: 70,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#ffffff',
         borderWidth: 2,
+        marginBottom: 40
     },
     textStyle: {
         color: '#FFFFFF',
@@ -107,6 +108,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingVertical: 10
     },
     textCheckBox: {
         fontSize: 20,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { LinearGradient } from 'expo-linear-gradient';
+import LinearGradient from 'expo-linear-gradient';
 import Text from '../../../../../assets/AppText';
 import EntityForm from './EntityForm';
 import BirthdayForm from './BirthdayForm';
@@ -15,7 +15,7 @@ import CityForm from './CityForm';
 import SignUpForm from './SignUpForm';
 import Discovery from '../../../Home/components/Discovery';
 import actions from '../redux/action';
-import { RootState } from '../../../../config-redux/rootReducer';
+import { RootState } from '../../../../redux/config-redux/rootReducer';
 
 interface Props {}
 interface birthday {

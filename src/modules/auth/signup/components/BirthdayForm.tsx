@@ -36,16 +36,13 @@ const BirthdayForm: React.FC<Props> = ({ submitBirthday, setRender }) => {
     const monthRegex = new RegExp('^([1-9]|1[0-2])$');
     const yearRegex = new RegExp('^\\d{4}$');
     return (
-        <KeyboardAvoidingView
-            behavior={'padding'}
-            style={styles.container}
-        >
+        <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
             <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
                 <View style={{ height: 550, alignSelf: 'stretch' }}>
                     <ButtonBack onPress={() => setRender('entity')} />
                     <View style={styles.header}>
                         <View style={styles.iconStyle}>
-                            <Icon name="birthday-cake" size={40} color="#900" />
+                            <Icon name="birthday-cake" size={40} color="#fff" />
                         </View>
                         <Text style={styles.textStyle}>Quelle est votre date de naissance ?</Text>
                     </View>
@@ -59,7 +56,7 @@ const BirthdayForm: React.FC<Props> = ({ submitBirthday, setRender }) => {
                                     onChangeText={onChange}
                                     value={value}
                                     placeholder="DD"
-                                    keyboardType='number-pad'
+                                    keyboardType="number-pad"
                                 />
                             )}
                             rules={{
@@ -75,7 +72,7 @@ const BirthdayForm: React.FC<Props> = ({ submitBirthday, setRender }) => {
                             name="date"
                             defaultValue=""
                         />
-                        {errors.firstName && <Text>Date is required.</Text>}
+                        <Text style={{ fontSize: 40, color: '#ccc' }}>/</Text>
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -85,7 +82,7 @@ const BirthdayForm: React.FC<Props> = ({ submitBirthday, setRender }) => {
                                     onChangeText={onChange}
                                     value={value}
                                     placeholder="MM"
-                                    keyboardType='number-pad'
+                                    keyboardType="number-pad"
                                 />
                             )}
                             rules={{
@@ -101,7 +98,7 @@ const BirthdayForm: React.FC<Props> = ({ submitBirthday, setRender }) => {
                             name="month"
                             defaultValue=""
                         />
-                        {errors.firstName && <Text>Date is required.</Text>}
+                        <Text style={{ fontSize: 40 ,color: '#ccc'}}>/</Text>
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -111,7 +108,7 @@ const BirthdayForm: React.FC<Props> = ({ submitBirthday, setRender }) => {
                                     onChangeText={onChange}
                                     value={value}
                                     placeholder="YY"
-                                    keyboardType='number-pad'
+                                    keyboardType="number-pad"
                                 />
                             )}
                             rules={{
@@ -138,6 +135,7 @@ const BirthdayForm: React.FC<Props> = ({ submitBirthday, setRender }) => {
 const styles = StyleSheet.create({
     header: {
         alignItems: 'center',
+        marginBottom: 30
     },
     imageStyle: {
         width: 75,
@@ -145,7 +143,7 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         color: '#FFFFFF',
-        fontSize: 25,
+        fontSize: 20,
     },
     inputStyle: {
         alignSelf: 'center',
@@ -166,14 +164,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     iconStyle: {
-        height: 90,
-        width: 90,
+        height: 75,
+        width: 75,
         borderRadius: 70,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#ffffff',
         borderWidth: 2,
+        marginBottom: 40
     },
 });
 

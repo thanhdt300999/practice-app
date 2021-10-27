@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
 } from 'react-native';
@@ -25,3 +25,16 @@ export default class AppText extends Component {
     </Text>
   )}
 }
+
+// export default AppText = (props) => {
+//   return (
+//     <Text style={[styles.text, props.style]}></Text>
+//   )
+// }
+
+// const styles = StyleSheet.create({
+//   text: {
+//     fontFamily: 'Avenir Next Condensed'
+//   }
+
+// })

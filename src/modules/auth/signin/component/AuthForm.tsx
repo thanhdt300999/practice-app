@@ -13,7 +13,7 @@ import { useForm, Controller } from 'react-hook-form';
 import api from '../../../../api/api';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from '../redux/actions';
-import { RootState } from '../../../../config-redux/rootReducer';
+import { RootState } from '../../../../redux/config-redux/rootReducer';
 import { AntDesign } from 'react-native-vector-icons';
 const fullWidth = Dimensions.get('window').width - 60; //full width
 type Props = {

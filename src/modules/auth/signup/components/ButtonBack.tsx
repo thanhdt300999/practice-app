@@ -2,16 +2,16 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Text from '../../../../../assets/AppText';
 import { IconButton } from 'react-native-paper';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 interface Props {
     onPress?: any;
     disable?: boolean;
     style?: Object;
     signup?: boolean;
-    navigation?: any;
     signin?: boolean;
 }
-const ButtonBack: React.FC<Props> = ({ onPress, disable, style, signup, navigation }) => {
+const ButtonBack: React.FC<Props> = ({ onPress, disable, style, signup }) => {
+    const navigation = useNavigation();
     return (
         <View style={styles.header}>
             <IconButton
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default withNavigation(ButtonBack);
+export default ButtonBack;

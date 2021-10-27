@@ -34,7 +34,7 @@ const OriginForm = ({ setRender, submitOrigin }) => {
                 <ButtonBack onPress={() => setRender('birthday')} />
                 <View style={styles.header}>
                     <View style={styles.iconStyle}>
-                        <Icon name="folder" size={40} color="#900" />
+                        <Icon name="folder" size={40} color="#fff" />
                     </View>
                     <Text style={styles.textStyle}>Quelle est votre origine ?</Text>
                 </View>
@@ -83,7 +83,10 @@ const styles = StyleSheet.create({
     styleCheckbox: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: 10,
+        marginHorizontal: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingVertical: 10
     },
     textCheckBox: {
         fontSize: 20,
@@ -95,14 +98,15 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
     },
     iconStyle: {
-        height: 90,
-        width: 90,
+        height: 75,
+        width: 75,
         borderRadius: 70,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#ffffff',
         borderWidth: 2,
+        marginBottom: 40
     },
 });
 
