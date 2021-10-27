@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@eact-native-async-storage/async-storage';
 import Signin from './signin/component/Signin';
 import Discovery from '../Home/components/Discovery';
 import { useSelector, useDispatch } from 'react-redux';

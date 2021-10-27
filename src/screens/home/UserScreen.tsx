@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, SafeAreaView, Text} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@eact-native-async-storage/async-storage';
 import {Button} from 'react-native-paper';
 
 interface Props {}

@@ -14,7 +14,7 @@ import { Dimensions } from 'react-native';
 import Text from '../../../../assets/AppText';
 import { useForm, Controller } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@eact-native-async-storage/async-storage';
 import { Button } from 'react-native-paper';
 
 interface Props {

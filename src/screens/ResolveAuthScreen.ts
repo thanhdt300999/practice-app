@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@eact-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 const ResolveAuthScreen = () => {
     const navigation = useNavigation()

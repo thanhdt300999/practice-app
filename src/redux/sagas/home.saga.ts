@@ -1,6 +1,6 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import homeServices from '../service/home.service';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@eact-native-async-storage/async-storage';
 import actions from '../actions/home.actions';
 
 function* saveTokenToStore(data) {

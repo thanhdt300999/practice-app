@@ -131,7 +131,6 @@
     <orderEntry type="library" name="Gradle: org.webkit:android-jsc:r250230@aar" level="project" />
     <orderEntry type="module" module-name="MyApp.react-native-screens" />
     <orderEntry type="module" module-name="MyApp.react-native-async-storage_async-storage" />
-    <orderEntry type="module" module-name="MyApp.react-native-community_async-storage" />
     <orderEntry type="module" module-name="MyApp.react-native-linear-gradient" />
     <orderEntry type="module" module-name="MyApp.react-native-safe-area-context" />
     <orderEntry type="module" module-name="MyApp.react-native-vector-icons" />
