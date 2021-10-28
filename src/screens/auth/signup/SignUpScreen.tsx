@@ -26,13 +26,12 @@ import CheckBox from '../../../components/button/CheckBox';
 
 const width = Dimensions.get('window').width; //full width
 
-interface Props {
-}
+interface Props {}
 interface region {
     id: string;
     name: string;
 }
-const SignupScreen: React.FC<Props> = ({ }) => {
+const SignupScreen: React.FC<Props> = ({}) => {
     const [first, setCheckFrist] = React.useState(false);
     const [second, setCheckSecond] = React.useState(false);
     const dispatch = useDispatch();
@@ -47,15 +46,16 @@ const SignupScreen: React.FC<Props> = ({ }) => {
 
     const onSubmit = (data) => {
         const formData = new FormData();
-        formData.append('firstname', data.fistname);
+        formData.append('firstname', data.firstname);
         formData.append('email', data.email);
         formData.append('password', data.password);
-        formData.append('affiliate', "1");
-        formData.append('mailing', "1");
+        formData.append('affiliate', 1);
+        formData.append('mailing', 1);
         formData.append('birthday', state.dataPostLogin.birthday);
-        formData.append('gender', "1");
+        formData.append('gender', state.dataPostLogin.gender);
         formData.append('origin', state.dataPostLogin.origin);
         formData.append('geoname_id', state.dataPostLogin.city);
+        console.log(formData);
         dispatch(actions.postSignupRequest(formData));
     };
     const emailRegex = new RegExp('^w+@[a-zA-Z_]+?.[a-zA-Z]{2,}$');
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         paddingTop: 10,
         position: 'absolute',
-        bottom: 40,
+        bottom: 0,
     },
 });
 

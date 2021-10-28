@@ -36,7 +36,7 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
         return value < 10 ? '0' + value.toString() : value.toString();
     };
     const dateRegex = new RegExp('^([1-9]|[12][0-9]|3[01])$');
-    const monthRegex = new RegExp('^([1-9]|1[0-2])$');
+    const monthRegex = new RegExp('^(0?[1-9]|1[012])$');
     const yearRegex = new RegExp('^\\d{4}$');
     const converBirthday = (birthday) => {
         return `${birthday.year}-${convertDateandMonth(birthday.month)}-${convertDateandMonth(
@@ -45,17 +45,17 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
     };
 
     return (
-        <LinearGradient
-            colors={['#FF59F4', '#FF5978']}
+        <KeyboardAvoidingView
             style={{ flex: 1 }}
-            useAngle={true}
-            angle={45}
-            angleCenter={{ x: 0, y: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
         >
-            <KeyboardAvoidingView
+            <LinearGradient
+                colors={['#FF59F4', '#FF5978']}
                 style={{ flex: 1 }}
-                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
+                useAngle={true}
+                angle={45}
+                angleCenter={{ x: 0, y: 1 }}
             >
                 <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
                     <View style={{ height: 550, alignSelf: 'stretch' }}>
@@ -79,6 +79,7 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                                         value={value}
                                         placeholder="DD"
                                         keyboardType="number-pad"
+                                        autoCompleteType={false}
                                     />
                                 )}
                                 rules={{
@@ -105,6 +106,7 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                                         value={value}
                                         placeholder="MM"
                                         keyboardType="number-pad"
+                                        autoCompleteType={false}
                                     />
                                 )}
                                 rules={{
@@ -131,6 +133,7 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                                         value={value}
                                         placeholder="YY"
                                         keyboardType="number-pad"
+                                        autoCompleteType={false}
                                     />
                                 )}
                                 rules={{
@@ -150,8 +153,8 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                     </View>
                 </TouchableWithoutFeedback>
                 <ButtonNext onPress={handleSubmit(onSubmit)} disable={!isValid} />
-            </KeyboardAvoidingView>
-        </LinearGradient>
+            </LinearGradient>
+        </KeyboardAvoidingView>
     );
 };
 

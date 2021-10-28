@@ -7,6 +7,7 @@ import {
     View,
     Dimensions,
     Keyboard,
+    TouchableWithoutFeedback,
 } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import Text from '../../../../assets/AppText';
@@ -56,21 +57,8 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
     React.useEffect(() => {
         setError('');
     }, []);
-    // React.useEffect(() => {
-    //     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-    //         setKeyboardVisible(true);
-    //     });
-    //     const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-    //         setKeyboardVisible(false);
-    //     });
-
-    //     return () => {
-    //         keyboardDidHideListener.remove();
-    //         keyboardDidShowListener.remove();
-    //     };
-    // }, []);
     return (
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : null}>
+        <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
             <View>
                 <Text style={styles.loginText}> Connextion</Text>
                 {error !== '' && (
@@ -95,6 +83,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                     }}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
+                            autoCompleteType={false}
                             label="Email"
                             mode="outlined"
                             style={styles.form}
@@ -114,6 +103,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
                             <TextInput
+                                autoCompleteType={false}
                                 label="Password"
                                 mode="outlined"
                                 style={styles.formPassword}
@@ -140,7 +130,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                         {showEye !== undefined && (
                             <AntDesign
                                 name="eyeo"
-                                style={{ alignSelf: 'center', marginTop: 7 }}
+                                style={{ marginTop: 7, alignSelf: 'flex-end' }}
                                 size={25}
                             />
                         )}
@@ -161,7 +151,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                     <Text style={styles.footerSpecialText}>Incrivez vous gratuitement</Text>
                 </Text>
             </View>
-        </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     );
 };
 const styles = StyleSheet.create({

@@ -29,7 +29,6 @@ const CityScreen: React.FC<Props> = ({}) => {
         dispatch(actions.setCity(city.id));
     };
     React.useEffect(() => {
-        console.log(state.dataPostLogin);
         if (state.dataPostLogin.zipcode) {
             let payload = {
                 countryId: state.dataPostLogin.country.id,
@@ -43,6 +42,13 @@ const CityScreen: React.FC<Props> = ({}) => {
                 regionId: state.dataPostLogin.region,
             };
             dispatch(actions.getCitiesByRegionRequest(payload));
+        }
+        if (state.dataPostLogin.geolocation) {
+            let payload = {
+                latitude: state.dataPostLogin.geolocation.latitude,
+                longitude: state.dataPostLogin.geolocation.longitude,
+            };
+            dispatch(actions.getCitiesByGeoRequest(payload));
         }
     }, []);
     return (

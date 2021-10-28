@@ -7,7 +7,7 @@ function CheckBox({ label, status, onPress }) {
     return (
         <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
-                <Checkbox status={status} />
+                <Checkbox status={status} uncheckedColor='#ffffff' color='#ffffff'/>
                 <Text style={styles.textStyle}>{label}</Text>
             </View>
         </TouchableOpacity>
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         flexWrap: 'wrap',
+        color: '#ffffff',
         flex: 1,
     },
 });

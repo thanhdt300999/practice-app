@@ -1,5 +1,5 @@
 import axios from 'axios';
-import AsyncStorage from '@eact-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const api = axios.create({
     baseURL: 'https://api.ltservices2.ovh/v4',
 });

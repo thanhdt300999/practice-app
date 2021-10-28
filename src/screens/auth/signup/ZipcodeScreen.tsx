@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
-import { Octicons } from 'react-native-vector-icons';
+import Octicons from 'react-native-vector-icons/Octicons';
 import { useForm, Controller } from 'react-hook-form';
 import actions from '../../../redux/actions/signup.actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';

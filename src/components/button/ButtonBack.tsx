@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     },
     header: {
         alignSelf: 'stretch',
-        marginTop: 40,
+        marginTop: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },

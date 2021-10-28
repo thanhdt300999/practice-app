@@ -1,6 +1,7 @@
 import { fork, all, takeLatest, takeEvery, take } from 'redux-saga/effects';
 import loginSaga from '../sagas/signin.saga';
 import {
+    watchGetCitiesByGeo,
     watchGetCitiesByRegion,
     watchGetCitiesByZipcode,
     watchGetCountries,
@@ -15,8 +16,10 @@ const sagas = function* () {
         watchGetRegions(),
         watchGetCitiesByRegion(),
         watchGetCitiesByZipcode(),
+        watchGetCitiesByGeo(),
         watchGetUsers(),
         watchPostSignup(),
+
     ]);
 };
 export default sagas;

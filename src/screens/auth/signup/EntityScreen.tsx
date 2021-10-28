@@ -33,7 +33,7 @@ const EntityScreen: React.FC<Props> = ({}) => {
             angle={45}
             angleCenter={{ x: 0, y: 1 }}
         >
-            <View style={{ height: 550, alignSelf: 'stretch' }}>
+            <View>
                 <ButtonBack onPress={() => navigation.navigate('Signin')} />
                 <View style={styles.header}>
                     <View style={styles.iconStyle}>

@@ -35,43 +35,55 @@ const getRegionsFailure = (payload) => ({
     payload,
 });
 
+
+//region
 const getCitiesByRegionRequest = (payload) => {
     return {
         type: 'GET_CITIES_BY_REGION_REQUEST',
         payload: payload,
     };
 };
-
 const getCitiesByRegionSuccess = (payload) => {
     return {
         type: 'GET_CITIES_BY_REGION_SUCCESS',
         payload,
     };
 };
-
 const getCitiesByRegionFailure = (payload) => ({
     type: 'GET_CITIES_BY_REGION_FAILURE',
     payload,
 });
 
+//zipcode
 const getCitiesByZipcodeRequest = (payload) => {
     return {
         type: 'GET_CITIES_BY_ZIPCODE_REQUEST',
         payload: payload,
     };
 };
-
-const getCitiesByZipcodeSuccess = (payload) => {
-    return {
-        type: 'GET_CITIES_BY_ZIPCODE_SUCCESS',
-        payload,
-    };
-};
-
+const getCitiesByZipcodeSuccess = (payload) => ({
+    type: 'GET_CITIES_BY_ZIPCODE_SUCCESS',
+    payload,
+});
 const getCitiesByZipcodeFailure = (payload) => ({
     type: 'GET_CITIES_BY_ZIPCODE_FAILURE',
     payload,
 });
+
+//geo
+const getCitiesByGeoRequest = (payload) => ({
+    type: 'GET_CITIES_BY_GEO_REQUEST',
+    payload,
+});
+const getCitiesByGeoSuccess = (payload) => ({
+    type: 'GET_CITIES_BY_GEO_SUCCESS',
+    payload,
+});
+const getCitiesByGeoFailure = (payload) => ({
+    type: 'GET_CITIES_BY_GEO_FAILURE',
+    payload,
+});
+
 //signup
 const postSignupRequest = (payload) => ({
     type: 'POST_SIGN_UP_REQUEST',
@@ -115,6 +127,10 @@ const setCity = (payload) => ({
     type: 'SET_CITY',
     payload: payload,
 });
+const setGeoLocation = (payload) => ({
+    type: 'SET_GEOLOCATION',
+    payload: payload,
+});
 export default {
     getCountries,
     getCountriesSucess,
@@ -128,6 +144,9 @@ export default {
     getCitiesByZipcodeRequest,
     getCitiesByZipcodeSuccess,
     getCitiesByZipcodeFailure,
+    getCitiesByGeoRequest,
+    getCitiesByGeoSuccess,
+    getCitiesByGeoFailure,
     postSignupRequest,
     postSignupSuccess,
     postSignupFailure,
@@ -137,5 +156,7 @@ export default {
     setCountry,
     setZipcode,
     setRegion,
-    setCity
+    setCity,
+    setGeoLocation,
+
 };

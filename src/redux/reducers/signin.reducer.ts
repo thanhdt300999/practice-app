@@ -1,10 +1,9 @@
-
 const initState = {
-    accessToken: '',
+    accessToken: null,
     isLoading: false,
     error: '',
     auth: {},
-    isLogged: false
+    isLogged: false,
 };
 const signinReducer = (state = initState, { type, payload }) => {
     switch (type) {
@@ -17,7 +16,7 @@ const signinReducer = (state = initState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: false,
-                accessToken: payload.access_token,
+                accessToken: payload.token,
                 isLogged: true,
                 error: '',
             };
@@ -26,6 +25,18 @@ const signinReducer = (state = initState, { type, payload }) => {
                 ...state,
                 isLoading: false,
                 error: payload,
+            };
+        case 'SET_TOKEN':
+            return {
+                ...state,
+                isLoading: false,
+                accessToken: payload,
+            };
+        case 'REMOVE_TOKEN':
+            return {
+                ...state,
+                isLoading: false,
+                accessToken: null,
             };
         default:
             return state;

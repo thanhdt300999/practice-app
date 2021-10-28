@@ -1,20 +1,8 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import homeServices from '../service/home.service';
-import AsyncStorage from '@eact-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import actions from '../actions/home.actions';
 
-function* saveTokenToStore(data) {
-    yield AsyncStorage.multiSet(
-        [
-            ['AccessToken', data.token],
-            ['puk', data.puk],
-            ['user', data.user],
-        ],
-        (err) => {
-            console.log('ERROR saveTokenToStore: ', err);
-        }
-    );
-}
 //country
 export function* watchGetUsers() {
     yield takeEvery('GET_USERS_REQUEST', handleGetUsers);

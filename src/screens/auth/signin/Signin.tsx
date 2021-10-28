@@ -4,15 +4,12 @@ import {
     StyleSheet,
     ImageBackground,
     Image,
-    TouchableOpacityBase,
     TouchableOpacity,
-    Pressable,
-    Alert,
     Modal,
-    Platform,
-    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Keyboard,
 } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, IconButton } from 'react-native-paper';
 import Text from '../../../../assets/AppText';
 import { useNavigation } from '@react-navigation/native';
 import AuthForm from './AuthForm';
@@ -24,31 +21,31 @@ const SigninScreen: React.FC<Props> = ({}) => {
     const state = useSelector((state: any) => state.signin);
     const navigation = useNavigation();
     const handleNavigate = () => {
-        navigation.navigate('SignupFlow', {screen: 'Entity'});
+        navigation.navigate('SignupFlow', { screen: 'Entity' });
     };
     return (
-        <View style={styles.container}>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                }}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Button
-                            style={styles.buttonClose}
-                            onPress={() => setModalVisible(!modalVisible)}
-                        >
-                            X
-                        </Button>
-                        <AuthForm modalVisible={modalVisible} />
+        <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+            <View style={styles.container}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Button
+                                style={styles.buttonClose}
+                                onPress={() => setModalVisible(!modalVisible)}
+                            >
+                                X
+                            </Button>
+                            <AuthForm modalVisible={modalVisible} />
+                        </View>
                     </View>
-                </View>
-            </Modal>
-            {/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}> */}
+                </Modal>
                 <ImageBackground
                     source={require('../../../../image/Capture.png')}
                     style={styles.image}
@@ -63,7 +60,6 @@ const SigninScreen: React.FC<Props> = ({}) => {
                     <View style={styles.footer}>
                         <TouchableOpacity
                             onPress={() => {
-                                console.log('abc');
                                 setModalVisible(true);
                             }}
                         >
@@ -74,9 +70,23 @@ const SigninScreen: React.FC<Props> = ({}) => {
                             <Text style={{ color: '#ffffff' }}>EN 1 MIN</Text>
                         </TouchableOpacity>
                     </View>
+                    {modalVisible && (
+                        <IconButton
+                            icon="close"
+                            color="#ffffff"
+                            size={20}
+                            style={{
+                                position: 'absolute',
+                                alignSelf: 'flex-end',
+                                right: 10,
+                                top: 10,
+                            }}
+                            onPress={() => console.log('Pressed')}
+                        />
+                    )}
                 </ImageBackground>
-            {/* </KeyboardAvoidingView> */}
-        </View>
+            </View>
+        </TouchableWithoutFeedback>
     );
 };
 

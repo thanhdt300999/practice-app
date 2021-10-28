@@ -1,14 +1,14 @@
-#Wed Oct 27 22:39:27 ICT 2021
+#Thu Oct 28 14:18:15 ICT 2021
 path.4=2/classes.dex
 path.3=14/classes.dex
 path.2=0/classes.dex
 path.1=0/classes.dex
 path.0=classes.dex
-base.4=/home/thanhdt/Desktop/practice-app/android/app/build/intermediates/dex/debug/mergeProjectDexDebug/2/classes.dex
-base.3=/home/thanhdt/Desktop/practice-app/android/app/build/intermediates/dex/debug/mergeProjectDexDebug/14/classes.dex
-base.2=/home/thanhdt/Desktop/practice-app/android/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.1=/home/thanhdt/Desktop/practice-app/android/app/build/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
-base.0=/home/thanhdt/Desktop/practice-app/android/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
+base.4=/home/nhan/practice-app/android/app/build/intermediates/dex/debug/mergeProjectDexDebug/2/classes.dex
+base.3=/home/nhan/practice-app/android/app/build/intermediates/dex/debug/mergeProjectDexDebug/14/classes.dex
+base.2=/home/nhan/practice-app/android/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
+base.1=/home/nhan/practice-app/android/app/build/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
+base.0=/home/nhan/practice-app/android/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 renamed.3=classes4.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex

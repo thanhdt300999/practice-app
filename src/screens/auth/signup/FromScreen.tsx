@@ -8,15 +8,16 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
 } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
+import { useDispatch, useSelector } from 'react-redux';
 import Text from '../../../../assets/AppText';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useForm, Controller } from 'react-hook-form';
-import actions from '../../../redux/actions/signup.actions';
-import { RootState } from '../../../redux/config-redux/rootReducer';
+import Geolocation from '@react-native-community/geolocation';
+import actions from '../../../redux/actions/signup.actions'
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
-import { TextInput } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
 
 interface Props {}
@@ -31,10 +32,20 @@ const FromScreen: React.FC<Props> = ({}) => {
         formState: { errors, isValid },
     } = useForm({ mode: 'onBlur' });
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     const onSubmit = (data) => {
         navigation.navigate('Country');
     };
-    const handleOnPress = () => {};
+    const handleOnPress = () => {
+        Geolocation.getCurrentPosition((info) => {
+            let data = {
+                latitude: info.coords.latitude,
+                longitude: info.coords.longitude,
+            };
+            dispatch(actions.setGeoLocation(data));
+            navigation.navigate('City')
+        });
+    };
     return (
         <LinearGradient
             colors={['#FF59F4', '#FF5978']}
@@ -84,9 +95,12 @@ const FromScreen: React.FC<Props> = ({}) => {
                                     marginTop: 10,
                                     alignSelf: 'flex-end',
                                     marginHorizontal: 20,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
                                 }}
                             >
-                                <Text>Geo location</Text>
+                                <Entypo name="location-pin" size={15} color="#fff" />
+                                <Text style={{ color: '#fff' }}>Geo location</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

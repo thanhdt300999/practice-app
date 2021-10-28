@@ -6,13 +6,7 @@ interface dataPostLogin {
     zipcode?: number;
     region?: number;
     city: number;
-    signup: {
-        firstname: string;
-        email: string;
-        password: string;
-        affiliate: number;
-        mailing: number;
-    };
+    geolocation?: object;
 }
 interface initState {
     isLoading: boolean;
@@ -29,13 +23,6 @@ const initState: initState = {
         origin: null,
         birthday: '',
         city: null,
-        signup: {
-            firstname: '',
-            email: '',
-            password: '',
-            affiliate: 0,
-            mailing: 0,
-        },
         country: {
             id: '',
             name: '',
@@ -135,6 +122,23 @@ const signupReducer = (state = initState, { type, payload }) => {
                 isLoading: false,
                 error: payload,
             };
+        case 'GET_CITIES_BY_GEO_REQUEST':
+            return {
+                ...state,
+                isLoading: true,
+            };
+        case 'GET_CITIES_BY_GEO_SUCCESS':
+            return {
+                ...state,
+                isLoading: false,
+                listCities: payload,
+            };
+        case 'GET_CITIES_BY_GEO_FAILURE':
+            return {
+                ...state,
+                isLoading: false,
+                error: payload,
+            };
         case 'SET_ENTITY':
             return {
                 ...state,
@@ -189,6 +193,14 @@ const signupReducer = (state = initState, { type, payload }) => {
                 dataPostLogin: {
                     ...state.dataPostLogin,
                     region: payload,
+                },
+            };
+        case 'SET_GEOLOCATION':
+            return {
+                ...state,
+                dataPostLogin: {
+                    ...state.dataPostLogin,
+                    geolocation: payload,
                 },
             };
         default:

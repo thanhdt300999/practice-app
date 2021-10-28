@@ -1,9 +1,9 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import signUpService from '../service/signup.service';
-import AsyncStorage from '@eact-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import actions from '../actions/signup.actions';
 import { saveTokenToStore } from '../sagas/signin.saga';
-import NavigationService from '../../../NavigationService';
+import signinAction from '../actions/signin.actions'
 //country
 export function* watchGetCountries() {
     yield takeEvery('GET_COUNTRIES_REQUEST', handleGetCountries);
@@ -66,6 +66,21 @@ export function* getCitiesByZipcode(data) {
     }
 }
 
+export function* watchGetCitiesByGeo() {
+    yield takeEvery('GET_CITIES_BY_GEO_REQUEST', handleGetCitiesByGeo);
+}
+export function* handleGetCitiesByGeo(action) {
+    yield call(getCitiesByGeo, action.payload);
+}
+export function* getCitiesByGeo(data) {
+    try {
+        let response = yield call(signUpService.getCitiesByGeo, data);
+        yield put(actions.getCitiesByGeoSuccess(response.listCities));
+    } catch (err) {
+        yield put(actions.getCitiesByGeoFailure(err));
+    }
+}
+
 export function* watchPostSignup() {
     yield takeEvery('POST_SIGN_UP_REQUEST', handlePostSignup);
 }
@@ -75,9 +90,9 @@ export function* handlePostSignup(action) {
 export function* postSignup(data) {
     try {
         let response = yield call(signUpService.postSignup, data);
-        yield call(saveTokenToStore, response)
-        yield put(actions.postSignupSuccess(response.uuid));
-        yield call(NavigationService.navigate, "Home")
+        yield call(saveTokenToStore, response);
+        yield put(actions.postSignupSuccess(response));
+        yield put(signinAction.setToken(response.token));
     } catch (err) {
         yield put(actions.postSignupFailure(err));
     }

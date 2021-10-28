@@ -17,8 +17,18 @@ const loginFailure = (payload) => ({
     payload,
 });
 
+const setToken = (payload) => ({
+    type: 'SET_TOKEN',
+    payload,
+});
+const removeToken = () => ({
+    type: 'REMOVE_TOKEN',
+});
+
 export default {
     actionLogin,
     loginSuccess,
     loginFailure,
+    setToken,
+    removeToken
 };

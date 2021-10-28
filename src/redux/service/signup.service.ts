@@ -56,15 +56,33 @@ function getCitiesByZipcode(data) {
         });
 }
 
-function postSignup(data) {
+function getCitiesByGeo(data) {
+    return api
+        .get(`/v4/atlas/location`, {
+            params: {
+                latitude: data.latitude,
+                longitude: data.longitude,
+                unit: 'DEG',
+            },
+        })
+        .then((response) => {
+            return {
+                listCities: response.data.CONTENT.cities,
+            };
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
 
+function postSignup(data) {
     return api2
         .post(`/pool/.json?new_key_signup=true`, data)
         .then((response) => {
             return {
-               puk: response.data.CONTENT.AUTH.puk,
-               token: response.data.CONTENT.AUTH.token,
-               uuid: response.data.CONTENT.AUTH.uuid
+                puk: response.data.CONTENT.AUTH.puk,
+                token: response.data.CONTENT.AUTH.token,
+                uuid: response.data.CONTENT.AUTH.uuid,
             };
         })
         .catch((err) => {
@@ -78,4 +96,5 @@ export default {
     getCitiesByRegion,
     getCitiesByZipcode,
     postSignup,
+    getCitiesByGeo,
 };
