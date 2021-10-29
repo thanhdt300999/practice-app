@@ -117,24 +117,29 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                         name="password"
                         defaultValue=""
                     />
-                    <TouchableOpacity
-                        onPress={() => setShowPassword(!showPassword)}
+                    <View
+                        
                         style={{
                             position: 'absolute',
                             alignSelf: 'flex-end',
                             paddingRight: 15,
                             paddingTop: 8,
+                            zIndex: 5
                         }}
                     >
                         <Text style={{ fontSize: 10, color: 'green' }}>Mot de passe oublie ?</Text>
                         {showEye !== undefined && (
+                            <TouchableOpacity
+                            onPress={() => setShowPassword(!showPassword)}
+                            >
                             <AntDesign
                                 name="eyeo"
                                 style={{ marginTop: 7, alignSelf: 'flex-end' }}
                                 size={25}
                             />
+                            </TouchableOpacity>
                         )}
-                    </TouchableOpacity>
+                    </View>
                 </View>
                 <Text style={styles.contactText}> Nous contacter ou Aida</Text>
                 <Button

@@ -33,7 +33,12 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
         navigation.navigate('Origin');
     };
     const convertDateandMonth = (value) => {
-        return value < 10 ? '0' + value.toString() : value.toString();
+        if(value.length < 2) {
+            return value < 10 ? '0' + value.toString() : value.toString();
+        }else {
+            return value
+        }
+        
     };
     const dateRegex = new RegExp('^([1-9]|[12][0-9]|3[01])$');
     const monthRegex = new RegExp('^(0?[1-9]|1[012])$');
