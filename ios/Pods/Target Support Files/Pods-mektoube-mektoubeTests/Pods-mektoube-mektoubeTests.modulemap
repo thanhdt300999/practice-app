@@ -1,0 +1,6 @@
+module Pods_mektoube_mektoubeTests {
+  umbrella header "Pods-mektoube-mektoubeTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

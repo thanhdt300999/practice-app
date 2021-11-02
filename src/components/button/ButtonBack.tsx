@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import Text from '../../../assets/AppText';
 import { IconButton, Colors } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +10,10 @@ interface Props {
     signup?: boolean;
     signin?: boolean;
 }
+
+
+const width = Dimensions.get("window").width
+const height = Dimensions.get("window").height
 const ButtonBack: React.FC<Props> = ({ onPress, disable, style, signup }) => {
     const navigation = useNavigation();
     return (
@@ -23,7 +27,7 @@ const ButtonBack: React.FC<Props> = ({ onPress, disable, style, signup }) => {
             <IconButton
                 icon="arrow-left"
                 color="#ffffff"
-                size={30}
+                size={height * 0.05}
                 // disabled={render > 0 ? false : true}
                 style={[styles.backButton, style]}
                 onPress={onPress}
@@ -46,9 +50,9 @@ const styles = StyleSheet.create({
     },
     header: {
         alignSelf: 'stretch',
-        marginTop: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginTop: Platform.OS === "ios" ? height*0.04 : 0
     },
     textSignUp: {
         alignSelf: 'center',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
+const height = Dimensions.get('window').height;
 
 interface Props {}
 interface city {
@@ -53,48 +54,45 @@ const CityScreen: React.FC<Props> = ({}) => {
     }, []);
     return (
         <LinearGradient
-            colors={['#FF59F4', '#FF5978']}
-            style={{ flex: 1 }}
+            colors={['#FF5978', '#FF59F4']}
+            style={{ flex: 1, backgroundColor: '#FF5978' }}
             useAngle={true}
-            angle={45}
-            angleCenter={{ x: 0, y: 1 }}
+            angle={0}
+            angleCenter={{ x: 0.5, y: 0.5 }}
+            locations={[0, 1]}
         >
-            <View style={{ height: 550, alignSelf: 'stretch' }}>
+            <View style={{ height: height * 0.8, alignSelf: 'stretch' }}>
                 <ButtonBack onPress={() => navigation.goBack()} />
                 <View style={styles.header}>
                     <View style={styles.iconStyle}>
-                        <FontAwesome5 name="warehouse" size={30} color="#fff" />
+                        <FontAwesome5 name="warehouse" size={height * 0.04} color="#fff" />
                     </View>
                     <Text style={styles.textStyle}>Quelle est votre ville ?</Text>
                 </View>
-                <View style={styles.scrollView}>
-                    {state.isLoading === false && (
-                        <FlatList
-                            data={state.listCities}
-                            renderItem={({ item }) => {
-                                return (
-                                    <View style={styles.styleCheckbox}>
-                                        <Text style={styles.textCheckBox}>{item.name}:</Text>
-                                        <View style={styles.radio}>
-                                            <RadioButton
-                                                color="#FFFFFF"
-                                                uncheckedColor="#FFFFFF"
-                                                value={item.name}
-                                                status={
-                                                    city.id === item.id ? 'checked' : 'unchecked'
-                                                }
-                                                onPress={() => setCity(item)}
-                                            />
-                                        </View>
+                {state.isLoading === false && (
+                    <FlatList
+                        data={state.listCities}
+                        renderItem={({ item }) => {
+                            return (
+                                <View style={styles.styleCheckbox}>
+                                    <Text style={styles.textCheckBox}>{item.name}:</Text>
+                                    <View style={styles.radio}>
+                                        <RadioButton
+                                            color="#FFFFFF"
+                                            uncheckedColor="#FFFFFF"
+                                            value={item.name}
+                                            status={city.id === item.id ? 'checked' : 'unchecked'}
+                                            onPress={() => setCity(item)}
+                                        />
                                     </View>
-                                );
-                            }}
-                            keyExtractor={(item) => item.id.toString()}
-                        />
-                    )}
-                </View>
+                                </View>
+                            );
+                        }}
+                        keyExtractor={(item) => item.id.toString()}
+                    />
+                )}
             </View>
-            <ButtonNext onPress={handleSubmit} disable={false /*city.id ? false : true*/} />
+            <ButtonNext onPress={handleSubmit} disable={city.id ? false : true} />
         </LinearGradient>
     );
 };
@@ -108,19 +106,19 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     iconStyle: {
-        height: 75,
-        width: 75,
+        height: height * 0.1,
+        width: height * 0.1,
         borderRadius: 70,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#ffffff',
         borderWidth: 2,
-        marginBottom: 40,
+        marginBottom: height * 0.03,
     },
     textStyle: {
         color: '#FFFFFF',
-        fontSize: 25,
+        fontSize: height * 0.04,
         marginBottom: 10,
     },
     styleCheckbox: {
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     textCheckBox: {
-        fontSize: 20,
+        fontSize: height * 0.03,
         fontWeight: 'bold',
         color: '#FFFFFF',
         alignSelf: 'center',

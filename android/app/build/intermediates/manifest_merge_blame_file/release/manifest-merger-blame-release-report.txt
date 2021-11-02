@@ -1,0 +1,329 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.mektoube"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="30" />
+9-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:4:5-67
+11-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:4:22-64
+12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+12-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:5:5-79
+12-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:5:22-76
+13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+13-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:6:5-81
+13-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:6:22-78
+14    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+14-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:7:5-85
+14-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:7:22-82
+15
+16    <uses-feature android:name="android.hardware.location.gps" />
+16-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:8:5-66
+16-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:8:19-63
+17
+18    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Optional permission for Analytics to run. -->
+18-->[com.google.android.gms:play-services-ads-lite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3b395f21c6574084b2a9be199690abd4/transformed/jetified-play-services-ads-lite-10.0.1/AndroidManifest.xml:20:5-78
+18-->[com.google.android.gms:play-services-ads-lite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3b395f21c6574084b2a9be199690abd4/transformed/jetified-play-services-ads-lite-10.0.1/AndroidManifest.xml:20:22-76
+19    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Permissions required for GCM -->
+19-->[com.google.android.gms:play-services-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/b78b8c2538e8052a8f68f4e85606a1a1/transformed/jetified-play-services-analytics-10.0.1/AndroidManifest.xml:24:5-67
+19-->[com.google.android.gms:play-services-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/b78b8c2538e8052a8f68f4e85606a1a1/transformed/jetified-play-services-analytics-10.0.1/AndroidManifest.xml:24:22-65
+20    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+20-->[com.google.android.gms:play-services-gcm:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/dae8bc5c41034862f9862c74f21dfdce/transformed/jetified-play-services-gcm-10.0.1/AndroidManifest.xml:20:5-81
+20-->[com.google.android.gms:play-services-gcm:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/dae8bc5c41034862f9862c74f21dfdce/transformed/jetified-play-services-gcm-10.0.1/AndroidManifest.xml:20:22-79
+21
+22    <uses-feature
+22-->[com.google.android.gms:play-services-maps:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/10b3622c3f393d1f0644b63d2e1c5278/transformed/jetified-play-services-maps-10.0.1/AndroidManifest.xml:21:5-77
+23        android:glEsVersion="0x00020000"
+23-->[com.google.android.gms:play-services-maps:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/10b3622c3f393d1f0644b63d2e1c5278/transformed/jetified-play-services-maps-10.0.1/AndroidManifest.xml:21:19-51
+24        android:required="true" />
+24-->[com.google.android.gms:play-services-maps:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/10b3622c3f393d1f0644b63d2e1c5278/transformed/jetified-play-services-maps-10.0.1/AndroidManifest.xml:21:52-75
+25
+26    <permission
+26-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:24:5-109
+27        android:name="com.mektoube.permission.C2D_MESSAGE"
+27-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:24:17-71
+28        android:protectionLevel="signature" />
+28-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:24:72-107
+29
+30    <uses-permission android:name="com.mektoube.permission.C2D_MESSAGE" />
+30-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:26:5-78
+30-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:26:22-76
+31
+32    <application
+32-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:9:5-28:19
+33        android:name="com.mektoube.MainApplication"
+33-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:10:7-38
+34        android:allowBackup="false"
+34-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:14:7-34
+35        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+35-->[androidx.core:core:1.1.0] /Users/dothanh/.gradle/caches/transforms-3/2780a7d58323a095a84203f45c645c6e/transformed/core-1.1.0/AndroidManifest.xml:24:18-86
+36        android:icon="@mipmap/ic_launcher"
+36-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:12:7-41
+37        android:label="@string/app_name"
+37-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:11:7-39
+38        android:roundIcon="@mipmap/ic_launcher_round"
+38-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:13:7-52
+39        android:theme="@style/AppTheme" >
+39-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:15:7-38
+40        <activity
+40-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:16:7-27:18
+41            android:name="com.mektoube.MainActivity"
+41-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:17:9-37
+42            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+42-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:19:9-86
+43            android:label="@string/app_name"
+43-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:18:9-41
+44            android:launchMode="singleTask"
+44-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:20:9-40
+45            android:windowSoftInputMode="adjustPan" >
+45-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:21:9-48
+46            <intent-filter>
+46-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:23:9-26:25
+47                <action android:name="android.intent.action.MAIN" />
+47-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:24:13-65
+47-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:24:21-62
+48
+49                <category android:name="android.intent.category.LAUNCHER" />
+49-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:25:13-73
+49-->/Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:25:23-70
+50            </intent-filter>
+51        </activity>
+52        <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
+53        <activity
+53-->[com.google.android.gms:play-services-ads-lite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3b395f21c6574084b2a9be199690abd4/transformed/jetified-play-services-ads-lite-10.0.1/AndroidManifest.xml:25:9-232
+54            android:name="com.google.android.gms.ads.AdActivity"
+54-->[com.google.android.gms:play-services-ads-lite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3b395f21c6574084b2a9be199690abd4/transformed/jetified-play-services-ads-lite-10.0.1/AndroidManifest.xml:25:19-71
+55            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+55-->[com.google.android.gms:play-services-ads-lite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3b395f21c6574084b2a9be199690abd4/transformed/jetified-play-services-ads-lite-10.0.1/AndroidManifest.xml:25:72-181
+56            android:theme="@android:style/Theme.Translucent" />
+56-->[com.google.android.gms:play-services-ads-lite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3b395f21c6574084b2a9be199690abd4/transformed/jetified-play-services-ads-lite-10.0.1/AndroidManifest.xml:25:182-230
+57        <activity
+57-->[com.google.android.gms:play-services-ads-lite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3b395f21c6574084b2a9be199690abd4/transformed/jetified-play-services-ads-lite-10.0.1/AndroidManifest.xml:26:9-131
+58            android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"
+58-->[com.google.android.gms:play-services-ads-lite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3b395f21c6574084b2a9be199690abd4/transformed/jetified-play-services-ads-lite-10.0.1/AndroidManifest.xml:26:19-91
+59            android:theme="@style/Theme.IAPTheme" />
+59-->[com.google.android.gms:play-services-ads-lite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3b395f21c6574084b2a9be199690abd4/transformed/jetified-play-services-ads-lite-10.0.1/AndroidManifest.xml:26:92-129
+60        <activity
+60-->[com.google.android.gms:play-services-appinvite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/33501151d4183376b67673d0a159d947/transformed/jetified-play-services-appinvite-10.0.1/AndroidManifest.xml:20:9-25:20
+61            android:name="com.google.android.gms.appinvite.PreviewActivity"
+61-->[com.google.android.gms:play-services-appinvite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/33501151d4183376b67673d0a159d947/transformed/jetified-play-services-appinvite-10.0.1/AndroidManifest.xml:20:19-50
+62            android:exported="true"
+62-->[com.google.android.gms:play-services-appinvite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/33501151d4183376b67673d0a159d947/transformed/jetified-play-services-appinvite-10.0.1/AndroidManifest.xml:20:51-74
+63            android:theme="@style/Theme.AppInvite.Preview" >
+63-->[com.google.android.gms:play-services-appinvite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/33501151d4183376b67673d0a159d947/transformed/jetified-play-services-appinvite-10.0.1/AndroidManifest.xml:20:75-121
+64            <intent-filter>
+64-->[com.google.android.gms:play-services-appinvite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/33501151d4183376b67673d0a159d947/transformed/jetified-play-services-appinvite-10.0.1/AndroidManifest.xml:21:13-24:29
+65                <action android:name="com.google.android.gms.appinvite.ACTION_PREVIEW" />
+65-->[com.google.android.gms:play-services-appinvite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/33501151d4183376b67673d0a159d947/transformed/jetified-play-services-appinvite-10.0.1/AndroidManifest.xml:22:17-89
+65-->[com.google.android.gms:play-services-appinvite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/33501151d4183376b67673d0a159d947/transformed/jetified-play-services-appinvite-10.0.1/AndroidManifest.xml:22:25-87
+66
+67                <category android:name="android.intent.category.DEFAULT" />
+67-->[com.google.android.gms:play-services-appinvite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/33501151d4183376b67673d0a159d947/transformed/jetified-play-services-appinvite-10.0.1/AndroidManifest.xml:23:17-75
+67-->[com.google.android.gms:play-services-appinvite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/33501151d4183376b67673d0a159d947/transformed/jetified-play-services-appinvite-10.0.1/AndroidManifest.xml:23:27-73
+68            </intent-filter>
+69        </activity>
+70        <activity
+70-->[com.google.android.gms:play-services-auth:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/af1a14be62d91838eefcc6fda98b927d/transformed/jetified-play-services-auth-10.0.1/AndroidManifest.xml:20:9-189
+71            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+71-->[com.google.android.gms:play-services-auth:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/af1a14be62d91838eefcc6fda98b927d/transformed/jetified-play-services-auth-10.0.1/AndroidManifest.xml:20:19-68
+72            android:excludeFromRecents="true"
+72-->[com.google.android.gms:play-services-auth:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/af1a14be62d91838eefcc6fda98b927d/transformed/jetified-play-services-auth-10.0.1/AndroidManifest.xml:20:129-162
+73            android:exported="false"
+73-->[com.google.android.gms:play-services-auth:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/af1a14be62d91838eefcc6fda98b927d/transformed/jetified-play-services-auth-10.0.1/AndroidManifest.xml:20:163-187
+74            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+74-->[com.google.android.gms:play-services-auth:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/af1a14be62d91838eefcc6fda98b927d/transformed/jetified-play-services-auth-10.0.1/AndroidManifest.xml:20:69-128
+75        <!--
+76Service handling Google Sign-In user revocation. For apps that do not integrate with
+77            Google Sign-In, this service will never be started.
+78        -->
+79        <service
+79-->[com.google.android.gms:play-services-auth:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/af1a14be62d91838eefcc6fda98b927d/transformed/jetified-play-services-auth-10.0.1/AndroidManifest.xml:24:9-184
+80            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+80-->[com.google.android.gms:play-services-auth:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/af1a14be62d91838eefcc6fda98b927d/transformed/jetified-play-services-auth-10.0.1/AndroidManifest.xml:24:18-63
+81            android:exported="true"
+81-->[com.google.android.gms:play-services-auth:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/af1a14be62d91838eefcc6fda98b927d/transformed/jetified-play-services-auth-10.0.1/AndroidManifest.xml:24:64-87
+82            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" />
+82-->[com.google.android.gms:play-services-auth:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/af1a14be62d91838eefcc6fda98b927d/transformed/jetified-play-services-auth-10.0.1/AndroidManifest.xml:24:88-182
+83
+84        <receiver android:name="com.google.android.gms.cast.framework.media.MediaIntentReceiver" />
+84-->[com.google.android.gms:play-services-cast-framework:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/f4a5be049029dc1aea8b4a9cc60529e7/transformed/jetified-play-services-cast-framework-10.0.1/AndroidManifest.xml:5:9-99
+84-->[com.google.android.gms:play-services-cast-framework:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/f4a5be049029dc1aea8b4a9cc60529e7/transformed/jetified-play-services-cast-framework-10.0.1/AndroidManifest.xml:5:19-97
+85
+86        <service android:name="com.google.android.gms.cast.framework.media.MediaNotificationService" />
+86-->[com.google.android.gms:play-services-cast-framework:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/f4a5be049029dc1aea8b4a9cc60529e7/transformed/jetified-play-services-cast-framework-10.0.1/AndroidManifest.xml:6:9-103
+86-->[com.google.android.gms:play-services-cast-framework:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/f4a5be049029dc1aea8b4a9cc60529e7/transformed/jetified-play-services-cast-framework-10.0.1/AndroidManifest.xml:6:18-101
+87        <service android:name="com.google.android.gms.cast.framework.ReconnectionService" />
+87-->[com.google.android.gms:play-services-cast-framework:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/f4a5be049029dc1aea8b4a9cc60529e7/transformed/jetified-play-services-cast-framework-10.0.1/AndroidManifest.xml:7:9-92
+87-->[com.google.android.gms:play-services-cast-framework:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/f4a5be049029dc1aea8b4a9cc60529e7/transformed/jetified-play-services-cast-framework-10.0.1/AndroidManifest.xml:7:18-90
+88
+89        <activity
+89-->[com.google.android.gms:play-services-base:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/c21dd338af018da86721bff41c81ca39/transformed/jetified-play-services-base-10.0.1/AndroidManifest.xml:19:9-172
+90            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+90-->[com.google.android.gms:play-services-base:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/c21dd338af018da86721bff41c81ca39/transformed/jetified-play-services-base-10.0.1/AndroidManifest.xml:19:19-85
+91            android:exported="false"
+91-->[com.google.android.gms:play-services-base:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/c21dd338af018da86721bff41c81ca39/transformed/jetified-play-services-base-10.0.1/AndroidManifest.xml:19:146-170
+92            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+92-->[com.google.android.gms:play-services-base:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/c21dd338af018da86721bff41c81ca39/transformed/jetified-play-services-base-10.0.1/AndroidManifest.xml:19:86-145
+93        <!--
+94 FirebaseMessagingService performs security checks at runtime,
+95             no need for explicit permissions despite exported="true"
+96        -->
+97        <service
+97-->[com.google.firebase:firebase-messaging:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/097ef66cc6b017ef43d7ee376c7ab9ee/transformed/jetified-firebase-messaging-10.0.1/AndroidManifest.xml:23:9-27:19
+98            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+98-->[com.google.firebase:firebase-messaging:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/097ef66cc6b017ef43d7ee376c7ab9ee/transformed/jetified-firebase-messaging-10.0.1/AndroidManifest.xml:23:18-87
+99            android:exported="true" >
+99-->[com.google.firebase:firebase-messaging:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/097ef66cc6b017ef43d7ee376c7ab9ee/transformed/jetified-firebase-messaging-10.0.1/AndroidManifest.xml:23:88-111
+100            <intent-filter android:priority="-500" >
+100-->[com.google.firebase:firebase-messaging:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/097ef66cc6b017ef43d7ee376c7ab9ee/transformed/jetified-firebase-messaging-10.0.1/AndroidManifest.xml:24:13-26:29
+100-->[com.google.firebase:firebase-messaging:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/097ef66cc6b017ef43d7ee376c7ab9ee/transformed/jetified-firebase-messaging-10.0.1/AndroidManifest.xml:24:28-51
+101                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+101-->[com.google.firebase:firebase-messaging:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/097ef66cc6b017ef43d7ee376c7ab9ee/transformed/jetified-firebase-messaging-10.0.1/AndroidManifest.xml:25:17-77
+101-->[com.google.firebase:firebase-messaging:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/097ef66cc6b017ef43d7ee376c7ab9ee/transformed/jetified-firebase-messaging-10.0.1/AndroidManifest.xml:25:25-75
+102            </intent-filter>
+103        </service>
+104        <service
+104-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:24:9-134
+105            android:name="com.google.android.gms.tagmanager.TagManagerService"
+105-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:24:18-84
+106            android:enabled="true"
+106-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:24:110-132
+107            android:exported="false" />
+107-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:24:85-109
+108
+109        <activity
+109-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:25:9-32:20
+110            android:name="com.google.android.gms.tagmanager.TagManagerPreviewActivity"
+110-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:25:19-93
+111            android:noHistory="true" > <!-- optional, removes the previewActivity from the activity stack. -->
+111-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:25:94-118
+112            <intent-filter>
+112-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:26:13-31:29
+113                <data android:scheme="tagmanager.c.com.mektoube" />
+113-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:27:17-71
+113-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:27:23-69
+114
+115                <action android:name="android.intent.action.VIEW" />
+115-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:28:17-68
+115-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:28:25-66
+116
+117                <category android:name="android.intent.category.DEFAULT" />
+117-->[com.google.android.gms:play-services-appinvite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/33501151d4183376b67673d0a159d947/transformed/jetified-play-services-appinvite-10.0.1/AndroidManifest.xml:23:17-75
+117-->[com.google.android.gms:play-services-appinvite:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/33501151d4183376b67673d0a159d947/transformed/jetified-play-services-appinvite-10.0.1/AndroidManifest.xml:23:27-73
+118                <category android:name="android.intent.category.BROWSABLE" />
+118-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:30:17-77
+118-->[com.google.android.gms:play-services-tagmanager-api:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/07ad48dd57c0c77f805d937ee57ed20c/transformed/jetified-play-services-tagmanager-api-10.0.1/AndroidManifest.xml:30:27-75
+119            </intent-filter>
+120        </activity>
+121
+122        <receiver
+122-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:25:7-26:18
+123            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+123-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:25:17-89
+124            android:enabled="true"
+124-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:25:90-112
+125            android:exported="false" >
+125-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:25:113-137
+126        </receiver>
+127        <receiver
+127-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:27:7-31:18
+128            android:name="com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver"
+128-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:27:17-104
+129            android:enabled="true"
+129-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:27:162-184
+130            android:permission="android.permission.INSTALL_PACKAGES" >
+130-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:27:105-161
+131            <intent-filter>
+131-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:28:11-30:27
+132                <action android:name="com.android.vending.INSTALL_REFERRER" />
+132-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:29:15-76
+132-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:29:23-74
+133            </intent-filter>
+134        </receiver>
+135
+136        <service
+136-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:32:7-137
+137            android:name="com.google.android.gms.measurement.AppMeasurementService"
+137-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:32:16-87
+138            android:enabled="true"
+138-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:32:88-110
+139            android:exported="false" />
+139-->[com.google.firebase:firebase-analytics:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/51cb6a2642b2d84590ab2055041481a7/transformed/jetified-firebase-analytics-10.0.1/AndroidManifest.xml:32:111-135
+140
+141        <receiver
+141-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:30:9-36:20
+142            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+142-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:30:19-84
+143            android:exported="true"
+143-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:30:85-108
+144            android:permission="com.google.android.c2dm.permission.SEND" >
+144-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:30:109-169
+145            <intent-filter>
+145-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:31:13-35:29
+146                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+146-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:32:17-80
+146-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:32:25-78
+147                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+147-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:33:17-85
+147-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:33:25-83
+148
+149                <category android:name="com.mektoube" />
+149-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:34:17-60
+149-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:34:27-58
+150            </intent-filter>
+151        </receiver>
+152        <!--
+153 Internal (not exported) receiver used by the app to start its own exported services
+154             without risk of being spoofed.
+155        -->
+156        <receiver
+156-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:40:9-119
+157            android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver"
+157-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:40:19-92
+158            android:exported="false" />
+158-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:40:93-117
+159        <!--
+160 FirebaseInstanceIdService performs security checks at runtime,
+161             no need for explicit permissions despite exported="true"
+162        -->
+163        <service
+163-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:44:9-48:19
+164            android:name="com.google.firebase.iid.FirebaseInstanceIdService"
+164-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:44:18-82
+165            android:exported="true" >
+165-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:44:83-106
+166            <intent-filter android:priority="-500" >
+166-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:45:13-47:29
+166-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:45:28-51
+167                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+167-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:46:17-79
+167-->[com.google.firebase:firebase-iid:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/0acf23c53b28be7acffb25c2b8524f67/transformed/jetified-firebase-iid-10.0.1/AndroidManifest.xml:46:25-77
+168            </intent-filter>
+169        </service>
+170
+171        <provider
+171-->[com.google.firebase:firebase-common:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3e30037cfe93335e6a0ea9886f10a719/transformed/jetified-firebase-common-10.0.1/AndroidManifest.xml:6:9-194
+172            android:name="com.google.firebase.provider.FirebaseInitProvider"
+172-->[com.google.firebase:firebase-common:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3e30037cfe93335e6a0ea9886f10a719/transformed/jetified-firebase-common-10.0.1/AndroidManifest.xml:6:79-143
+173            android:authorities="com.mektoube.firebaseinitprovider"
+173-->[com.google.firebase:firebase-common:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3e30037cfe93335e6a0ea9886f10a719/transformed/jetified-firebase-common-10.0.1/AndroidManifest.xml:6:19-78
+174            android:exported="false"
+174-->[com.google.firebase:firebase-common:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3e30037cfe93335e6a0ea9886f10a719/transformed/jetified-firebase-common-10.0.1/AndroidManifest.xml:6:144-168
+175            android:initOrder="100" />
+175-->[com.google.firebase:firebase-common:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/3e30037cfe93335e6a0ea9886f10a719/transformed/jetified-firebase-common-10.0.1/AndroidManifest.xml:6:169-192
+176
+177        <meta-data
+177-->[com.google.android.gms:play-services-basement:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/7a1bf3c35a1a2ee1862a12eaeaca78bb/transformed/jetified-play-services-basement-10.0.1/AndroidManifest.xml:20:9-121
+178            android:name="com.google.android.gms.version"
+178-->[com.google.android.gms:play-services-basement:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/7a1bf3c35a1a2ee1862a12eaeaca78bb/transformed/jetified-play-services-basement-10.0.1/AndroidManifest.xml:20:20-65
+179            android:value="@integer/google_play_services_version" />
+179-->[com.google.android.gms:play-services-basement:10.0.1] /Users/dothanh/.gradle/caches/transforms-3/7a1bf3c35a1a2ee1862a12eaeaca78bb/transformed/jetified-play-services-basement-10.0.1/AndroidManifest.xml:20:66-119
+180    </application>
+181
+182</manifest>

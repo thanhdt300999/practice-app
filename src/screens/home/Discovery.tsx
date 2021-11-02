@@ -11,23 +11,24 @@ import {
     SafeAreaView,
     Platform,
     Dimensions,
+    StatusBar
 } from 'react-native';
 import Text from '../../../assets/AppText';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/Entypo';
 import { RootState } from '../../redux/config-redux/rootReducer';
-import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import action from '../../redux/actions/home.actions';
-import LinearGradient from 'react-native-linear-gradient';
-
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+const height = Dimensions.get('window').height;
 const HEADER_MAX_HEIGHT = 200;
-const HEADER_MIN_HEIGHT = 60;
+const HEADER_MIN_HEIGHT = height * 0.05 + 10;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 const width: number = Dimensions.get('window').width; //full width
-const MARGIN = (width - 312) / 4;
+const MARGIN = (width * 0.3 - 32) / 4;
 interface Props {}
 
 const Item = ({ title, url, age, location }) => (
@@ -44,14 +45,14 @@ const Item = ({ title, url, age, location }) => (
                     <FontAwesome name="circle" color="#8cff12" size={15} />
                 </View>
             </View>
-            <Text style={{ fontSize: 20 }}>{title}</Text>
+            <Text style={{ fontSize: height * 0.03 }}>{title}</Text>
             <View style={styles.userInfo}>
                 <View style={styles.userAge}>
-                    <Text style={{ fontSize: 10 }}>{age} ans</Text>
+                    <Text style={{ fontSize: height * 0.015 }}>{age} ans</Text>
                 </View>
                 <View style={styles.userLocation}>
                     <Icon1 name="location-pin" />
-                    <Text style={{ fontSize: 10 }}>{location}</Text>
+                    <Text style={{ fontSize: height * 0.015 }}>{location}</Text>
                 </View>
             </View>
         </View>
@@ -61,6 +62,7 @@ const Discovery: React.FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state.home);
     const scrollY: any = new Animated.Value(0);
+    const [reset, setReset] = React.useState<number>(0)
     const translateY: any = scrollY.interpolate({
         inputRange: [230, 281],
         outputRange: [0, 60],
@@ -79,22 +81,17 @@ const Discovery: React.FC<Props> = ({}) => {
     };
     const headerHeight = scrollY.interpolate({
         inputRange: [0, HEADER_SCROLL_DISTANCE],
-        outputRange: [0, 60],
+        outputRange: [0, HEADER_MIN_HEIGHT],
         extrapolate: 'clamp',
     });
     const renderItem = ({ item }) => {
-        if (state.isLoading) {
-            return <View></View>;
-        } else {
-            return (
-                <Item
-                    url={item.thumbnail}
-                    age={item.age}
-                    location={item.country}
-                    title={item.name}
-                />
-            );
-        }
+        // if (state.isLoading) {
+        //     return <View></View>;
+        // } else {
+        return (
+            <Item url={item.thumbnail} age={item.age} location={item.country} title={item.name} />
+        );
+        // }
     };
     const listHeaderComponent = () => (
         <View style={styles.listHeaderComponent}>
@@ -102,8 +99,11 @@ const Discovery: React.FC<Props> = ({}) => {
             <View style={styles.banner}>
                 <Text style={styles.textHeader}>Votre Recherche</Text>
                 <TouchableOpacity style={styles.headerButton}>
-                    <Icon name="linechart" color="#ffffff" size={25} />
+                    <Icon name="linechart" color="#ffffff" size={height * 0.03} />
                     <Text style={styles.textButton}>CRITERES</Text>
+                    <View style={styles.resetInfo}>
+                        <Text style={styles.resetText}>{reset}</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>
@@ -117,103 +117,111 @@ const Discovery: React.FC<Props> = ({}) => {
         dispatch(action.getUsersRequest());
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
         LogBox.ignoreLogs(['fontFamily']);
+        LogBox.ignoreLogs(['Encountered two children with']);
     }, []);
     const onRefresh = () => {
         dispatch(action.getUsersRequest());
+        state.isLoading === false && setReset(reset + 1)
+        
     };
     const onReset = () => {
         dispatch(action.getUsersRequest());
+        state.isLoading === false && setReset(reset + 1)
     };
     return (
-        <>
-            <SafeAreaView style={{ flex: 1 }}>
-                <View
-                    style={{
-                        alignItems: 'center',
+        <SafeAreaView style={{ flex: 1 }}>
+            <View
+                style={{
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                }}
+            >
+                <FlatList
+                    ListHeaderComponent={listHeaderComponent}
+                    numColumns={2}
+                    data={state.listUsers}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.uuid.toString()}
+                    removeClippedSubviews={true}
+                    refreshControl={
+                        <RefreshControl
+                            colors={['red', 'tomato']}
+                            onRefresh={onRefresh}
+                            refreshing={state.isLoading}
+                            progressViewOffset={Platform.OS === "ios" ? null : height*0.1}
+                        />
+                    }
+                    scrollEventThrottle={16}
+                    onScroll={(e) => {
+                        scrollY.setValue(e.nativeEvent.contentOffset.y);
                     }}
-                >
-                    <FlatList
-                        ListHeaderComponent={listHeaderComponent}
-                        numColumns={2}
-                        data={state.listUsers}
-                        renderItem={renderItem}
-                        keyExtractor={(item) => item.uuid.toString()}
-                        // getItemLayout={getItemLayout}
-                        removeClippedSubviews={true}
-                        refreshControl={
-                            <RefreshControl onRefresh={onRefresh} refreshing={state.isLoading} />
-                        }
-                        scrollEventThrottle={16}
-                        onScroll={(e) => {
-                            scrollY.setValue(e.nativeEvent.contentOffset.y);
+                    initialNumToRender={10} // Reduce initial render amount
+                    onEndReached={() =>
+                        state.isLoading === false && dispatch(action.getUsersRequest())
+                    }
+                    onEndReachedThreshold={0.9}
+                    maxToRenderPerBatch={5} // Reduce number in each render batch
+                    updateCellsBatchingPeriod={100} // Increase time between renders
+                />
+            </View>
+            <Animated.View style={[styles.header, { height: headerHeight }]}>
+                <View style={styles.bar}>
+                    <View
+                        style={{
+                            marginLeft: 15,
+                            flexDirection: 'row',
+                            alignItems: 'center',
                         }}
-                        initialNumToRender={10} // Reduce initial render amount
-                        maxToRenderPerBatch={5} // Reduce number in each render batch
-                        // updateCellsBatchingPeriod={100} // Increase time between renders
-                        windowSize={10} // Reduce the window size
-                    />
-                </View>
-                <Animated.View style={[styles.header, { height: headerHeight }]}>
-                    <View style={styles.bar}>
-                        <View
-                            style={{
-                                marginLeft: 15,
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <TouchableOpacity onPress={onReset}>
-                                {/* <MaterialIcons name="settings-backup-restore" size={30} /> */}
-                            </TouchableOpacity>
-                            <Text>Reset</Text>
-                        </View>
-                        <Text style={{ fontSize: 25 }}> Decouvir </Text>
-                        <View style={{ flexDirection: 'row', marginRight: 15 }}>
-                            <Entypo
-                                name="save"
-                                style={{ marginHorizontal: 10 }}
-                                size={25}
-                                color="green"
-                            />
-                            <FontAwesome name="sort-amount-desc" color="green" size={25} />
-                        </View>
+                    >
+                        <TouchableOpacity onPress={onReset}>
+                            <MaterialCommunityIcons name="restore" size={height * 0.03} />
+                        </TouchableOpacity>
+                        <Text>Reset</Text>
                     </View>
-                    <LinearGradient
-                        style={{ flex: 1 }}
-                        colors={['#999999', '#a8a8a8', '#e3e3e3', '#ffffff']}
-                    ></LinearGradient>
-                </Animated.View>
-            </SafeAreaView>
-        </>
+                    <Text style={{ fontSize: height * 0.03 }}> Decouvir </Text>
+                    <View style={{ flexDirection: 'row', marginRight: 15 }}>
+                        <Entypo
+                            name="save"
+                            style={{ marginHorizontal: 10 }}
+                            size={height * 0.03}
+                            color="green"
+                        />
+                        <FontAwesome name="sort-amount-desc" color="green" size={height * 0.03} />
+                    </View>
+                </View>
+            </Animated.View>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     image: {
-        height: 180,
+        height: height * 0.25,
     },
     banner: {
         flexDirection: 'row',
-        marginHorizontal: 20,
-        marginTop: 25,
+        marginHorizontal: 15,
+        marginTop: height * 0.03,
         justifyContent: 'space-between',
     },
     headerButton: {
-        width: 150,
-        borderRadius: 10,
-        height: 50,
+        width: width * 0.35,
+        borderRadius: 5,
+        height: height * 0.07,
         backgroundColor: '#24cf5f',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
     },
     textHeader: {
-        fontSize: 22,
+        fontSize: height * 0.03,
         fontWeight: 'bold',
     },
     textButton: {
         color: '#ffffff',
         fontWeight: 'bold',
+        fontSize: height * 0.02,
+        marginLeft: 3,
     },
     userBox: {
         marginTop: 25,
@@ -224,8 +232,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
     },
     userImage: {
-        width: 140,
-        height: 160,
+        width: width * 0.35,
+        height: height * 0.2,
         borderRadius: 10,
     },
     userInfo: {
@@ -249,7 +257,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-
         elevation: 5,
         color: 'white',
         fontSize: 18,
@@ -267,22 +274,45 @@ const styles = StyleSheet.create({
     },
 
     header: {
+        top: Platform.OS === 'ios' ? getStatusBarHeight(true) : null,
         position: 'absolute',
         left: 0,
         right: 0,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#f2f2f2',
         overflow: 'hidden',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     bar: {
-        height: 48,
+        paddingTop: height*0.01,
+        height: height * 0.05,
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        alignContent: 'center',
     },
     listHeaderComponent: {
         width: width,
     },
+    resetInfo: {
+        height: height* 0.025,
+        width: height* 0.03,
+        backgroundColor: '#fff',
+        borderRadius: 3,
+        position: 'absolute',
+        top: 3,
+        right: 5
+    },
+    resetText: {
+        fontSize: height*0.02,
+        textAlign: 'center',
+        
+    }
 });
 
 export default Discovery;

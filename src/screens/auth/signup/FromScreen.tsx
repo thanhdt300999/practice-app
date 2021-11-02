@@ -7,19 +7,21 @@ import {
     Platform,
     TouchableWithoutFeedback,
     Keyboard,
+    Dimensions,
+    // Text
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Text from '../../../../assets/AppText';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useForm, Controller } from 'react-hook-form';
 import Geolocation from '@react-native-community/geolocation';
-import actions from '../../../redux/actions/signup.actions'
+import actions from '../../../redux/actions/signup.actions';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import ButtonNext from '../../../components/button/ButtonNext';
-
+const height = Dimensions.get('window').height;
 interface Props {}
 interface origin {
     id: string;
@@ -37,22 +39,31 @@ const FromScreen: React.FC<Props> = ({}) => {
         navigation.navigate('Country');
     };
     const handleOnPress = () => {
-        Geolocation.getCurrentPosition((info) => {
-            let data = {
-                latitude: info.coords.latitude,
-                longitude: info.coords.longitude,
-            };
-            dispatch(actions.setGeoLocation(data));
-            navigation.navigate('City')
-        });
+        Geolocation.getCurrentPosition(
+            (info) => {
+                let data = {
+                    latitude: info.coords.latitude,
+                    longitude: info.coords.longitude,
+                };
+                dispatch(actions.setGeoLocation(data));
+                navigation.navigate('City');
+            },
+            (error) => console.log(error),
+            {
+                enableHighAccuracy: true,
+                timeout: 1000,
+                maximumAge: 10000000,
+            }
+        );
     };
     return (
         <LinearGradient
-            colors={['#FF59F4', '#FF5978']}
-            style={{ flex: 1 }}
+            colors={['#FF5978', '#FF59F4']}
+            style={{ flex: 1, backgroundColor: '#FF5978' }}
             useAngle={true}
-            angle={45}
-            angleCenter={{ x: 0, y: 1 }}
+            angle={0}
+            angleCenter={{ x: 0.5, y: 0.5 }}
+            locations={[0, 1]}
         >
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : null}
@@ -63,7 +74,7 @@ const FromScreen: React.FC<Props> = ({}) => {
                         <ButtonBack onPress={() => navigation.goBack()} />
                         <View style={styles.header}>
                             <View style={styles.iconStyle}>
-                                <Entypo name="location-pin" size={40} color="#fff" />
+                                <Entypo name="location-pin" size={height * 0.04} color="#fff" />
                             </View>
                             <Text style={styles.textStyle}>Ou habitez-vous ?</Text>
                         </View>
@@ -122,7 +133,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     textStyle: {
-        fontSize: 25,
+        fontSize: height * 0.04,
         alignSelf: 'center',
         color: '#FFFFFF',
     },
@@ -134,12 +145,6 @@ const styles = StyleSheet.create({
         borderBottomColor: '#ccc',
         paddingVertical: 10,
     },
-    textCheckBox: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#FFFFFF',
-        alignSelf: 'center',
-    },
     radio: {
         alignSelf: 'flex-end',
     },
@@ -147,15 +152,15 @@ const styles = StyleSheet.create({
         height: 300,
     },
     iconStyle: {
-        height: 75,
-        width: 75,
+        height: height * 0.1,
+        width: height * 0.1,
         borderRadius: 70,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#ffffff',
         borderWidth: 2,
-        marginBottom: 40,
+        marginBottom: height * 0.03,
     },
     textInput: {
         backgroundColor: 'transparent',

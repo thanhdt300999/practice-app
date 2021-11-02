@@ -9,14 +9,14 @@ interface Props {
     disable: boolean;
     style?: Object;
 }
-
+const height = Dimensions.get("window").height
 const ButtonNext: React.FC<Props> = ({ onPress, disable, style }) => {
     return (
         <View style={styles.container}>
             <IconButton
                 icon="check"
                 color="#FFFFFF"
-                size={40}
+                size={height*0.05}
                 disabled={disable}
                 style={[styles.confirmButton, style]}
                 onPress={onPress}
@@ -34,11 +34,10 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        bottom: 0,
+        bottom: height*0.04,
         marginTop: 0,
         position: 'absolute',
         alignSelf: 'center',
-        marginBottom: 30,
         // marginBottom: 36
     },
 });

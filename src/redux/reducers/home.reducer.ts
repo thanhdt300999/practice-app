@@ -14,7 +14,8 @@ const homeReducer = (state = initState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: false,
-                listUsers: payload.listUsers,
+                // listUsers: payload.listUsers
+                listUsers: [...state.listUsers, ...payload.listUsers],
             };
         case 'GET_USERS_FAILURE':
             return {

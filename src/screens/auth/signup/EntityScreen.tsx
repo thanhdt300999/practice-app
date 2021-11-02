@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
@@ -12,7 +12,7 @@ import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
 
 interface Props {}
-
+const height = Dimensions.get('window').height;
 const EntityScreen: React.FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => {
@@ -27,17 +27,18 @@ const EntityScreen: React.FC<Props> = ({}) => {
 
     return (
         <LinearGradient
-            colors={['#FF59F4', '#FF5978']}
-            style={{ flex: 1 }}
+            colors={['#FF5978', '#FF59F4']}
+            style={{ flex: 1, backgroundColor: '#FF5978' }}
             useAngle={true}
-            angle={45}
-            angleCenter={{ x: 0, y: 1 }}
+            angle={0}
+            angleCenter={{ x: 0.5, y: 0.5 }}
+            locations={[0, 1]}
         >
             <View>
                 <ButtonBack onPress={() => navigation.navigate('Signin')} />
                 <View style={styles.header}>
                     <View style={styles.iconStyle}>
-                        <Icon name="intersex" size={30} color="#fff" />
+                        <Icon name="intersex" size={height * 0.04} color="#fff" />
                     </View>
                     <Text style={styles.textStyle}>Vous etes</Text>
                 </View>
@@ -71,23 +72,23 @@ const EntityScreen: React.FC<Props> = ({}) => {
 
 const styles = StyleSheet.create({
     iconStyle: {
-        height: 75,
-        width: 75,
+        height: height * 0.1,
+        width: height * 0.1,
         borderRadius: 70,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#ffffff',
         borderWidth: 2,
-        marginBottom: 40,
+        marginBottom: height * 0.03,
     },
     header: {
         alignItems: 'center',
         flexDirection: 'column',
-        marginBottom: 20,
+        marginBottom: height * 0.03,
     },
     textStyle: {
-        fontSize: 25,
+        fontSize: height * 0.04,
         alignSelf: 'center',
         color: '#FFFFFF',
     },
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     textCheckBox: {
-        fontSize: 20,
+        fontSize: height * 0.03,
         fontWeight: 'bold',
         color: '#FFFFFF',
         alignSelf: 'center',

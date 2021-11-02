@@ -31,12 +31,14 @@ const signinReducer = (state = initState, { type, payload }) => {
                 ...state,
                 isLoading: false,
                 accessToken: payload,
+                isLogged: true
             };
         case 'REMOVE_TOKEN':
             return {
                 ...state,
                 isLoading: false,
                 accessToken: null,
+                isLogged: false
             };
         default:
             return state;

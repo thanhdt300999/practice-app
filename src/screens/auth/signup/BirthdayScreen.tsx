@@ -6,6 +6,8 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
     Platform,
+    Dimensions,
+    // Text
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -19,7 +21,7 @@ import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 interface Props {}
-
+const height = Dimensions.get('window').height;
 const BirthdayScreen: React.FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const {
@@ -32,17 +34,18 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
         dispatch(actions.setBirthday(converBirthday(data)));
         navigation.navigate('Origin');
     };
+    //convert Date and month to mm, dd
     const convertDateandMonth = (value) => {
-        if(value.length < 2) {
+        if (value.length < 2) {
             return value < 10 ? '0' + value.toString() : value.toString();
-        }else {
-            return value
+        } else {
+            return value;
         }
-        
     };
     const dateRegex = new RegExp('^([1-9]|[12][0-9]|3[01])$');
     const monthRegex = new RegExp('^(0?[1-9]|1[012])$');
     const yearRegex = new RegExp('^\\d{4}$');
+    //convert birthday to yyyy-mm-dd
     const converBirthday = (birthday) => {
         return `${birthday.year}-${convertDateandMonth(birthday.month)}-${convertDateandMonth(
             birthday.date
@@ -50,116 +53,109 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
     };
 
     return (
-        <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
+        <LinearGradient
+            colors={['#FF5978', '#FF59F4']}
+            style={{ flex: 1, backgroundColor: '#FF5978' }}
+            useAngle={true}
+            angle={0}
+            angleCenter={{ x: 0.5, y: 0.5 }}
+            locations={[0, 1]}
         >
-            <LinearGradient
-                colors={['#FF59F4', '#FF5978']}
-                style={{ flex: 1 }}
-                useAngle={true}
-                angle={45}
-                angleCenter={{ x: 0, y: 1 }}
-            >
-                <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-                    <View style={{ height: 550, alignSelf: 'stretch' }}>
-                        <ButtonBack onPress={() => navigation.goBack()} />
-                        <View style={styles.header}>
-                            <View style={styles.iconStyle}>
-                                <Icon name="birthday-cake" size={30} color="#fff" />
-                            </View>
-                            <Text style={styles.textStyle}>
-                                Quelle est votre date de naissance ?
-                            </Text>
+            <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+                <View style={{ height: 550, alignSelf: 'stretch' }}>
+                    <ButtonBack onPress={() => navigation.goBack()} />
+                    <View style={styles.header}>
+                        <View style={styles.iconStyle}>
+                            <Icon name="birthday-cake" size={height * 0.04} color="#fff" />
                         </View>
-                        <View style={styles.inputStyle}>
-                            <Controller
-                                control={control}
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        style={styles.textInput}
-                                        onBlur={onBlur}
-                                        onChangeText={onChange}
-                                        value={value}
-                                        placeholder="DD"
-                                        keyboardType="number-pad"
-                                        autoCompleteType={false}
-                                    />
-                                )}
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: 'Field is required!',
-                                    },
-                                    pattern: {
-                                        value: dateRegex,
-                                        message: 'Date is invalid',
-                                    },
-                                }}
-                                name="date"
-                                defaultValue=""
-                            />
-                            <Text style={{ fontSize: 40, color: '#ccc' }}>/</Text>
-                            <Controller
-                                control={control}
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        style={styles.textInput}
-                                        onBlur={onBlur}
-                                        onChangeText={onChange}
-                                        value={value}
-                                        placeholder="MM"
-                                        keyboardType="number-pad"
-                                        autoCompleteType={false}
-                                    />
-                                )}
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: 'Field is required!',
-                                    },
-                                    pattern: {
-                                        value: monthRegex,
-                                        message: 'Month is invalid',
-                                    },
-                                }}
-                                name="month"
-                                defaultValue=""
-                            />
-                            <Text style={{ fontSize: 40, color: '#ccc' }}>/</Text>
-                            <Controller
-                                control={control}
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        style={styles.textInput}
-                                        onBlur={onBlur}
-                                        onChangeText={onChange}
-                                        value={value}
-                                        placeholder="YY"
-                                        keyboardType="number-pad"
-                                        autoCompleteType={false}
-                                    />
-                                )}
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: 'Field is required!',
-                                    },
-                                    pattern: {
-                                        value: yearRegex,
-                                        message: 'Year is invalid',
-                                    },
-                                }}
-                                name="year"
-                                defaultValue=""
-                            />
-                        </View>
+                        <Text style={styles.textStyle}>Quelle est votre date de naissance ?</Text>
                     </View>
-                </TouchableWithoutFeedback>
-                <ButtonNext onPress={handleSubmit(onSubmit)} disable={!isValid} />
-            </LinearGradient>
-        </KeyboardAvoidingView>
+                    <View style={styles.inputStyle}>
+                        <Controller
+                            control={control}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <TextInput
+                                    style={styles.textInput}
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    placeholder="DD"
+                                    keyboardType="number-pad"
+                                    autoCompleteType={false}
+                                />
+                            )}
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: 'Field is required!',
+                                },
+                                pattern: {
+                                    value: dateRegex,
+                                    message: 'Date is invalid',
+                                },
+                            }}
+                            name="date"
+                            defaultValue=""
+                        />
+                        <Text style={{ fontSize: height * 0.07, color: '#ccc' }}>/</Text>
+                        <Controller
+                            control={control}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <TextInput
+                                    style={styles.textInput}
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    placeholder="MM"
+                                    keyboardType="number-pad"
+                                    autoCompleteType={false}
+                                />
+                            )}
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: 'Field is required!',
+                                },
+                                pattern: {
+                                    value: monthRegex,
+                                    message: 'Month is invalid',
+                                },
+                            }}
+                            name="month"
+                            defaultValue=""
+                        />
+                        <Text style={{ fontSize: height * 0.07, color: '#ccc' }}>/</Text>
+                        <Controller
+                            control={control}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <TextInput
+                                    style={styles.textInput}
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    placeholder="YY"
+                                    keyboardType="number-pad"
+                                    autoCompleteType={false}
+                                />
+                            )}
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: 'Field is required!',
+                                },
+                                pattern: {
+                                    value: yearRegex,
+                                    message: 'Year is invalid',
+                                },
+                            }}
+                            name="year"
+                            defaultValue=""
+                        />
+                    </View>
+                </View>
+            </TouchableWithoutFeedback>
+            <ButtonNext onPress={handleSubmit(onSubmit)} disable={!isValid} />
+        </LinearGradient>
     );
 };
 
@@ -167,6 +163,7 @@ const styles = StyleSheet.create({
     header: {
         alignItems: 'center',
         marginBottom: 30,
+        marginHorizontal: 5,
     },
     imageStyle: {
         width: 75,
@@ -174,7 +171,7 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         color: '#FFFFFF',
-        fontSize: 20,
+        fontSize: height * 0.03,
     },
     inputStyle: {
         alignSelf: 'center',
@@ -195,15 +192,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     iconStyle: {
-        height: 75,
-        width: 75,
+        height: height * 0.1,
+        width: height * 0.1,
         borderRadius: 70,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#ffffff',
         borderWidth: 2,
-        marginBottom: 40,
+        marginBottom: height * 0.03,
     },
 });
 

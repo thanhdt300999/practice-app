@@ -6,6 +6,7 @@ import actions from '../actions/home.actions';
 //country
 export function* watchGetUsers() {
     yield takeEvery('GET_USERS_REQUEST', handleGetUsers);
+    // yield takeEvery('GET_MORE_USER_REQUEST', handleGetUsers);
 }
 export function* handleGetUsers() {
     yield call(getUsers);

@@ -8,14 +8,17 @@ import {
     Modal,
     TouchableWithoutFeedback,
     Keyboard,
+    // Text,
+    Dimensions,
 } from 'react-native';
 import { Button, IconButton } from 'react-native-paper';
 import Text from '../../../../assets/AppText';
 import { useNavigation } from '@react-navigation/native';
 import AuthForm from './AuthForm';
 import { useSelector } from 'react-redux';
+const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 export interface Props {}
-
 const SigninScreen: React.FC<Props> = ({}) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const state = useSelector((state: any) => state.signin);
@@ -23,6 +26,20 @@ const SigninScreen: React.FC<Props> = ({}) => {
     const handleNavigate = () => {
         navigation.navigate('SignupFlow', { screen: 'Entity' });
     };
+    const [modalHeight, setModalHeight] = React.useState(height * 0.5);
+    React.useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+            setModalHeight(height * 0.2); // or some other action
+        });
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+            setModalHeight(height * 0.5); // or some other action
+        });
+
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
+    }, []);
     return (
         <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
@@ -35,7 +52,7 @@ const SigninScreen: React.FC<Props> = ({}) => {
                     }}
                 >
                     <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
+                        <View style={[styles.modalView, { marginTop: modalHeight }]}>
                             <Button
                                 style={styles.buttonClose}
                                 onPress={() => setModalVisible(!modalVisible)}
@@ -50,13 +67,15 @@ const SigninScreen: React.FC<Props> = ({}) => {
                     source={require('../../../../image/Capture.png')}
                     style={styles.image}
                 >
-                    <Image
-                        style={styles.tinyLogo}
-                        source={require('../../../../image//logo-large.png')}
-                    />
-                    <Text style={styles.textBanner}>
-                        L'application numero 1 de la rencontre Musulmane et Maghrebine
-                    </Text>
+                    <View style={styles.banner}>
+                        <Image
+                            style={styles.tinyLogo}
+                            source={require('../../../../image//logo-large.png')}
+                        />
+                        <Text style={styles.textBanner}>
+                            L'application numero 1 de la rencontre Musulmane et Maghrebine
+                        </Text>
+                    </View>
                     <View style={styles.footer}>
                         <TouchableOpacity
                             onPress={() => {
@@ -66,7 +85,9 @@ const SigninScreen: React.FC<Props> = ({}) => {
                             <Text style={styles.textSignin}>SE CONNECTER</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={handleNavigate}>
-                            <Text style={{ color: '#ffffff' }}>INSCRIPTION GRATUITE</Text>
+                            <Text style={{ color: '#ffffff', fontSize: height * 0.02 }}>
+                                INSCRIPTION GRATUITE
+                            </Text>
                             <Text style={{ color: '#ffffff' }}>EN 1 MIN</Text>
                         </TouchableOpacity>
                     </View>
@@ -80,6 +101,7 @@ const SigninScreen: React.FC<Props> = ({}) => {
                                 alignSelf: 'flex-end',
                                 right: 10,
                                 top: 10,
+                                zIndex: 1000,
                             }}
                             onPress={() => console.log('Pressed')}
                         />
@@ -97,9 +119,8 @@ const styles = StyleSheet.create({
     },
     tinyLogo: {
         alignSelf: 'center',
-        width: 300,
+        width: width * 0.8,
         resizeMode: 'contain',
-        marginTop: 300,
     },
     image: {
         height: '100%',
@@ -107,13 +128,13 @@ const styles = StyleSheet.create({
     },
     textBanner: {
         color: '#ffffff',
-        fontSize: 20,
+        fontSize: height * 0.03,
         textAlign: 'center',
     },
     textSignin: {
         color: 'white',
         textDecorationLine: 'underline',
-        fontSize: 16,
+        fontSize: height * 0.02,
     },
     footer: {
         flexDirection: 'row',
@@ -126,9 +147,9 @@ const styles = StyleSheet.create({
     button: {
         marginLeft: 30,
         backgroundColor: 'green',
-        height: 50,
+        height: height * 0.08,
         borderRadius: 5,
-        width: 200,
+        width: width * 0.5,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -142,7 +163,6 @@ const styles = StyleSheet.create({
         marginTop: 22,
     },
     modalView: {
-        marginTop: 200,
         backgroundColor: 'white',
         borderRadius: 20,
         width: '100%',
@@ -163,12 +183,15 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         color: 'white',
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         textAlign: 'center',
     },
     modalText: {
         marginBottom: 15,
         textAlign: 'center',
+    },
+    banner: {
+        marginTop: height * 0.35,
     },
 });
 

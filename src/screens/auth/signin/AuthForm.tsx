@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-    KeyboardAvoidingView,
-    Platform,
     StyleSheet,
     TouchableOpacity,
     View,
     Dimensions,
     Keyboard,
     TouchableWithoutFeedback,
+    // Text
 } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import Text from '../../../../assets/AppText';
@@ -16,7 +15,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import actions from '../../../redux/actions/signin.actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-const fullWidth = Dimensions.get('window').width - 60; //full width
+const width = Dimensions.get('window').width; //full width
+const height = Dimensions.get('window').height;
 type Props = {
     modalVisible: boolean;
 };
@@ -30,14 +30,14 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
     const dispatch = useDispatch();
     const [showPassword, setShowPassword] = React.useState<boolean>(false);
     const [error, setError] = React.useState<string>('');
-    const [isKeyboardVisible, setKeyboardVisible] = React.useState(false);
+    
 
     const {
         control,
         handleSubmit,
         formState: { errors },
         watch,
-    } = useForm<PersonData>();
+    } = useForm<PersonData>({ mode: 'onSubmit' });
     const showEye = watch('password');
     const onSubmit = (data) => {
         let formData = new FormData();
@@ -76,6 +76,22 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                         <Text style={{ color: 'red' }}>Email or password is incorrect</Text>
                     </View>
                 )}
+                {/* {errors !== {} && (
+                    <View
+                        style={{
+                            backgroundColor: '#b5e0e8',
+                            height: 40,
+                            justifyContent: 'center',
+                            borderRadius: 10,
+                            alignItems: 'center',
+                            paddingLeft: 10,
+                            marginVertical: 10,
+                        }}
+                    >
+                        <Text style={{ color: 'red' }}>{errors?.email?.message}</Text>
+                        <Text style={{ color: 'red' }}>{errors?.password?.message}</Text>
+                    </View>
+                )} */}
                 <Controller
                     control={control}
                     rules={{
@@ -118,38 +134,32 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                         defaultValue=""
                     />
                     <View
-                        
                         style={{
                             position: 'absolute',
                             alignSelf: 'flex-end',
                             paddingRight: 15,
-                            paddingTop: 8,
-                            zIndex: 5
+                            paddingTop: width * 0.04,
+                            zIndex: 5,
                         }}
                     >
-                        <Text style={{ fontSize: 10, color: 'green' }}>Mot de passe oublie ?</Text>
+                        <Text style={{ fontSize: height * 0.02, color: 'green' }}>
+                            Mot de passe oublie ?
+                        </Text>
                         {showEye !== undefined && (
-                            <TouchableOpacity
-                            onPress={() => setShowPassword(!showPassword)}
-                            >
-                            <AntDesign
-                                name="eyeo"
-                                style={{ marginTop: 7, alignSelf: 'flex-end' }}
-                                size={25}
-                            />
+                            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                                <AntDesign
+                                    name="eyeo"
+                                    style={{ marginTop: width * 0.01, alignSelf: 'flex-end' }}
+                                    size={height * 0.03}
+                                />
                             </TouchableOpacity>
                         )}
                     </View>
                 </View>
                 <Text style={styles.contactText}> Nous contacter ou Aida</Text>
-                <Button
-                    color="#24cf5f"
-                    style={styles.buttonStyle}
-                    mode="contained"
-                    onPress={handleSubmit(onSubmit)}
-                >
+                <TouchableOpacity style={styles.buttonStyle} onPress={handleSubmit(onSubmit)}>
                     <Text style={styles.buttonText}>ME CONNECTER</Text>
-                </Button>
+                </TouchableOpacity>
 
                 <Text style={styles.footerText}>
                     Vous n'avez pas de compte?{''}
@@ -161,40 +171,41 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
 };
 const styles = StyleSheet.create({
     form: {
-        width: fullWidth,
-        height: 55,
+        width: width - 60,
+        height: height * 0.08,
     },
     formPassword: {
-        width: fullWidth,
-        height: 55,
+        width: width - 60,
+        height: height * 0.08,
         marginTop: 5,
     },
     loginText: {
-        fontSize: 25,
+        fontSize: height * 0.04,
         fontWeight: 'bold',
         marginBottom: 10,
     },
     contactText: {
         textDecorationLine: 'underline',
         marginTop: 15,
-        fontSize: 18,
+        fontSize: height * 0.025,
     },
     buttonStyle: {
         height: 49,
-        marginTop: 45,
+        marginTop: height * 0.03,
         borderRadius: 10,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#24cf5f',
     },
     buttonText: {
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: height * 0.025,
         color: 'white',
     },
     footerText: {
-        fontSize: 14,
-        marginTop: 15,
+        fontSize: height * 0.02,
+        marginTop: height * 0.02,
     },
     footerSpecialText: {
         color: '#24cf5f',

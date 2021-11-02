@@ -37,6 +37,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../app/src/debug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../app/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../app/src/main/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../app/src/main/assets" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../../app/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../app/build" />
     </content>
@@ -129,6 +130,7 @@
     <orderEntry type="library" name="Gradle: androidx.autofill:autofill:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-okhttp3:2.5.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: org.webkit:android-jsc:r250230@aar" level="project" />
+    <orderEntry type="module" module-name="MyApp.react-native-community_geolocation" />
     <orderEntry type="module" module-name="MyApp.react-native-screens" />
     <orderEntry type="module" module-name="MyApp.react-native-async-storage_async-storage" />
     <orderEntry type="module" module-name="MyApp.react-native-linear-gradient" />

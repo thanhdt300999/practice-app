@@ -3,13 +3,12 @@ import {
     View,
     StyleSheet,
     TouchableOpacity,
-    Image,
-    FlatList,
     KeyboardAvoidingView,
     Platform,
     TouchableWithoutFeedback,
     Keyboard,
     Dimensions,
+    // Text
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -20,12 +19,11 @@ import { RootState } from '../../../redux/config-redux/rootReducer';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { useForm, Controller } from 'react-hook-form';
-import { RadioButton, TextInput } from 'react-native-paper';
-import ButtonNext from '../../../components/button/ButtonNext';
+import { TextInput } from 'react-native-paper';
 import CheckBox from '../../../components/button/CheckBox';
 
 const width = Dimensions.get('window').width; //full width
-
+const height = Dimensions.get('window').height;
 interface Props {}
 interface region {
     id: string;
@@ -41,9 +39,9 @@ const SignupScreen: React.FC<Props> = ({}) => {
         control,
         handleSubmit,
         formState: { errors, isValid },
-        getValues,
-    } = useForm({ mode: 'onBlur' });
-
+        watch,
+    } = useForm({ mode: 'onSubmit' });
+    const watchPassword = watch('password',"")
     const onSubmit = (data) => {
         const formData = new FormData();
         formData.append('firstname', data.firstname);
@@ -58,7 +56,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
         console.log(formData);
         dispatch(actions.postSignupRequest(formData));
     };
-    const emailRegex = new RegExp('^w+@[a-zA-Z_]+?.[a-zA-Z]{2,}$');
+    const emailRegex = new RegExp('/^[^s@]+@[^s@]+.[^s@]+$/');
     const nameRegex = new RegExp('^\\w{4,15}$');
     const passwordRegex = new RegExp('.{8,}');
 
@@ -69,74 +67,79 @@ const SignupScreen: React.FC<Props> = ({}) => {
             return false;
         }
     };
+
+    // React.useEffect(() => {
+    //     const subscription = watch((value, { name, type }) => console.log(value, name, type));
+    //     return () => subscription.unsubscribe();
+    // }, [watch]);
     return (
+        
         <LinearGradient
-            colors={['#FF59F4', '#FF5978']}
-            style={{ flex: 1 }}
+            colors={['#FF5978', '#FF59F4']}
+            style={{ flex: 1, backgroundColor: '#FF5978' }}
             useAngle={true}
-            angle={45}
-            angleCenter={{ x: 0, y: 1 }}
+            angle={0}
+            angleCenter={{ x: 0.5, y: 0.5 }}
+            locations={[0, 1]}
         >
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : null}
-                style={styles.container}
-            >
-                <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-                    <>
-                        <View style={{ height: 550, alignSelf: 'stretch' }}>
-                            <ButtonBack
-                                onPress={() => navigation.goBack()}
-                                style={{ alignSelf: 'flex-start' }}
-                                signup={true}
-                            />
-                            <Controller
-                                control={control}
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        style={styles.textInput}
-                                        onBlur={onBlur}
-                                        onChangeText={onChange}
-                                        value={value}
-                                        placeholder="Email"
-                                    />
-                                )}
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: 'Field is required!',
-                                    },
-                                    // pattern: {
-                                    //     value: emailRegex,
-                                    //     message: 'Email is incorrect',
-                                    // },
-                                }}
-                                name="email"
-                                defaultValue=""
-                            />
-                            <Controller
-                                control={control}
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        style={styles.textInput}
-                                        onBlur={onBlur}
-                                        onChangeText={onChange}
-                                        value={value}
-                                        placeholder="Prénom"
-                                    />
-                                )}
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: 'Field is required!',
-                                    },
-                                    pattern: {
-                                        value: nameRegex,
-                                        message: 'Name must have 4 to 15 characters',
-                                    },
-                                }}
-                                name="firstname"
-                                defaultValue=""
-                            />
+            {console.log(watchPassword)}
+            <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+                <>
+                    <View style={{ height: 550, alignSelf: 'stretch' }}>
+                        <ButtonBack
+                            onPress={() => navigation.goBack()}
+                            style={{ alignSelf: 'flex-start' }}
+                            signup={true}
+                        />
+                        <Controller
+                            control={control}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <TextInput
+                                    style={styles.textInput}
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    placeholder="Email"
+                                />
+                            )}
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: 'Field is required!',
+                                },
+                                pattern: {
+                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                    message: 'Email is incorrect',
+                                },
+                            }}
+                            name="email"
+                            defaultValue=""
+                        />
+                        <Controller
+                            control={control}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <TextInput
+                                    style={styles.textInput}
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    placeholder="Prénom"
+                                />
+                            )}
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: 'Field is required!',
+                                },
+                                pattern: {
+                                    value: nameRegex,
+                                    message: 'Name must have 4 to 15 characters',
+                                },
+                            }}
+                            name="firstname"
+                            defaultValue=""
+                        />
+                        <View style={{ justifyContent: 'center' }}>
                             <Controller
                                 control={control}
                                 render={({ field: { onChange, onBlur, value } }) => (
@@ -162,83 +165,54 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                 name="password"
                                 defaultValue=""
                             />
-                            <CheckBox
-                                label="Je certifie atre majeur(e) et j'accepte les Conditions generales d'utilisations"
-                                status={first ? 'checked' : 'unchecked'}
-                                onPress={() => {
-                                    setCheckFrist(!first);
-                                }}
-                            />
-                            <CheckBox
-                                label="Jacceple que mes donnees renseignees, y compris celles facultatives a mon origine, soient accessibles au service client de Mektoube et autres ultisateurs du site dans & hors I'UE conformenent a la charte parivee"
-                                status={second ? 'checked' : 'unchecked'}
-                                onPress={() => {
-                                    setCheckSecond(!second);
-                                }}
-                            />
+                            {watchPassword.length < 8 && watchPassword.length >= 1 && <Text style={styles.checkPassText}>Failbe</Text>}
                         </View>
-                        <TouchableOpacity
-                            style={[
-                                styles.connectButton,
-                                { backgroundColor: checkValid() ? '#ff2c2c' : 'gray' },
-                            ]}
-                            disabled={false}
-                            onPress={handleSubmit(onSubmit)}
+                        <CheckBox
+                            label="Je certifie atre majeur(e) et j'accepte les Conditions generales d'utilisations"
+                            status={first ? 'checked' : 'unchecked'}
+                            onPress={() => {
+                                setCheckFrist(!first);
+                            }}
+                        />
+                        <CheckBox
+                            label="Jacceple que mes donnees renseignees, y compris celles facultatives a mon origine, soient accessibles au service client de Mektoube et autres ultisateurs du site dans & hors I'UE conformenent a la charte parivee"
+                            status={second ? 'checked' : 'unchecked'}
+                            onPress={() => {
+                                setCheckSecond(!second);
+                            }}
+                        />
+                    </View>
+                    <TouchableOpacity
+                        style={[
+                            styles.connectButton,
+                            { backgroundColor: checkValid() ? '#ff2c2c' : 'gray' },
+                        ]}
+                        disabled={false}
+                        onPress={handleSubmit(onSubmit)}
+                    >
+                        <Entypo name="check" size={30} color="#ffffff" />
+                        <Text
+                            style={{
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                fontSize: height * 0.03,
+                                color: '#ffffff',
+                            }}
                         >
-                            <Entypo name="check" size={30} color="#ffffff" />
-                            <Text
-                                style={{
-                                    textAlign: 'center',
-                                    fontWeight: 'bold',
-                                    fontSize: 20,
-                                    color: '#ffffff',
-                                }}
-                            >
-                                ME CONNECTER
-                            </Text>
-                        </TouchableOpacity>
-                    </>
-                </TouchableWithoutFeedback>
-            </KeyboardAvoidingView>
+                            ME CONNECTER
+                        </Text>
+                    </TouchableOpacity>
+                </>
+            </TouchableWithoutFeedback>
         </LinearGradient>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
     contain: {
         alignItems: 'center',
         flexDirection: 'column',
         marginBottom: 20,
-    },
-    imageStyle: {
-        width: 75,
-        height: 75,
-        alignSelf: 'center',
-    },
-    textStyle: {
-        fontSize: 25,
-        alignSelf: 'center',
-        color: '#FFFFFF',
-    },
-    styleCheckbox: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        paddingVertical: 10,
-    },
-    textCheckBox: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#FFFFFF',
-        alignSelf: 'center',
-    },
-    radio: {
-        alignSelf: 'flex-end',
     },
     iconStyle: {
         height: 75,
@@ -259,11 +233,16 @@ const styles = StyleSheet.create({
         height: 50,
         width: width,
         flexDirection: 'row',
-        justifyContent: 'center',
-        alignContent: 'center',
         paddingTop: 10,
         position: 'absolute',
         bottom: 0,
+    },
+    checkPassText: {
+        textDecorationLine: 'underline',
+        position: 'absolute',
+        right: 20,
+        color: '#ffffff',
+        fontSize: height * 0.025,
     },
 });
 

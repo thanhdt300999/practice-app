@@ -1,5 +1,0 @@
-export const authContants = {
-    HANDLE_LOGIN: 'HANDLE_LOGIN',
-    LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-    LOGIN_FAILURE: 'LOGIN_FAILURE'
-}
