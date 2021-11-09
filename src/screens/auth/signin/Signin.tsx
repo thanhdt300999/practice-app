@@ -27,6 +27,7 @@ const SigninScreen: React.FC<Props> = ({}) => {
         navigation.navigate('SignupFlow', { screen: 'Entity' });
     };
     const [modalHeight, setModalHeight] = React.useState(height * 0.5);
+    const [showButton, setShowButton] = React.useState(true);
     React.useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
             setModalHeight(height * 0.2); // or some other action
@@ -40,6 +41,12 @@ const SigninScreen: React.FC<Props> = ({}) => {
             keyboardDidShowListener.remove();
         };
     }, []);
+    React.useEffect(() => {
+        const timer = setTimeout(() => setShowButton(!showButton), 500);
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [modalVisible]);
     return (
         <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
@@ -51,14 +58,29 @@ const SigninScreen: React.FC<Props> = ({}) => {
                         setModalVisible(!modalVisible);
                     }}
                 >
+                    {showButton && (
+                        <IconButton
+                            icon="close"
+                            color="#ffffff"
+                            size={20}
+                            style={{
+                                position: 'absolute',
+                                alignSelf: 'flex-end',
+                                right: 10,
+                                top: height * 0.05,
+                                zIndex: 1000,
+                            }}
+                            onPress={() => setModalVisible(!modalVisible)}
+                        />
+                    )}
                     <View style={styles.centeredView}>
                         <View style={[styles.modalView, { marginTop: modalHeight }]}>
-                            <Button
+                            {/* <Button
                                 style={styles.buttonClose}
                                 onPress={() => setModalVisible(!modalVisible)}
                             >
                                 X
-                            </Button>
+                            </Button> */}
                             <AuthForm modalVisible={modalVisible} />
                         </View>
                     </View>
@@ -91,21 +113,6 @@ const SigninScreen: React.FC<Props> = ({}) => {
                             <Text style={{ color: '#ffffff' }}>EN 1 MIN</Text>
                         </TouchableOpacity>
                     </View>
-                    {modalVisible && (
-                        <IconButton
-                            icon="close"
-                            color="#ffffff"
-                            size={20}
-                            style={{
-                                position: 'absolute',
-                                alignSelf: 'flex-end',
-                                right: 10,
-                                top: 10,
-                                zIndex: 1000,
-                            }}
-                            onPress={() => console.log('Pressed')}
-                        />
-                    )}
                 </ImageBackground>
             </View>
         </TouchableWithoutFeedback>
@@ -135,6 +142,7 @@ const styles = StyleSheet.create({
         color: 'white',
         textDecorationLine: 'underline',
         fontSize: height * 0.02,
+        fontWeight: 'normal'
     },
     footer: {
         flexDirection: 'row',
@@ -183,7 +191,6 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         color: 'white',
-        // fontWeight: 'bold',
         textAlign: 'center',
     },
     modalText: {

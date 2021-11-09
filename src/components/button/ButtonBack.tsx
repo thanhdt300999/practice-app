@@ -11,35 +11,39 @@ interface Props {
     signin?: boolean;
 }
 
-
-const width = Dimensions.get("window").width
-const height = Dimensions.get("window").height
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+const marginTop = Platform.OS === 'ios' ? height * 0.04 : height * 0.02;
 const ButtonBack: React.FC<Props> = ({ onPress, disable, style, signup }) => {
     const navigation = useNavigation();
+    
     return (
-        <View style={styles.header}>
-            {/* <IconButton
-                icon="camera"
-                color='#ffffff'
-                size={20}
-                onPress={() => console.log('Pressed')}
-            /> */}
+        <View style={[styles.header]}>
             <IconButton
                 icon="arrow-left"
                 color="#ffffff"
-                size={height * 0.05}
+                size={height * 0.04}
                 // disabled={render > 0 ? false : true}
                 style={[styles.backButton, style]}
                 onPress={onPress}
             />
-            {signup && (
-                <View style={styles.textSignUp}>
-                    <Text style={styles.textDescription}>Incription</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
-                        <Text style={styles.textComplete}>Déjà un compte ?</Text>
-                    </TouchableOpacity>
-                </View>
-            )}
+            {signup && <Text style={styles.textDescription}>Incription</Text>}
+            {signup && <TouchableOpacity
+                style={styles.buttonSignup}
+                onPress= {() => navigation.navigate("Signin")}
+            >
+                <Text style={styles.textComplete}>Deja un complte ?</Text>
+            </TouchableOpacity>}
+            {/* {signup && 
+            <View style={{flexDirection: 'row'}}>
+            
+            <TouchableOpacity
+                style={styles.buttonSignup}
+            >
+                <Text style={styles.textComplete}>Deja un complte ?</Text>
+            </TouchableOpacity>
+            </View>
+            } */}
         </View>
     );
 };
@@ -49,25 +53,39 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     header: {
+        marginTop: marginTop,
         alignSelf: 'stretch',
+        position: 'absolute',
+        // borderColor: '#000',
+        // borderWidth: 1,
+        zIndex: 2,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: Platform.OS === "ios" ? height*0.04 : 0
+        marginHorizontal: 15,
+        width: width - 30,
+        justifyContent: 'space-between'
     },
     textSignUp: {
         alignSelf: 'center',
         flexDirection: 'row',
+        marginLeft: width * 0.35,
+        alignItems: 'center',
     },
     textComplete: {
         textDecorationLine: 'underline',
         color: '#ffffff',
         marginHorizontal: 10,
+        fontSize: height*0.02
+        
     },
     textDescription: {
         color: '#ffffff',
-        fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: height*0.03,
+        alignSelf: 'center',
+        marginLeft: 40
     },
+    buttonSignup: {
+        alignSelf: 'center'
+    }
 });
 
 export default ButtonBack;

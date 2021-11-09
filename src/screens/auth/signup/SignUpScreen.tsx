@@ -3,19 +3,19 @@ import {
     View,
     StyleSheet,
     TouchableOpacity,
-    KeyboardAvoidingView,
-    Platform,
     TouchableWithoutFeedback,
     Keyboard,
     Dimensions,
+    ActivityIndicator,
+    Platform,
     // Text
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
-import Entypo from 'react-native-vector-icons/Entypo';
 import actions from '../../../redux/actions/signup.actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { useForm, Controller } from 'react-hook-form';
@@ -40,8 +40,8 @@ const SignupScreen: React.FC<Props> = ({}) => {
         handleSubmit,
         formState: { errors, isValid },
         watch,
-    } = useForm({ mode: 'onSubmit' });
-    const watchPassword = watch('password',"")
+    } = useForm({ mode: 'onBlur' });
+    const watchPassword = watch('password', '');
     const onSubmit = (data) => {
         const formData = new FormData();
         formData.append('firstname', data.firstname);
@@ -67,13 +67,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
             return false;
         }
     };
-
-    // React.useEffect(() => {
-    //     const subscription = watch((value, { name, type }) => console.log(value, name, type));
-    //     return () => subscription.unsubscribe();
-    // }, [watch]);
     return (
-        
         <LinearGradient
             colors={['#FF5978', '#FF59F4']}
             style={{ flex: 1, backgroundColor: '#FF5978' }}
@@ -82,15 +76,19 @@ const SignupScreen: React.FC<Props> = ({}) => {
             angleCenter={{ x: 0.5, y: 0.5 }}
             locations={[0, 1]}
         >
-            {console.log(watchPassword)}
             <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
                 <>
-                    <View style={{ height: 550, alignSelf: 'stretch' }}>
-                        <ButtonBack
-                            onPress={() => navigation.goBack()}
-                            style={{ alignSelf: 'flex-start' }}
-                            signup={true}
-                        />
+                    <ButtonBack
+                        onPress={() => navigation.goBack()}
+                        style={{ alignSelf: 'flex-start' }}
+                        signup={true}
+                    />
+                    <View
+                        style={{
+                            height: height * 0.8,
+                            marginTop: Platform.OS === 'ios' ? height * 0.12 : height * 0.06,
+                        }}
+                    >
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -115,6 +113,11 @@ const SignupScreen: React.FC<Props> = ({}) => {
                             name="email"
                             defaultValue=""
                         />
+                        {errors.email && (
+                            <View style={styles.errorBox}>
+                                <Text style={styles.errorText}>{errors.email.message}</Text>
+                            </View>
+                        )}
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -139,7 +142,12 @@ const SignupScreen: React.FC<Props> = ({}) => {
                             name="firstname"
                             defaultValue=""
                         />
-                        <View style={{ justifyContent: 'center' }}>
+                        {errors.firstname && (
+                            <View style={styles.errorBox}>
+                                <Text style={styles.errorText}>{errors.firstname.message}</Text>
+                            </View>
+                        )}
+                        <View style={{ justifyContent: 'center', marginBottom: height * 0.05 }}>
                             <Controller
                                 control={control}
                                 render={({ field: { onChange, onBlur, value } }) => (
@@ -165,7 +173,14 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                 name="password"
                                 defaultValue=""
                             />
-                            {watchPassword.length < 8 && watchPassword.length >= 1 && <Text style={styles.checkPassText}>Failbe</Text>}
+                            {errors.password && (
+                                <View style={styles.errorBox}>
+                                    <Text style={styles.errorText}>{errors.password.message}</Text>
+                                </View>
+                            )}
+                            {watchPassword.length < 8 && watchPassword.length >= 1 && (
+                                <Text style={styles.checkPassText}>Failbe</Text>
+                            )}
                         </View>
                         <CheckBox
                             label="Je certifie atre majeur(e) et j'accepte les Conditions generales d'utilisations"
@@ -185,22 +200,35 @@ const SignupScreen: React.FC<Props> = ({}) => {
                     <TouchableOpacity
                         style={[
                             styles.connectButton,
-                            { backgroundColor: checkValid() ? '#ff2c2c' : 'gray' },
+                            // { backgroundColor: checkValid() ? '#f97b97' : 'gray' },
                         ]}
-                        disabled={false}
+                        // disabled={checkValid() ? false : true}
                         onPress={handleSubmit(onSubmit)}
                     >
-                        <Entypo name="check" size={30} color="#ffffff" />
-                        <Text
-                            style={{
-                                textAlign: 'center',
-                                fontWeight: 'bold',
-                                fontSize: height * 0.03,
-                                color: '#ffffff',
-                            }}
-                        >
-                            ME CONNECTER
-                        </Text>
+                        {state.isLoading === true ? (
+                            <ActivityIndicator color="white" size="large" />
+                        ) : (
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginBottom: 5,
+                                }}
+                            >
+                                <Entypo name="check" size={height * 0.02} color="#ffffff" />
+                                <Text
+                                    style={{
+                                        marginLeft: 10,
+                                        textAlign: 'center',
+                                        fontSize: height * 0.02,
+                                        color: '#ffffff',
+                                    }}
+                                >
+                                    ME CONNECTER
+                                </Text>
+                            </View>
+                        )}
                     </TouchableOpacity>
                 </>
             </TouchableWithoutFeedback>
@@ -229,13 +257,17 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     connectButton: {
-        backgroundColor: '#ff2c2c',
+        backgroundColor: '#ff5978',
         height: 50,
         width: width,
-        flexDirection: 'row',
         paddingTop: 10,
         position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
         bottom: 0,
+        borderTopWidth: 1,
+        borderTopColor: '#fff',
     },
     checkPassText: {
         textDecorationLine: 'underline',
@@ -243,6 +275,19 @@ const styles = StyleSheet.create({
         right: 20,
         color: '#ffffff',
         fontSize: height * 0.025,
+    },
+    errorText: {
+        color: '#fff',
+        marginLeft: 20,
+    },
+    errorBox: {
+        marginHorizontal: 20,
+        height: height * 0.04,
+        backgroundColor: 'red',
+        marginTop: 5,
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 

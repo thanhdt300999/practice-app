@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { View, StyleSheet, FlatList, Dimensions, TouchableOpacity, RefreshControl, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
@@ -10,7 +10,9 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
+import globalStyles from './globalStyle'
 const height = Dimensions.get('window').height;
+const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
 interface Props {}
 interface country {
     id: string;
@@ -53,17 +55,18 @@ const CountryScreen: React.FC<Props> = ({}) => {
         >
             <View style={{ height: height * 0.8, alignSelf: 'stretch' }}>
                 <ButtonBack onPress={() => navigation.goBack()} />
-                <View style={styles.header}>
-                    <View style={styles.iconStyle}>
-                        <FontAwesome5 name="landmark" size={height * 0.04} color="#fff" />
+                <View style={globalStyles.header}>
+                    <View style={globalStyles.iconStyle}>
+                        <FontAwesome5 name="landmark" size={height * 0.03} color="#fff" />
                     </View>
-                    <Text style={styles.textStyle}>Quel est votre pays ?</Text>
+                    <Text style={globalStyles.textFormStyle}>Quel est votre pays ?</Text>
+                    <Text style={{alignSelf: 'center', marginTop: 5 , color: '#fff',fontSize: height*0.019}}>Un seul choix possible</Text>
                 </View>
                 <FlatList
                     data={state.listCountries}
                     renderItem={({ item }) => {
                         return (
-                            <View style={styles.styleCheckbox}>
+                            <TouchableOpacity style={styles.styleCheckbox} onPress={() => setCountry(item)}>
                                 <Text style={styles.textCheckBox}>{item.name}:</Text>
                                 <View style={styles.radio}>
                                     <RadioButton
@@ -74,10 +77,17 @@ const CountryScreen: React.FC<Props> = ({}) => {
                                         onPress={() => setCountry(item)}
                                     />
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         );
                     }}
                     keyExtractor={(item) => item.id}
+                    refreshControl={
+                        <RefreshControl
+                            colors={['red', 'tomato']}
+                            refreshing={state.isLoading}
+                            progressViewOffset={Platform.OS === "ios" ? null : height*0.1}
+                        />
+                    }
                 />
             </View>
             <ButtonNext onPress={onSubmit} disable={country.id !== '' ? false : true} />
@@ -86,38 +96,16 @@ const CountryScreen: React.FC<Props> = ({}) => {
 };
 
 const styles = StyleSheet.create({
-    iconStyle: {
-        height: height * 0.1,
-        width: height * 0.1,
-        borderRadius: 70,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: '#ffffff',
-        borderWidth: 2,
-        marginBottom: height * 0.03,
-    },
-    header: {
-        alignItems: 'center',
-        flexDirection: 'column',
-        marginBottom: 20,
-    },
-    textStyle: {
-        fontSize: height * 0.04,
-        alignSelf: 'center',
-        color: '#FFFFFF',
-    },
     styleCheckbox: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: 20,
+        marginHorizontal: 25,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         paddingVertical: 10,
     },
     textCheckBox: {
-        fontSize: height * 0.03,
-        fontWeight: 'bold',
+        fontSize: height * 0.02,
         color: '#FFFFFF',
         alignSelf: 'center',
     },

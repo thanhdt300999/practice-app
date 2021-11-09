@@ -8,7 +8,7 @@ import {
     watchGetRegions,
     watchPostSignup,
 } from '../sagas/signup.saga';
-import { watchGetUsers } from '../sagas/home.saga';
+import { watchGetMoreUsers, watchGetUsers } from '../sagas/home.saga';
 const sagas = function* () {
     yield all([
         takeLatest('HANDLE_LOGIN', loginSaga),
@@ -19,7 +19,7 @@ const sagas = function* () {
         watchGetCitiesByGeo(),
         watchGetUsers(),
         watchPostSignup(),
-
+        watchGetMoreUsers()
     ]);
 };
 export default sagas;

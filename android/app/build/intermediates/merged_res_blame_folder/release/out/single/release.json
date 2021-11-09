@@ -32,24 +32,24 @@
         "source": "/Users/dothanh/Desktop/practice-app/android/app/build/generated/res/react/release/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "/Users/dothanh/Desktop/practice-app/android/app/build/intermediates/res/merged/release/drawable-mdpi_image_menubar.jpg.flat",
-        "source": "/Users/dothanh/Desktop/practice-app/android/app/build/generated/res/react/release/drawable-mdpi/image_menubar.jpg"
-    },
-    {
         "merged": "/Users/dothanh/Desktop/practice-app/android/app/build/intermediates/res/merged/release/drawable-xxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
         "source": "/Users/dothanh/Desktop/practice-app/android/app/build/generated/res/react/release/drawable-xxhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "/Users/dothanh/Desktop/practice-app/android/app/build/intermediates/res/merged/release/drawable-mdpi_image_discovery.jpg.flat",
+        "source": "/Users/dothanh/Desktop/practice-app/android/app/build/generated/res/react/release/drawable-mdpi/image_discovery.jpg"
     },
     {
         "merged": "/Users/dothanh/Desktop/practice-app/android/app/build/intermediates/res/merged/release/drawable-mdpi_image_capture.png.flat",
         "source": "/Users/dothanh/Desktop/practice-app/android/app/build/generated/res/react/release/drawable-mdpi/image_capture.png"
     },
     {
-        "merged": "/Users/dothanh/Desktop/practice-app/android/app/build/intermediates/res/merged/release/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "/Users/dothanh/Desktop/practice-app/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
-    },
-    {
         "merged": "/Users/dothanh/Desktop/practice-app/android/app/build/intermediates/res/merged/release/mipmap-xhdpi_ic_launcher.png.flat",
         "source": "/Users/dothanh/Desktop/practice-app/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/dothanh/Desktop/practice-app/android/app/build/intermediates/res/merged/release/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Users/dothanh/Desktop/practice-app/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
         "merged": "/Users/dothanh/Desktop/practice-app/android/app/build/intermediates/res/merged/release/mipmap-hdpi_ic_launcher_round.png.flat",

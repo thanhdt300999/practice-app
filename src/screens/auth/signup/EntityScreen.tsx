@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
+import { View, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
@@ -10,9 +10,10 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
-
+import globalStyles from './globalStyle'
 interface Props {}
 const height = Dimensions.get('window').height;
+const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
 const EntityScreen: React.FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => {
@@ -36,13 +37,13 @@ const EntityScreen: React.FC<Props> = ({}) => {
         >
             <View>
                 <ButtonBack onPress={() => navigation.navigate('Signin')} />
-                <View style={styles.header}>
-                    <View style={styles.iconStyle}>
-                        <Icon name="intersex" size={height * 0.04} color="#fff" />
+                <View style={globalStyles.header}>
+                    <View style={globalStyles.iconStyle}>
+                        <Icon name="intersex" size={height * 0.03} color="#fff" />
                     </View>
-                    <Text style={styles.textStyle}>Vous etes</Text>
+                    <Text style={globalStyles.textFormStyle}>Vous etes: </Text>
                 </View>
-                <View style={styles.styleCheckbox}>
+                <TouchableOpacity style={styles.styleCheckbox} onPress={() => setGender('Female')}>
                     <Text style={styles.textCheckBox}>Homme:</Text>
                     <View style={styles.radio}>
                         <RadioButton
@@ -53,9 +54,9 @@ const EntityScreen: React.FC<Props> = ({}) => {
                             onPress={() => setGender('Female')}
                         />
                     </View>
-                </View>
-                <View style={styles.styleCheckbox}>
-                    <Text style={styles.textCheckBox}>Male:</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.styleCheckbox} onPress={() => setGender('Male')}>
+                    <Text style={styles.textCheckBox}>Femme:</Text>
                     <RadioButton
                         color="#FFFFFF"
                         value="Male"
@@ -63,7 +64,7 @@ const EntityScreen: React.FC<Props> = ({}) => {
                         status={gender === 'Male' ? 'checked' : 'unchecked'}
                         onPress={() => setGender('Male')}
                     />
-                </View>
+                </TouchableOpacity>
             </View>
             <ButtonNext onPress={onSubmit} disable={gender === 'unchecked' ? true : false} />
         </LinearGradient>
@@ -71,38 +72,16 @@ const EntityScreen: React.FC<Props> = ({}) => {
 };
 
 const styles = StyleSheet.create({
-    iconStyle: {
-        height: height * 0.1,
-        width: height * 0.1,
-        borderRadius: 70,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: '#ffffff',
-        borderWidth: 2,
-        marginBottom: height * 0.03,
-    },
-    header: {
-        alignItems: 'center',
-        flexDirection: 'column',
-        marginBottom: height * 0.03,
-    },
-    textStyle: {
-        fontSize: height * 0.04,
-        alignSelf: 'center',
-        color: '#FFFFFF',
-    },
     styleCheckbox: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: 20,
+        marginHorizontal: 25,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         paddingVertical: 10,
     },
     textCheckBox: {
-        fontSize: height * 0.03,
-        fontWeight: 'bold',
+        fontSize: height * 0.025,
         color: '#FFFFFF',
         alignSelf: 'center',
     },

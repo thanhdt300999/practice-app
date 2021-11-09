@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { View, StyleSheet, FlatList, Dimensions, TouchableOpacity, RefreshControl, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
@@ -10,8 +10,9 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
+import globalStyles from './globalStyle'
 const height = Dimensions.get('window').height;
-
+const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
 interface Props {}
 interface city {
     id: string;
@@ -63,18 +64,18 @@ const CityScreen: React.FC<Props> = ({}) => {
         >
             <View style={{ height: height * 0.8, alignSelf: 'stretch' }}>
                 <ButtonBack onPress={() => navigation.goBack()} />
-                <View style={styles.header}>
-                    <View style={styles.iconStyle}>
-                        <FontAwesome5 name="warehouse" size={height * 0.04} color="#fff" />
+                <View style={globalStyles.header}>
+                    <View style={globalStyles.iconStyle}>
+                        <FontAwesome5 name="warehouse" size={height * 0.03} color="#fff" />
                     </View>
-                    <Text style={styles.textStyle}>Quelle est votre ville ?</Text>
+                    <Text style={globalStyles.textFormStyle}>Quelle est votre ville ?</Text>
                 </View>
                 {state.isLoading === false && (
                     <FlatList
                         data={state.listCities}
                         renderItem={({ item }) => {
                             return (
-                                <View style={styles.styleCheckbox}>
+                                <TouchableOpacity style={styles.styleCheckbox} onPress={() => setCity(item)}>
                                     <Text style={styles.textCheckBox}>{item.name}:</Text>
                                     <View style={styles.radio}>
                                         <RadioButton
@@ -85,10 +86,17 @@ const CityScreen: React.FC<Props> = ({}) => {
                                             onPress={() => setCity(item)}
                                         />
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                             );
                         }}
                         keyExtractor={(item) => item.id.toString()}
+                        refreshControl={
+                            <RefreshControl
+                                colors={['red', 'tomato']}
+                                refreshing={state.isLoading}
+                                progressViewOffset={Platform.OS === "ios" ? null : height*0.1}
+                            />
+                        }
                     />
                 )}
             </View>
@@ -101,26 +109,6 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
     },
-    header: {
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    iconStyle: {
-        height: height * 0.1,
-        width: height * 0.1,
-        borderRadius: 70,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: '#ffffff',
-        borderWidth: 2,
-        marginBottom: height * 0.03,
-    },
-    textStyle: {
-        color: '#FFFFFF',
-        fontSize: height * 0.04,
-        marginBottom: 10,
-    },
     styleCheckbox: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -130,8 +118,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     textCheckBox: {
-        fontSize: height * 0.03,
-        fontWeight: 'bold',
+        fontSize: height * 0.02,
         color: '#FFFFFF',
         alignSelf: 'center',
     },

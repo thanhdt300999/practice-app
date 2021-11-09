@@ -7,5 +7,7 @@ export const rootReducer = combineReducers({
     signup: signupReducer,
     home: homeReducer
 });
-
+const rootReducer1 = (state, action) => {
+    return appReducer(state, action)
+  }
 export type RootState = ReturnType<typeof rootReducer>

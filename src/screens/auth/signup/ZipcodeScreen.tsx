@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import {
     View,
     StyleSheet,
-    TouchableOpacity,
-    KeyboardAvoidingView,
-    Platform,
     TouchableWithoutFeedback,
     Keyboard,
     Dimensions,
@@ -20,7 +17,9 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { TextInput } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
+import globalStyles from './globalStyle';
 const height = Dimensions.get('window').height;
+const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
 interface Props {}
 interface origin {
     id: string;
@@ -50,18 +49,14 @@ const ZipcodeScreen: React.FC<Props> = ({}) => {
             angleCenter={{ x: 0.5, y: 0.5 }}
             locations={[0, 1]}
         >
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : null}
-                style={styles.container}
-            >
                 <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
                     <View style={{ height: height * 0.8, alignSelf: 'stretch' }}>
                         <ButtonBack onPress={() => navigation.goBack()} />
-                        <View style={styles.contain}>
-                            <View style={styles.iconStyle}>
-                                <Octicons name="file-zip" size={height * 0.04} color="#fff" />
+                        <View style={globalStyles.header}>
+                            <View style={globalStyles.iconStyle}>
+                                <Octicons name="file-zip" size={height * 0.03} color="#fff" />
                             </View>
-                            <Text style={styles.textStyle}>Quel est votre code postal ?</Text>
+                            <Text style={globalStyles.textFormStyle}>Quel est votre code postal ?</Text>
                         </View>
                         <Controller
                             control={control}
@@ -91,7 +86,6 @@ const ZipcodeScreen: React.FC<Props> = ({}) => {
                     </View>
                 </TouchableWithoutFeedback>
                 <ButtonNext onPress={handleSubmit(onSubmit)} disable={!isValid} />
-            </KeyboardAvoidingView>
         </LinearGradient>
     );
 };
@@ -99,50 +93,6 @@ const ZipcodeScreen: React.FC<Props> = ({}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    contain: {
-        alignItems: 'center',
-        flexDirection: 'column',
-        marginBottom: 20,
-    },
-    imageStyle: {
-        width: 75,
-        height: 75,
-        alignSelf: 'center',
-        // marginBottom: "100%",
-    },
-    textStyle: {
-        fontSize: height * 0.04,
-        alignSelf: 'center',
-        color: '#FFFFFF',
-    },
-    styleCheckbox: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        paddingVertical: 10,
-    },
-    textCheckBox: {
-        fontSize: height * 0.03,
-        fontWeight: 'bold',
-        color: '#FFFFFF',
-        alignSelf: 'center',
-    },
-    radio: {
-        alignSelf: 'flex-end',
-    },
-    iconStyle: {
-        height: height * 0.1,
-        width: height * 0.1,
-        borderRadius: 70,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: '#ffffff',
-        borderWidth: 2,
-        marginBottom: height * 0.03,
     },
     textInput: {
         backgroundColor: 'transparent',

@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, Dimensions } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    FlatList,
+    Dimensions,
+    TouchableOpacity,
+    RefreshControl,
+    Platform,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
@@ -10,7 +18,9 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
+import globalStyles from './globalStyle'
 const height = Dimensions.get('window').height;
+const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
 interface Props {}
 interface region {
     id: string;
@@ -40,24 +50,28 @@ const RegionScreen: React.FC<Props> = ({}) => {
             angleCenter={{ x: 0.5, y: 0.5 }}
             locations={[0, 1]}
         >
+            {console.log(state.isLoading)}
             <View style={{ height: height * 0.8, alignSelf: 'stretch' }}>
                 <ButtonBack
                     onPress={() => {
                         navigation.goBack();
                     }}
                 />
-                <View style={styles.header}>
-                    <View style={styles.iconStyle}>
-                        <FontAwesome5 name="city" size={height * 0.04} color="#fff" />
+                <View style={globalStyles.header}>
+                    <View style={globalStyles.iconStyle}>
+                        <FontAwesome5 name="city" size={height * 0.03} color="#fff" />
                     </View>
-                    <Text style={styles.textStyle}>Quelle est votre region ? </Text>
+                    <Text style={globalStyles.textFormStyle}>Quelle est votre region ? </Text>
                 </View>
                 {state.isLoading === false && (
                     <FlatList
                         data={state.listRegions}
                         renderItem={({ item }) => {
                             return (
-                                <View style={styles.styleCheckbox}>
+                                <TouchableOpacity
+                                    style={styles.styleCheckbox}
+                                    onPress={() => setRegion(item)}
+                                >
                                     <Text style={styles.textCheckBox}>{item.name}:</Text>
                                     <View style={styles.radio}>
                                         <RadioButton
@@ -68,10 +82,17 @@ const RegionScreen: React.FC<Props> = ({}) => {
                                             onPress={() => setRegion(item)}
                                         />
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                             );
                         }}
                         keyExtractor={(item) => item.id}
+                        refreshControl={
+                            <RefreshControl
+                                colors={['red', 'tomato']}
+                                refreshing={state.isLoading}
+                                progressViewOffset={Platform.OS === 'ios' ? null : height * 0.1}
+                            />
+                        }
                     />
                 )}
             </View>
@@ -83,21 +104,12 @@ const RegionScreen: React.FC<Props> = ({}) => {
 const styles = StyleSheet.create({
     header: {
         alignItems: 'center',
-    },
-    iconStyle: {
-        height: height * 0.1,
-        width: height * 0.1,
-        borderRadius: 70,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: '#ffffff',
-        borderWidth: 2,
         marginBottom: height * 0.03,
+        marginTop: marginTop,
     },
     textStyle: {
         color: '#FFFFFF',
-        fontSize: height * 0.04,
+        fontSize: height * 0.03,
         marginBottom: 10,
     },
     styleCheckbox: {
@@ -109,8 +121,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     textCheckBox: {
-        fontSize: height * 0.03,
-        fontWeight: 'bold',
+        fontSize: height * 0.02,
         color: '#FFFFFF',
         alignSelf: 'center',
     },
