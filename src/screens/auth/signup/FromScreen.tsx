@@ -11,7 +11,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch } from 'react-redux';
 import Text from '../../../../assets/AppText';
-import Entypo from 'react-native-vector-icons/Entypo';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { useForm, Controller } from 'react-hook-form';
 import Geolocation from '@react-native-community/geolocation';
 import actions from '../../../redux/actions/signup.actions';
@@ -19,8 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import ButtonNext from '../../../components/button/ButtonNext';
 import globalStyles from './globalStyle'
-const height = Dimensions.get('window').height;
-const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
+const height: number = Dimensions.get('window').height;
 interface Props {}
 interface origin {
     id: string;
@@ -81,21 +80,14 @@ const FromScreen: React.FC<Props> = ({}) => {
         timestamp: 1636099015077,
     };
 
-    const handleOnPress = () => {
-        let data = {
+    const handleOnPress = () =>  {
+        let data: object = {
             latitude: info1.coords.latitude,
             longitude: info1.coords.longitude,
         };
         Geolocation.getCurrentPosition(
             (info) => {
                 console.log(info);
-                // let data = {
-                //     latitude: info.coords.latitude,
-                //     longitude: info.coords.longitude,
-                // };
-                // console.log(data)
-                // dispatch(actions.setGeoLocation(data));
-                // navigation.navigate('City');
             },
             (error) => console.log(error),
             {
@@ -120,7 +112,7 @@ const FromScreen: React.FC<Props> = ({}) => {
                 <ButtonBack onPress={() => navigation.goBack()} />
                 <View style={globalStyles.header}>
                     <View style={globalStyles.iconStyle}>
-                        <Entypo name="location-pin" size={height * 0.03} color="#fff" />
+                        <EvilIcons name="location" size={height * 0.025} color="#fff" />
                     </View>
                     <Text style={globalStyles.textFormStyle}>Ou habitez-vous ?</Text>
                 </View>
@@ -137,7 +129,7 @@ const FromScreen: React.FC<Props> = ({}) => {
                         alignItems: 'center',
                     }}
                 >
-                    <Entypo name="location-pin" size={15} color="#fff" />
+                    <EvilIcons name="location" size={15} color="#fff" />
                     <Text style={{ color: '#fff' }}>Me Geolocaliser ?</Text>
                 </TouchableOpacity>
             </View>

@@ -18,43 +18,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/Entypo';
 import { RootState } from '../../redux/config-redux/rootReducer';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import action from '../../redux/actions/home.actions';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import LinearGradient from 'react-native-linear-gradient';
 const height: number = Dimensions.get('window').height;
-const HEADER_MAX_HEIGHT: number = 200;
-const HEADER_MIN_HEIGHT: number = height * 0.05 + 10;
+const HEADER_MAX_HEIGHT: number = height*0.4;
+const HEADER_MIN_HEIGHT: number = height * 0.1 + 10;
 const HEADER_SCROLL_DISTANCE: number = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 const width: number = Dimensions.get('window').width; //full width
-const MARGIN: number = (width * 0.3 - 32) / 3;
+const MARGIN: number = width * 0.1;
 interface Props {}
 
 const Item = ({ title, url, age, location }) => (
     <View style={Platform.OS === 'ios' ? styles.shadowProp : null}>
         <View style={styles.userBox}>
-            <View style={{ padding: 2}}>
+            <View style={{ alignItems: 'center' }}>
                 <Image
                     style={styles.userImage}
                     source={{
                         uri: url,
                     }}
                 />
-                <View style={styles.icon}>
-                    <FontAwesome name="circle" color="#8cff12" size={height*0.025} />
+                <View style={styles.iconOnline}>
+                    <FontAwesome name="circle" color="#8cff12" size={height * 0.025} />
                 </View>
             </View>
-            <Text
-                style={{
-                    fontSize: height * 0.02,
-                    color: '#362e2e',
-                    marginVertical: 10,
-                }}
-            >
-                {title}
-            </Text>
+            <Text style={styles.userName}>{title}</Text>
             <View style={styles.userInfo}>
                 <View style={styles.userAge}>
                     <Text style={{ fontSize: height * 0.015, color: '#a1a4a8' }}>{age} ans</Text>
@@ -95,7 +87,6 @@ const Discovery: React.FC<Props> = ({}) => {
                         style={{
                             fontSize: height * 0.05,
                             color: '#fff',
-                        
                         }}
                     >
                         Rencontre
@@ -137,7 +128,14 @@ const Discovery: React.FC<Props> = ({}) => {
                     </View>
                 </TouchableOpacity>
             </View>
-            <View style={{borderBottomWidth:0.5, borderBottomColor: '#ccc', marginTop: 7, width: width*0.1}}></View>
+            <View
+                style={{
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: '#ccc',
+                    marginTop: 7,
+                    width: width * 0.1,
+                }}
+            ></View>
         </View>
     );
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -208,9 +206,12 @@ const Discovery: React.FC<Props> = ({}) => {
                             }}
                         >
                             <TouchableOpacity onPress={onReset}>
-                                <MaterialCommunityIcons name="restore" size={height * 0.025} />
+                                <AntDesign
+                                    name="reload1"
+                                    size={height * 0.025}
+                                />
                             </TouchableOpacity>
-                            <Text style={{ color: '#000', fontSize: height*0.025 }}>Reset</Text>
+                            <Text style={{ color: '#000', fontSize: height * 0.025 }}>Reset</Text>
                         </View>
                         <Text style={{ fontSize: height * 0.03, color: '#000' }}> Decouvir </Text>
                         <View style={{ flexDirection: 'row', marginRight: 30 }}>
@@ -219,11 +220,11 @@ const Discovery: React.FC<Props> = ({}) => {
                                     marginHorizontal: 20,
                                     borderWidth: 1,
                                     borderColor: '#24cf5f',
-                                    padding: 5,
+                                    padding: 4,
                                     borderRadius: 6,
                                 }}
                             >
-                                <Entypo name="save" size={height * 0.02} color="#24cf5f" />
+                                <Entypo name="save" size={height * 0.015} color="#24cf5f" />
                             </View>
                             <View style={{ alignSelf: 'center' }}>
                                 <FontAwesome
@@ -270,7 +271,7 @@ const styles = StyleSheet.create({
     },
     headerButton: {
         width: width * 0.35,
-        borderRadius: 5,
+        borderRadius: 8,
         height: height * 0.07,
         backgroundColor: '#24cf5f',
         justifyContent: 'center',
@@ -279,40 +280,56 @@ const styles = StyleSheet.create({
     },
     textHeader: {
         fontSize: height * 0.03,
-      
+
         color: '#4a5057',
     },
     textButton: {
         color: '#ffffff',
-     
+
         fontSize: height * 0.02,
         marginLeft: 3,
     },
     userBox: {
         marginTop: 25,
-        // marginLeft: MARGIN,
-        borderRadius: 10,
-        paddingHorizontal: 8,
+        borderRadius: 15,
         paddingVertical: 15,
         backgroundColor: '#ffffff',
-        elevation: 3,
+        elevation: 1,
+        width: width * 0.35,
     },
     userImage: {
-        width: width * 0.35,
-        height: width * 0.35,
+        width: width * 0.3,
+        height: width * 0.3,
         borderRadius: 10,
+    },
+    iconOnline: {
+        position: 'absolute',
+        bottom: 0,
+        backgroundColor: '#ffffff',
+        width: height * 0.03,
+        height: height * 0.03,
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        right: 7,
+    },
+    userName: {
+        fontSize: height * 0.02,
+        color: '#362e2e',
+        marginLeft: width * 0.025,
+        marginTop: 10,
     },
     userInfo: {
         flexDirection: 'row',
-        marginTop: 0,
-        width: width * 0.35,
+        marginTop: 10,
+        marginHorizontal: width * 0.025,
         overflow: 'hidden',
     },
     userAge: {
-        borderRightColor: '#a1a4a8',
-        borderRightWidth: 1,
         paddingRight: 20,
         color: '#74797f',
+        borderRightColor: '#ccc',
+        borderRightWidth: 2,
     },
     userLocation: {
         marginLeft: 5,
@@ -333,18 +350,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 18,
     },
-    icon: {
-        position: 'absolute',
-        bottom: 0,
-        alignSelf: 'flex-end',
-        backgroundColor: '#ffffff',
-        width: height*0.03,
-        height: height*0.03,
-        borderRadius: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
     header: {
         top: Platform.OS === 'ios' ? getStatusBarHeight(true) : null,
         position: 'absolute',
@@ -356,11 +361,11 @@ const styles = StyleSheet.create({
     },
     bar: {
         backgroundColor: '#ffffff',
-        height: height * 0.059,
+        height: Platform.OS === 'ios' ? height*0.06 : height * 0.08,
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        elevation: 4,
+        elevation: 10,
     },
     listHeaderComponent: {
         width: width,
@@ -390,12 +395,12 @@ const styles = StyleSheet.create({
         width: width,
     },
     abc: {
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 4,
         },
-        shadowOpacity: 0.30,
+        shadowOpacity: 0.3,
         shadowRadius: 4.65,
         elevation: 8,
     },

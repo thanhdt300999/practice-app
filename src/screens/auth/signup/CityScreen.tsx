@@ -3,7 +3,7 @@ import { View, StyleSheet, FlatList, Dimensions, TouchableOpacity, RefreshContro
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Feather from 'react-native-vector-icons/Feather';
 import actions from '../../../redux/actions/signup.actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';
 import { useNavigation } from '@react-navigation/native';
@@ -11,8 +11,7 @@ import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
 import globalStyles from './globalStyle'
-const height = Dimensions.get('window').height;
-const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
+const height: number = Dimensions.get('window').height;
 interface Props {}
 interface city {
     id: string;
@@ -66,7 +65,7 @@ const CityScreen: React.FC<Props> = ({}) => {
                 <ButtonBack onPress={() => navigation.goBack()} />
                 <View style={globalStyles.header}>
                     <View style={globalStyles.iconStyle}>
-                        <FontAwesome5 name="warehouse" size={height * 0.03} color="#fff" />
+                        <Feather name="folder" size={height * 0.025} color="#fff" />
                     </View>
                     <Text style={globalStyles.textFormStyle}>Quelle est votre ville ?</Text>
                 </View>
@@ -75,8 +74,8 @@ const CityScreen: React.FC<Props> = ({}) => {
                         data={state.listCities}
                         renderItem={({ item }) => {
                             return (
-                                <TouchableOpacity style={styles.styleCheckbox} onPress={() => setCity(item)}>
-                                    <Text style={styles.textCheckBox}>{item.name}:</Text>
+                                <TouchableOpacity style={globalStyles.styleCheckbox} onPress={() => setCity(item)}>
+                                    <Text style={styles.textCheckBox}>{item.name}</Text>
                                     <View style={styles.radio}>
                                         <RadioButton
                                             color="#FFFFFF"
@@ -106,17 +105,6 @@ const CityScreen: React.FC<Props> = ({}) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-    },
-    styleCheckbox: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        paddingVertical: 10,
-    },
     textCheckBox: {
         fontSize: height * 0.02,
         color: '#FFFFFF',
@@ -124,10 +112,7 @@ const styles = StyleSheet.create({
     },
     radio: {
         alignSelf: 'flex-end',
-    },
-    scrollView: {
-        height: 300,
-    },
+    }
 });
 
 export default CityScreen;

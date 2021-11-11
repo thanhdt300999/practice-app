@@ -12,8 +12,7 @@ import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
 import globalStyles from './globalStyle'
 interface Props {}
-const height = Dimensions.get('window').height;
-const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
+const height: number = Dimensions.get('window').height;
 const EntityScreen: React.FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => {
@@ -39,12 +38,12 @@ const EntityScreen: React.FC<Props> = ({}) => {
                 <ButtonBack onPress={() => navigation.navigate('Signin')} />
                 <View style={globalStyles.header}>
                     <View style={globalStyles.iconStyle}>
-                        <Icon name="intersex" size={height * 0.03} color="#fff" />
+                        <Icon name="intersex" size={height * 0.025} color="#fff" />
                     </View>
                     <Text style={globalStyles.textFormStyle}>Vous etes: </Text>
                 </View>
-                <TouchableOpacity style={styles.styleCheckbox} onPress={() => setGender('Female')}>
-                    <Text style={styles.textCheckBox}>Homme:</Text>
+                <TouchableOpacity style={globalStyles.styleCheckbox} onPress={() => setGender('Female')}>
+                    <Text style={styles.textCheckBox}>Homme</Text>
                     <View style={styles.radio}>
                         <RadioButton
                             color="#FFFFFF"
@@ -55,8 +54,8 @@ const EntityScreen: React.FC<Props> = ({}) => {
                         />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.styleCheckbox} onPress={() => setGender('Male')}>
-                    <Text style={styles.textCheckBox}>Femme:</Text>
+                <TouchableOpacity style={globalStyles.styleCheckbox} onPress={() => setGender('Male')}>
+                    <Text style={styles.textCheckBox}>Femme</Text>
                     <RadioButton
                         color="#FFFFFF"
                         value="Male"
@@ -72,14 +71,6 @@ const EntityScreen: React.FC<Props> = ({}) => {
 };
 
 const styles = StyleSheet.create({
-    styleCheckbox: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 25,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        paddingVertical: 10,
-    },
     textCheckBox: {
         fontSize: height * 0.025,
         color: '#FFFFFF',

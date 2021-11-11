@@ -64,7 +64,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                 {(error !== '' || errors.email || errors.password) && (
                     <View
                         style={{
-                            backgroundColor: '#b5e0e8',
+                            backgroundColor: '#fde9ea',
                             height: 40,
                             justifyContent: 'center',
                             borderRadius: 10,
@@ -73,11 +73,11 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                             marginVertical: 10,
                         }}
                     >
-                        {errors.email && <Text style={{ color: 'red' }}>Email is required</Text>}
+                        {errors.email && <Text style={{ color: '#ff2c2c' }}>Email is required</Text>}
                         {!errors.email && errors.password && (
-                            <Text style={{ color: 'red' }}>Password is required</Text>
+                            <Text style={{ color: '#ff2c2c' }}>Password is required</Text>
                         )}
-                        {error !== '' && !errors.email && !errors.password  && <Text style={{ color: 'red' }}>Email or password is incorrect</Text>}
+                        {error !== '' && !errors.email && !errors.password  && <Text style={{ color: '#ff2c2c' }}>Identifiant ou mot de passe incorrect</Text>}
                     </View>
                 )}
                 <Controller
@@ -126,7 +126,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                         render={({ field: { onChange, onBlur, value } }) => (
                             <TextInput
                                 autoCompleteType={false}
-                                label="Votre mot de passe"
+                                label="Mot de passe"
                                 style={styles.formPassword}
                                 onBlur={onBlur}
                                 onChangeText={onChange}
@@ -151,7 +151,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                             position: 'absolute',
                             alignSelf: 'flex-end',
                             paddingRight: 15,
-                            // paddingTop: width * 0.03,
+                            paddingTop: width * 0.02,
                             zIndex: 5,
                             top: 10,
                             height: height * 0.08
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     loginText: {
-        fontSize: height * 0.04,
+        fontSize: height * 0.03,
         marginBottom: 10,
         color: '#000'
     },
@@ -227,10 +227,10 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
         marginTop: 15,
         fontSize: height * 0.02,
-        color: 'grey',
+        color: 'gray',
     },
     buttonStyle: {
-        height: height*0.065,
+        height: height*0.075,
         marginTop: height * 0.03,
         borderRadius: 10,
         flexDirection: 'column',
@@ -239,12 +239,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#24cf5f',
     },
     buttonText: {
-        fontSize: height * 0.025,
+        fontSize: height * 0.022,
         color: 'white',
     },
     footerText: {
         fontSize: height * 0.02,
-        marginTop: height * 0.02,
+        marginTop: height * 0.03,
         color: 'grey',
     },
     footerSpecialText: {

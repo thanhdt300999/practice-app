@@ -9,16 +9,16 @@ import Entity from '../screens/home/Entity';
 import Message from '../screens/home/Message';
 import NotificationScreen from '../screens/home/NotificationScreen';
 import UserScreen from '../screens/home/UserScreen';
-
+import { StyleSheet, Text, View } from 'react-native';
+import { DiscoveryIcon, UserIcon, MessageIcon, NotificationIcon, EntityIcon } from './myIconTabBar';
 const Tab = createBottomTabNavigator();
-
 export default function homeNavigation() {
     return (
         <Tab.Navigator
             initialRouteName="Discovery"
             screenOptions={{
-                tabBarActiveTintColor: 'blue',
-                tabBarInactiveTintColor: '#ccc',
+                tabBarActiveTintColor: 'black',
+                tabBarInactiveTintColor: 'gray',
                 tabBarShowLabel: false,
                 headerShown: false,
             }}
@@ -27,15 +27,17 @@ export default function homeNavigation() {
                 name="Discovery"
                 component={Discovery}
                 options={{
-                    tabBarIcon: ({ color }) => <Feather name="search" size={30} color={color} />,
+                    tabBarIcon: ({ color, focused }) => (
+                        <DiscoveryIcon focused={focused} color={color} />
+                    ),
                 }}
             />
             <Tab.Screen
                 name="Entity"
                 component={Entity}
                 options={{
-                    tabBarIcon: ({ color }) => (
-                        <FontAwesome name="intersex" size={30} color={color} />
+                    tabBarIcon: ({ color, focused }) => (
+                        <EntityIcon focused={focused} color={color} />
                     ),
                 }}
             />
@@ -43,8 +45,8 @@ export default function homeNavigation() {
                 name="Message"
                 component={Message}
                 options={{
-                    tabBarIcon: ({ color }) => (
-                        <AntDesign name="message1" size={30} color={color} />
+                    tabBarIcon: ({ color, focused }) => (
+                        <MessageIcon focused={focused} color={color} />
                     ),
                 }}
             />
@@ -52,8 +54,8 @@ export default function homeNavigation() {
                 name="NotificationScreen"
                 component={NotificationScreen}
                 options={{
-                    tabBarIcon: ({ color }) => (
-                        <Ionicons name="notifications-outline" size={30} color={color} />
+                    tabBarIcon: ({ color, focused }) => (
+                        <NotificationIcon focused={focused} color={color} />
                     ),
                 }}
             />
@@ -61,7 +63,9 @@ export default function homeNavigation() {
                 name="UserScreen"
                 component={UserScreen}
                 options={{
-                    tabBarIcon: ({ color }) => <AntDesign name="user" size={30} color={color} />,
+                    tabBarIcon: ({ color, focused }) => (
+                        <UserIcon focused={focused} color={color} />
+                    ),
                 }}
             />
         </Tab.Navigator>

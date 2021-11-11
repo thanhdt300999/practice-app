@@ -7,11 +7,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import SigninScreen from '../screens/auth/signin/Signin';
 import signupNavigation from './signupNavigation';
 import homeNavigation from './homeNavigation';
-import { useSelector,useDispatch } from 'react-redux';
-import actions from '../redux/actions/signin.actions'
+import { useSelector, useDispatch } from 'react-redux';
+import actions from '../redux/actions/signin.actions';
 import { RootState } from '../redux/config-redux/rootReducer';
+import FlashMessage from "react-native-flash-message";
 const Stack = createNativeStackNavigator();
-
+const message = () => {
+    return (<FlashMessage position="top" />)
+}
 const RootNavigation = () => {
     const state = useSelector((state: RootState) => state.signin);
     const [isLoading, setIsLoading] = React.useState(false);
@@ -22,7 +25,7 @@ const RootNavigation = () => {
             let token = await AsyncStorage.getItem('token');
             setIsLoading(false);
             if (token) {
-                dispatch(actions.setToken(token))
+                dispatch(actions.setToken(token));
             }
         } catch (error) {
             console.log(error);
@@ -31,9 +34,9 @@ const RootNavigation = () => {
     React.useEffect(() => {
         readToken();
     }, []);
-    if(isLoading === true) {
-        return null
-    }else {
+    if (isLoading === true) {
+        return null;
+    } else {
         return (
             <Stack.Navigator
                 initialRouteName="resolveAuth"
@@ -41,7 +44,6 @@ const RootNavigation = () => {
                     headerShown: false,
                 }}
             >
-    
                 {state.isLogged === false ? (
                     <>
                         <Stack.Screen name="Signin" component={SigninScreen} />
@@ -54,8 +56,9 @@ const RootNavigation = () => {
                 )}
                 {/* <Stack.Screen name="ResolveAuth" component={ResolveAuthScreen} />
                 <Stack.Screen name="Signin" component={SigninScreen} />
-                <Stack.Screen name="SignupFlow" component={signupNavigation} />
-                <Stack.Screen name="HomeFlow" component={homeNavigation} /> */}
+             
+                // <Stack.Screen name="HomeFlow" component={homeNavigation} /> */}
+                {/* <Stack.Screen name="ABC" component={message} /> */}
             </Stack.Navigator>
         );
     }

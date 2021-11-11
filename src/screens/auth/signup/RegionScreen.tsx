@@ -19,8 +19,7 @@ import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
 import globalStyles from './globalStyle'
-const height = Dimensions.get('window').height;
-const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
+const height: number = Dimensions.get('window').height;
 interface Props {}
 interface region {
     id: string;
@@ -50,7 +49,6 @@ const RegionScreen: React.FC<Props> = ({}) => {
             angleCenter={{ x: 0.5, y: 0.5 }}
             locations={[0, 1]}
         >
-            {console.log(state.isLoading)}
             <View style={{ height: height * 0.8, alignSelf: 'stretch' }}>
                 <ButtonBack
                     onPress={() => {
@@ -59,7 +57,7 @@ const RegionScreen: React.FC<Props> = ({}) => {
                 />
                 <View style={globalStyles.header}>
                     <View style={globalStyles.iconStyle}>
-                        <FontAwesome5 name="city" size={height * 0.03} color="#fff" />
+                        <FontAwesome5 name="city" size={height * 0.025} color="#fff" />
                     </View>
                     <Text style={globalStyles.textFormStyle}>Quelle est votre region ? </Text>
                 </View>
@@ -69,10 +67,10 @@ const RegionScreen: React.FC<Props> = ({}) => {
                         renderItem={({ item }) => {
                             return (
                                 <TouchableOpacity
-                                    style={styles.styleCheckbox}
+                                    style={globalStyles.styleCheckbox}
                                     onPress={() => setRegion(item)}
                                 >
-                                    <Text style={styles.textCheckBox}>{item.name}:</Text>
+                                    <Text style={styles.textCheckBox}>{item.name}</Text>
                                     <View style={styles.radio}>
                                         <RadioButton
                                             color="#FFFFFF"
@@ -102,24 +100,6 @@ const RegionScreen: React.FC<Props> = ({}) => {
 };
 
 const styles = StyleSheet.create({
-    header: {
-        alignItems: 'center',
-        marginBottom: height * 0.03,
-        marginTop: marginTop,
-    },
-    textStyle: {
-        color: '#FFFFFF',
-        fontSize: height * 0.03,
-        marginBottom: 10,
-    },
-    styleCheckbox: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        paddingVertical: 10,
-    },
     textCheckBox: {
         fontSize: height * 0.02,
         color: '#FFFFFF',

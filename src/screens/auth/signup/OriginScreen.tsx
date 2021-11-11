@@ -3,15 +3,14 @@ import { View, StyleSheet, FlatList, Dimensions, TouchableOpacity } from 'react-
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
 import actions from '../../../redux/actions/signup.actions';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
 import globalStyles from './globalStyle'
-const height = Dimensions.get('window').height;
-const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
+const height: number= Dimensions.get('window').height;
 const demoData = [
     { id: '0', name: 'Peu importe' },
     { id: '1', name: 'Algérien' },
@@ -49,7 +48,7 @@ const OriginScreen: React.FC<Props> = ({}) => {
                 <ButtonBack onPress={() => navigation.goBack()} />
                 <View style={globalStyles.header}>
                     <View style={globalStyles.iconStyle}>
-                        <Icon name="folder" size={height * 0.03} color="#fff" />
+                        <Entypo name="map" size={height * 0.025} color="#fff" />
                     </View>
                     <Text style={globalStyles.textFormStyle}>Quelle est votre origine ?</Text>
                 </View>
@@ -57,8 +56,8 @@ const OriginScreen: React.FC<Props> = ({}) => {
                     data={demoData}
                     renderItem={({ item }) => {
                         return (
-                            <TouchableOpacity style={styles.styleCheckbox} onPress={() => setOrigin(item)}>
-                                <Text style={styles.textCheckBox}>{item.name}:</Text>
+                            <TouchableOpacity style={globalStyles.styleCheckbox} onPress={() => setOrigin(item)}>
+                                <Text style={styles.textCheckBox}>{item.name}</Text>
                                 <View style={styles.radio}>
                                     <RadioButton
                                         color="#FFFFFF"
@@ -80,19 +79,6 @@ const OriginScreen: React.FC<Props> = ({}) => {
 };
 
 const styles = StyleSheet.create({
-    textStyle: {
-        fontSize: height * 0.03,
-        alignSelf: 'center',
-        color: '#FFFFFF',
-    },
-    styleCheckbox: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 25,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        paddingVertical: 10,
-    },
     textCheckBox: {
         fontSize: height * 0.02,
         color: '#FFFFFF',

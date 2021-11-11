@@ -1,14 +1,14 @@
 import { Dimensions, Platform, StyleSheet } from 'react-native';
 
-const height = Dimensions.get('window').height;
-const width = Dimensions.get('window').width;
-const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
+const height: number = Dimensions.get('window').height;
+const width: number = Dimensions.get('window').width;
+const marginTop: number = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
 export default StyleSheet.create({
     iconStyle: {
         height: height * 0.1,
         width: height * 0.1,
         borderRadius: 70,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#ffffff',
@@ -16,7 +16,7 @@ export default StyleSheet.create({
         marginBottom: height * 0.03,
     },
     textFormStyle: {
-        fontSize: height * 0.03,
+        fontSize: width * 0.06,
         color: '#FFFFFF',
     },
     header: {
@@ -24,5 +24,13 @@ export default StyleSheet.create({
         marginBottom: height * 0.03,
         marginHorizontal: 5,
         marginTop: marginTop,
+    },
+    styleCheckbox: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 25,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingVertical: 10,
     }
 });

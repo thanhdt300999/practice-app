@@ -10,6 +10,7 @@ import {
     Keyboard,
     // Text,
     Dimensions,
+    Platform,
 } from 'react-native';
 import { Button, IconButton } from 'react-native-paper';
 import Text from '../../../../assets/AppText';
@@ -26,14 +27,14 @@ const SigninScreen: React.FC<Props> = ({}) => {
     const handleNavigate = () => {
         navigation.navigate('SignupFlow', { screen: 'Entity' });
     };
-    const [modalHeight, setModalHeight] = React.useState(height * 0.5);
+    const [modalHeight, setModalHeight] = React.useState(height*0.8);
     const [showButton, setShowButton] = React.useState(true);
     React.useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-            setModalHeight(height * 0.2); // or some other action
+            setModalHeight(Platform.OS === 'ios' ? height * 0.6 : height * 0.5); // or some other action
         });
         const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setModalHeight(height * 0.5); // or some other action
+            setModalHeight(height*0.8); // or some other action
         });
 
         return () => {
@@ -47,6 +48,8 @@ const SigninScreen: React.FC<Props> = ({}) => {
             clearTimeout(timer);
         };
     }, [modalVisible]);
+    React.useEffect(() => {
+    }, [state.isLoading])
     return (
         <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
@@ -62,7 +65,7 @@ const SigninScreen: React.FC<Props> = ({}) => {
                         <IconButton
                             icon="close"
                             color="#ffffff"
-                            size={20}
+                            size={30}
                             style={{
                                 position: 'absolute',
                                 alignSelf: 'flex-end',
@@ -75,12 +78,6 @@ const SigninScreen: React.FC<Props> = ({}) => {
                     )}
                     <View style={styles.centeredView}>
                         <View style={[styles.modalView, { marginTop: modalHeight }]}>
-                            {/* <Button
-                                style={styles.buttonClose}
-                                onPress={() => setModalVisible(!modalVisible)}
-                            >
-                                X
-                            </Button> */}
                             <AuthForm modalVisible={modalVisible} />
                         </View>
                     </View>
@@ -91,7 +88,7 @@ const SigninScreen: React.FC<Props> = ({}) => {
                 >
                     <View style={styles.banner}>
                         <Image
-                            style={styles.tinyLogo}
+                            style={styles.imageBanner}
                             source={require('../../../../image//logo-large.png')}
                         />
                         <Text style={styles.textBanner}>
@@ -124,9 +121,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
-    tinyLogo: {
+    imageBanner: {
         alignSelf: 'center',
-        width: width * 0.8,
+        width: width * 0.75,
         resizeMode: 'contain',
     },
     image: {
@@ -135,29 +132,29 @@ const styles = StyleSheet.create({
     },
     textBanner: {
         color: '#ffffff',
-        fontSize: height * 0.03,
+        fontSize: Platform.OS === 'ios' ? height * 0.025 : height*0.03,
         textAlign: 'center',
+        width: width*0.8,
     },
     textSignin: {
         color: 'white',
         textDecorationLine: 'underline',
         fontSize: height * 0.02,
-        fontWeight: 'normal'
     },
     footer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         position: 'absolute',
         bottom: 35,
     },
     button: {
-        marginLeft: 30,
-        backgroundColor: 'green',
-        height: height * 0.08,
+        marginLeft: width*0.15,
+        backgroundColor: '#24cf5f',
+        height: height * 0.065,
         borderRadius: 5,
-        width: width * 0.5,
+        width: width * 0.45,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -168,7 +165,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 22,
     },
     modalView: {
         backgroundColor: 'white',
@@ -198,7 +194,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     banner: {
-        marginTop: height * 0.35,
+        marginTop: height * 0.45,
+        alignItems: 'center'
     },
 });
 

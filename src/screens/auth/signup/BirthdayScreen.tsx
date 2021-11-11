@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, Dimensions, Platform } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    TouchableWithoutFeedback,
+    Keyboard,
+    Dimensions,
+    Platform,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import { useForm, Controller } from 'react-hook-form';
@@ -10,11 +17,10 @@ import ButtonNext from '../../../components/button/ButtonNext';
 import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import actions from '../../../redux/actions/signup.actions';
-import globalStyles from './globalStyle'
+import globalStyles from './globalStyle';
 interface Props {}
-const height = Dimensions.get('window').height;
-const width = Dimensions.get('window').width;
-const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
+const height: number = Dimensions.get('window').height;
+const width: number = Dimensions.get('window').width;
 const BirthdayScreen: React.FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const {
@@ -25,9 +31,9 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
         formState: { errors, isValid },
     } = useForm({ mode: 'onBlur' });
     const navigation = useNavigation();
-    const watchDate = watch("date", "");
-    const watchMonth = watch("month", "");
-    const watchYear = watch("year", "");
+    const watchDate = watch('date', '');
+    const watchMonth = watch('month', '');
+    const watchYear = watch('year', '');
     const birthday = getValues();
     const [showError, setShowError] = React.useState<boolean>(false);
     const dateRegex = new RegExp('^(0?[1-9]|[12][0-9]|3[01])$');
@@ -102,9 +108,11 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                     <ButtonBack onPress={() => navigation.goBack()} />
                     <View style={globalStyles.header}>
                         <View style={globalStyles.iconStyle}>
-                            <Icon name="birthday-cake" size={height * 0.03} color="#fff" />
+                            <Icon name="birthday-cake" size={height * 0.025} color="#fff" />
                         </View>
-                        <Text style={globalStyles.textFormStyle}>Quelle est votre date de naissance ?</Text>
+                        <Text style={globalStyles.textFormStyle}>
+                            Quelle est votre date de naissance ?
+                        </Text>
                     </View>
                     <View style={styles.inputStyle}>
                         <Controller
@@ -115,9 +123,23 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                                     onBlur={onBlur}
                                     onChangeText={onChange}
                                     value={value}
-                                    placeholder="DD"
+                                    placeholder="JJ"
                                     keyboardType="number-pad"
+                                    underlineColor="#ffffff"
                                     autoCompleteType={false}
+                                    theme={{
+                                        colors: {
+                                            text: 'white',
+                                            placeholder: '#d6d3cb',
+                                            primary: 'white',
+                                        },
+                                        fonts: {
+                                            regular: {
+                                                fontFamily: 'Avenir Next Condensed',
+                                            },
+                                        },
+                                    }}
+                                    underlineColorAndroid="transparent"
                                 />
                             )}
                             rules={{
@@ -133,7 +155,7 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                             name="date"
                             defaultValue=""
                         />
-                        <Text style={{ fontSize: height * 0.07, color: '#ccc' }}>/</Text>
+                        <Text style={{ fontSize: height * 0.025, color: '#ccc' }}>/</Text>
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -145,6 +167,20 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                                     placeholder="MM"
                                     keyboardType="number-pad"
                                     autoCompleteType={false}
+                                    underlineColorAndroid="transparent"
+                                    underlineColor="#ffffff"
+                                    theme={{
+                                        colors: {
+                                            text: 'white',
+                                            placeholder: '#d6d3cb',
+                                            primary: 'white',
+                                        },
+                                        fonts: {
+                                            regular: {
+                                                fontFamily: 'Avenir Next Condensed',
+                                            },
+                                        },
+                                    }}
                                 />
                             )}
                             rules={{
@@ -160,7 +196,9 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                             name="month"
                             defaultValue=""
                         />
-                        <Text style={{ fontSize: height * 0.07, color: '#ccc' }}>/</Text>
+                        <View style={{alignSelf: 'center'}}>
+                        <Text style={{ fontSize: height * 0.025, color: '#ccc' }}>/</Text>
+                        </View>
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -169,9 +207,22 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                                     onBlur={onBlur}
                                     onChangeText={onChange}
                                     value={value}
-                                    placeholder="YY"
+                                    placeholder="AAAA"
                                     keyboardType="number-pad"
                                     autoCompleteType={false}
+                                    underlineColor="white"
+                                    theme={{
+                                        colors: {
+                                            text: 'white',
+                                            placeholder: '#d6d3cb',
+                                            primary: 'white',
+                                        },
+                                        fonts: {
+                                            regular: {
+                                                fontFamily: 'Avenir Next Condensed',
+                                            },
+                                        },
+                                    }}
                                 />
                             )}
                             rules={{
@@ -209,27 +260,23 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
 };
 
 const styles = StyleSheet.create({
-    imageStyle: {
-        width: 75,
-        height: 75,
-    },
     inputStyle: {
         alignSelf: 'center',
         flexDirection: 'row',
         width: 200,
         justifyContent: 'space-between',
+        height: height*0.055,
+        alignItems: 'center',
+        marginTop: 15
     },
     textInput: {
         backgroundColor: 'transparent',
+        height: height*0.055
     },
     bottom: {
         flex: 1,
         justifyContent: 'flex-end',
         marginBottom: 36,
-    },
-    container: {
-        flex: 1,
-        alignItems: 'center',
     },
     errorBox: {
         marginHorizontal: 30,

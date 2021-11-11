@@ -5,6 +5,7 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
     Dimensions,
+    Platform,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -18,8 +19,7 @@ import ButtonBack from '../../../components/button/ButtonBack';
 import { TextInput } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
 import globalStyles from './globalStyle';
-const height = Dimensions.get('window').height;
-const marginTop = Platform.OS === 'ios' ? height * 0.06 : height * 0.04;
+const height: number = Dimensions.get('window').height;
 interface Props {}
 interface origin {
     id: string;
@@ -91,9 +91,6 @@ const ZipcodeScreen: React.FC<Props> = ({}) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
     textInput: {
         backgroundColor: 'transparent',
         marginHorizontal: 20,

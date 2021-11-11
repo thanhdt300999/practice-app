@@ -21,9 +21,10 @@ import ButtonBack from '../../../components/button/ButtonBack';
 import { useForm, Controller } from 'react-hook-form';
 import { TextInput } from 'react-native-paper';
 import CheckBox from '../../../components/button/CheckBox';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 
-const width = Dimensions.get('window').width; //full width
-const height = Dimensions.get('window').height;
+const width: number = Dimensions.get('window').width; //full width
+const height: number = Dimensions.get('window').height;
 interface Props {}
 interface region {
     id: string;
@@ -32,6 +33,7 @@ interface region {
 const SignupScreen: React.FC<Props> = ({}) => {
     const [first, setCheckFrist] = React.useState(false);
     const [second, setCheckSecond] = React.useState(false);
+    const [showError, setShowError] = React.useState(false);
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const state = useSelector((state: RootState) => state.signup);
@@ -40,33 +42,45 @@ const SignupScreen: React.FC<Props> = ({}) => {
         handleSubmit,
         formState: { errors, isValid },
         watch,
-    } = useForm({ mode: 'onBlur' });
+    } = useForm({ mode: 'onSubmit' });
     const watchPassword = watch('password', '');
     const onSubmit = (data) => {
-        const formData = new FormData();
-        formData.append('firstname', data.firstname);
-        formData.append('email', data.email);
-        formData.append('password', data.password);
-        formData.append('affiliate', 1);
-        formData.append('mailing', 1);
-        formData.append('birthday', state.dataPostLogin.birthday);
-        formData.append('gender', state.dataPostLogin.gender);
-        formData.append('origin', state.dataPostLogin.origin);
-        formData.append('geoname_id', state.dataPostLogin.city);
-        console.log(formData);
-        dispatch(actions.postSignupRequest(formData));
-    };
-    const emailRegex = new RegExp('/^[^s@]+@[^s@]+.[^s@]+$/');
-    const nameRegex = new RegExp('^\\w{4,15}$');
-    const passwordRegex = new RegExp('.{8,}');
-
-    const checkValid = () => {
-        if (isValid && first == true && second == true) {
-            return true;
+        if (first && second) {
+            const formData = new FormData();
+            formData.append('firstname', data.firstname);
+            formData.append('email', data.email);
+            formData.append('password', data.password);
+            formData.append('affiliate', 1);
+            formData.append('mailing', 1);
+            formData.append('birthday', state.dataPostLogin.birthday);
+            formData.append('gender', state.dataPostLogin.gender);
+            formData.append('origin', state.dataPostLogin.origin);
+            formData.append('geoname_id', state.dataPostLogin.city);
+            console.log(formData);
+            dispatch(actions.postSignupRequest(formData));
         } else {
-            return false;
+            showMessage({
+                message: "Vous devez accepter CGU",
+                color: 'white',
+                backgroundColor: '#ff2c2c',
+                textStyle: {fontFamily: 'Avenir Next Condensed'},
+                style: {alignItems: 'center'}
+              });
         }
     };
+    React.useEffect(() => {
+        if(state.error) {
+            showMessage({
+                message: "Email is exist",
+                color: 'white',
+                backgroundColor: '#ff2c2c',
+                textStyle: {fontFamily: 'Avenir Next Condensed'},
+                style: {alignItems: 'center'}
+            });
+        }
+    }, [state.error])
+    const nameRegex = new RegExp('^\\w{4,15}$');
+    const passwordRegex = new RegExp('.{8,}');
     return (
         <LinearGradient
             colors={['#FF5978', '#FF59F4']}
@@ -98,12 +112,21 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                     onChangeText={onChange}
                                     value={value}
                                     placeholder="Email"
+                                    underlineColorAndroid="#ffffff"
+                                    underlineColor="#ffffff"
+                                    theme={{
+                                        colors: {
+                                            text: 'white',
+                                            placeholder: '#d3ded6',
+                                            primary: 'white',
+                                        },
+                                    }}
                                 />
                             )}
                             rules={{
                                 required: {
                                     value: true,
-                                    message: 'Field is required!',
+                                    message: 'Email is required!',
                                 },
                                 pattern: {
                                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -127,12 +150,21 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                     onChangeText={onChange}
                                     value={value}
                                     placeholder="Prénom"
+                                    underlineColorAndroid="#ffffff"
+                                    underlineColor="#ffffff"
+                                    theme={{
+                                        colors: {
+                                            text: 'white',
+                                            placeholder: '#d3ded6',
+                                            primary: 'white',
+                                        },
+                                    }}
                                 />
                             )}
                             rules={{
                                 required: {
                                     value: true,
-                                    message: 'Field is required!',
+                                    message: 'First name is required!',
                                 },
                                 pattern: {
                                     value: nameRegex,
@@ -147,7 +179,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                 <Text style={styles.errorText}>{errors.firstname.message}</Text>
                             </View>
                         )}
-                        <View style={{ justifyContent: 'center', marginBottom: height * 0.05 }}>
+                        <View style={{ justifyContent: 'center', marginBottom: height * 0.02 }}>
                             <Controller
                                 control={control}
                                 render={({ field: { onChange, onBlur, value } }) => (
@@ -158,12 +190,21 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                         value={value}
                                         placeholder="Mot de passe"
                                         secureTextEntry={true}
+                                        underlineColorAndroid="transparent"
+                                        underlineColor="#ffffff"
+                                        theme={{
+                                            colors: {
+                                                text: 'white',
+                                                placeholder: '#d3ded6',
+                                                primary: 'white',
+                                            },
+                                        }}
                                     />
                                 )}
                                 rules={{
                                     required: {
                                         value: true,
-                                        message: 'Field is required!',
+                                        message: 'Password is required!',
                                     },
                                     pattern: {
                                         value: passwordRegex,
@@ -178,8 +219,21 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                     <Text style={styles.errorText}>{errors.password.message}</Text>
                                 </View>
                             )}
-                            {watchPassword.length < 8 && watchPassword.length >= 1 && (
-                                <Text style={styles.checkPassText}>Failbe</Text>
+                            {watchPassword.length < 8  && (
+                                <View style={styles.checkPassText}>
+                                    <Text
+                                        style={{
+                                            color: '#ffffff',
+                                            fontSize: height * 0.02,
+                                            textDecorationColor: '#ff2c2c' /*'#ff2c2c'*/,
+                                        }}
+                                    >
+                                        Failbe
+                                    </Text>
+                                    <View
+                                        style={{ borderBottomColor: '#ff2c2c', borderBottomWidth: 2 }}
+                                    ></View>
+                                </View>
                             )}
                         </View>
                         <CheckBox
@@ -198,11 +252,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
                         />
                     </View>
                     <TouchableOpacity
-                        style={[
-                            styles.connectButton,
-                            // { backgroundColor: checkValid() ? '#f97b97' : 'gray' },
-                        ]}
-                        // disabled={checkValid() ? false : true}
+                        style={[styles.connectButton]}
                         onPress={handleSubmit(onSubmit)}
                     >
                         {state.isLoading === true ? (
@@ -237,24 +287,11 @@ const SignupScreen: React.FC<Props> = ({}) => {
 };
 
 const styles = StyleSheet.create({
-    contain: {
-        alignItems: 'center',
-        flexDirection: 'column',
-        marginBottom: 20,
-    },
-    iconStyle: {
-        height: 75,
-        width: 75,
-        borderRadius: 70,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: '#ffffff',
-        borderWidth: 2,
-    },
     textInput: {
         backgroundColor: 'transparent',
         marginHorizontal: 20,
+        // borderBottomWidth: 4,
+        // borderBottomColor: 'white'
     },
     connectButton: {
         backgroundColor: '#ff5978',
@@ -274,7 +311,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 20,
         color: '#ffffff',
+        top: height*0.035,
         fontSize: height * 0.025,
+        textDecorationColor: '#ff2c2c' /*'#ff2c2c'*/,
     },
     errorText: {
         color: '#fff',
@@ -283,7 +322,7 @@ const styles = StyleSheet.create({
     errorBox: {
         marginHorizontal: 20,
         height: height * 0.04,
-        backgroundColor: 'red',
+        backgroundColor: '#ff2c2c',
         marginTop: 5,
         textAlign: 'center',
         justifyContent: 'center',
