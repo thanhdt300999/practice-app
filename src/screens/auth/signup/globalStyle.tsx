@@ -28,7 +28,7 @@ export default StyleSheet.create({
     styleCheckbox: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: 25,
+        marginHorizontal: 30,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         paddingVertical: 10,

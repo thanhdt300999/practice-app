@@ -280,13 +280,35 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                 )}
                             </View>
                         </View>
-                        <CheckBox
+                        <TouchableOpacity
+                            onPress={() => {
+                                setCheckFrist(!first);
+                            }}
+                        >
+                            <View style={styles.container}>
+                                <View style={[styles.customCheckbox]}>
+                                    {first && <Feather name="check" color="#fff" size={25} />}
+                                </View>
+                                    <Text style={[styles.textStyle]}>
+                                        Je certifie atre majeur(e) et j'accepte les{' '}
+                                        <Text
+                                            style={[
+                                                styles.textStyle,
+                                                { textDecorationLine: 'underline' },
+                                            ]}
+                                        >
+                                        Conditions generales d'utilisations
+                                        </Text>
+                                    </Text>
+                            </View>
+                        </TouchableOpacity>
+                        {/* <CheckBox
                             label="Je certifie atre majeur(e) et j'accepte les Conditions generales d'utilisations"
                             status={first ? 'checked' : 'unchecked'}
                             onPress={() => {
                                 setCheckFrist(!first);
                             }}
-                        />
+                        /> */}
                         <CheckBox
                             label="Jacceple que mes donnees renseignees, y compris celles facultatives a mon origine, soient accessibles au service client de Mektoube et autres ultisateurs du site dans & hors I'UE conformenent a la charte parivee"
                             status={second ? 'checked' : 'unchecked'}
@@ -336,7 +358,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     connectButton: {
-        backgroundColor: '#ff5978',
+        backgroundColor: '#ff597880',
         height: 50,
         width: width,
         paddingTop: 10,
@@ -369,6 +391,29 @@ const styles = StyleSheet.create({
         backgroundColor: '#ff2c2c',
         marginTop: 5,
         textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderColor: '#ffff',
+        marginHorizontal: 15,
+        marginTop: 30,
+    },
+    textStyle: {
+        flexWrap: 'wrap',
+        color: 'white',
+        flex: 1,
+        fontSize: Platform.OS === 'ios' ? height * 0.016 : height * 0.02,
+    },
+    customCheckbox: {
+        borderRadius: 8,
+        borderWidth: 2,
+        borderColor: '#ccc',
+        width: 35,
+        height: 35,
+        marginRight: 10,
         justifyContent: 'center',
         alignItems: 'center',
     },

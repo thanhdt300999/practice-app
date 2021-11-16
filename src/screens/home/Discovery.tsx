@@ -30,7 +30,7 @@ const HEADER_MAX_HEIGHT: number = height * 1;
 const HEADER_MIN_HEIGHT: number = height * 0.3 + 10;
 const HEADER_SCROLL_DISTANCE: number = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 const width: number = Dimensions.get('window').width; //full width
-const MARGIN: number = width * 0.1;
+const MARGIN: number = width * 0.07;
 interface Props {}
 
 const Item = ({ title, url, age, location }) => (
@@ -113,7 +113,7 @@ const listHeaderComponent = () => (
             style={{
                 borderBottomWidth: 0.5,
                 borderBottomColor: '#ccc',
-                marginTop: 7,
+                marginTop: 25,
                 width: width * 0.1,
             }}
         ></View>
@@ -202,7 +202,7 @@ const Discovery: React.FC<Props> = ({}) => {
                         <RefreshControl
                             colors={['red', 'tomato']}
                             onRefresh={onRefresh}
-                            refreshing={state.isLoading}
+                            refreshing={state.isLoadingGetUsers}
                             progressViewOffset={Platform.OS === 'ios' ? null : height * 0.1}
                         />
                     }
@@ -321,11 +321,11 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         backgroundColor: '#ffffff',
         elevation: 1,
-        width: width * 0.35,
+        width: width * 0.38,
     },
     userImage: {
-        width: width * 0.3,
-        height: width * 0.3,
+        width: width * 0.33,
+        height: width * 0.33,
         borderRadius: 10,
     },
     iconOnline: {
@@ -453,16 +453,15 @@ const styles = StyleSheet.create({
     },
     footerLoading: {
         flexDirection: 'row',
-        marginHorizontal: width*0.05,
+        marginHorizontal: width*0.07,
         justifyContent: 'space-between',
     },
     loadingBox: {
         marginTop: 20,
-        width: width * 0.42,
-        height: height * 0.2,
+        width: width * 0.38,
+        height: width * 0.45,
         borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 15,
+        borderRadius: 15
     },
 });
 

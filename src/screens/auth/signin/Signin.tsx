@@ -27,7 +27,7 @@ const SigninScreen: React.FC<Props> = ({}) => {
     const handleNavigate = () => {
         navigation.navigate('SignupFlow', { screen: 'Entity' });
     };
-    const [modalHeight, setModalHeight] = React.useState(height * 0.8);
+    const [modalHeight, setModalHeight] = React.useState(height * 0.7);
     const [showButton, setShowButton] = React.useState(true);
     const [disableClose, setDisableClose] = React.useState(false);
     React.useEffect(() => {
@@ -36,7 +36,7 @@ const SigninScreen: React.FC<Props> = ({}) => {
             setModalHeight(Platform.OS === 'ios' ? height * 0.1 : 0); // or some other action
         });
         const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setModalHeight(height * 0.8);
+            setModalHeight(height * 0.7);
             setDisableClose(false);
         });
 
@@ -114,7 +114,7 @@ const SigninScreen: React.FC<Props> = ({}) => {
                         <Text style={styles.textSignin}>SE CONNECTER</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={handleNavigate}>
-                        <Text style={{ color: '#ffffff', fontSize: height * 0.02 }}>
+                        <Text style={{ color: '#ffffff' }}>
                             INSCRIPTION GRATUITE
                         </Text>
                         <Text style={{ color: '#ffffff' }}>EN 1 MIN</Text>
@@ -141,14 +141,14 @@ const styles = StyleSheet.create({
     },
     textBanner: {
         color: '#ffffff',
-        fontSize: Platform.OS === 'ios' ? height * 0.025 : height * 0.03,
+        fontSize: Platform.OS === 'ios' ? height * 0.025 : height * 0.028,
         textAlign: 'center',
         width: width * 0.8,
     },
     textSignin: {
         color: 'white',
         textDecorationLine: 'underline',
-        fontSize: height * 0.02,
+        fontSize: height * 0.025,
     },
     footer: {
         flexDirection: 'row',
@@ -157,13 +157,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         bottom: 35,
+        marginHorizontal: 20
     },
     button: {
-        marginLeft: width * 0.15,
+        marginLeft: width * 0.10,
         backgroundColor: '#24cf5f',
-        height: height * 0.065,
+        height: height * 0.075,
         borderRadius: 5,
-        width: width * 0.45,
+        width: width * 0.5,
         justifyContent: 'center',
         alignItems: 'center',
     },
