@@ -15,7 +15,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
 import actions from '../../../redux/actions/signup.actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';
-import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { useForm, Controller } from 'react-hook-form';
@@ -33,7 +34,8 @@ interface region {
 const SignupScreen: React.FC<Props> = ({}) => {
     const [first, setCheckFrist] = React.useState(false);
     const [second, setCheckSecond] = React.useState(false);
-    const [showError, setShowError] = React.useState(false);
+    const [showPassword, setShowPassword] = React.useState(true);
+    const [error, setError] = React.useState('');
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const state = useSelector((state: RootState) => state.signup);
@@ -42,6 +44,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
         handleSubmit,
         formState: { errors, isValid },
         watch,
+        clearErrors,
     } = useForm({ mode: 'onSubmit' });
     const watchPassword = watch('password', '');
     const onSubmit = (data) => {
@@ -56,44 +59,45 @@ const SignupScreen: React.FC<Props> = ({}) => {
             formData.append('gender', state.dataPostLogin.gender);
             formData.append('origin', state.dataPostLogin.origin);
             formData.append('geoname_id', state.dataPostLogin.city);
-            console.log(formData);
             dispatch(actions.postSignupRequest(formData));
         } else {
             showMessage({
-                message: "Vous devez accepter CGU",
+                message: 'Vous devez accepter les CGU',
                 color: 'white',
                 backgroundColor: '#ff2c2c',
-                textStyle: {fontFamily: 'Avenir Next Condensed'},
-                style: {alignItems: 'center'}
-              });
+                textStyle: { fontFamily: 'Avenir Next Condensed' },
+                style: { alignItems: 'center' },
+            });
         }
     };
     React.useEffect(() => {
-        if(state.error) {
+        state.error !== '' &&
             showMessage({
-                message: "Email is exist",
+                message:
+                    'Catte adresse email est deja prise. Voulez-vous vous connecter ou recuperer votre mot de pass',
                 color: 'white',
                 backgroundColor: '#ff2c2c',
-                textStyle: {fontFamily: 'Avenir Next Condensed'},
-                style: {alignItems: 'center'}
+                textStyle: { fontFamily: 'Avenir Next Condensed' },
+                style: { alignItems: 'center' },
             });
-        }
-    }, [state.error])
-    const nameRegex = new RegExp('^\\w{4,15}$');
-    const passwordRegex = new RegExp('.{8,}');
+    }, [state.error]);
+    const nameRegex = new RegExp('^[a-zA-Z]{4,15}$');
     return (
-        <LinearGradient
-            colors={['#FF5978', '#FF59F4']}
-            style={{ flex: 1, backgroundColor: '#FF5978' }}
-            useAngle={true}
-            angle={0}
-            angleCenter={{ x: 0.5, y: 0.5 }}
-            locations={[0, 1]}
-        >
-            <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+            <LinearGradient
+                colors={['#FF5978', '#FF59F4']}
+                style={{ flex: 1, backgroundColor: '#FF5978' }}
+                useAngle={true}
+                angle={0}
+                angleCenter={{ x: 0.5, y: 0.5 }}
+                locations={[0, 1]}
+            >
                 <>
                     <ButtonBack
-                        onPress={() => navigation.goBack()}
+                        onPress={() => {
+                            navigation.goBack();
+                            dispatch({ type: 'GO_BACK' });
+                        }}
                         style={{ alignSelf: 'flex-start' }}
                         signup={true}
                     />
@@ -109,7 +113,10 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                 <TextInput
                                     style={styles.textInput}
                                     onBlur={onBlur}
-                                    onChangeText={onChange}
+                                    onChangeText={(e) => {
+                                        clearErrors();
+                                        onChange(e);
+                                    }}
                                     value={value}
                                     placeholder="Email"
                                     underlineColorAndroid="#ffffff"
@@ -117,7 +124,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                     theme={{
                                         colors: {
                                             text: 'white',
-                                            placeholder: '#d3ded6',
+                                            placeholder: '#ccc',
                                             primary: 'white',
                                         },
                                     }}
@@ -147,7 +154,10 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                 <TextInput
                                     style={styles.textInput}
                                     onBlur={onBlur}
-                                    onChangeText={onChange}
+                                    onChangeText={(e) => {
+                                        clearErrors();
+                                        onChange(e);
+                                    }}
                                     value={value}
                                     placeholder="Prénom"
                                     underlineColorAndroid="#ffffff"
@@ -155,7 +165,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                     theme={{
                                         colors: {
                                             text: 'white',
-                                            placeholder: '#d3ded6',
+                                            placeholder: '#ccc',
                                             primary: 'white',
                                         },
                                     }}
@@ -168,7 +178,15 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                 },
                                 pattern: {
                                     value: nameRegex,
-                                    message: 'Name must have 4 to 15 characters',
+                                    message: 'Name must not have special characters',
+                                },
+                                minLength: {
+                                    value: 4,
+                                    message: 'Name must have more than 4 chars',
+                                },
+                                maxLength: {
+                                    value: 15,
+                                    message: 'Name must have less than 15 chars',
                                 },
                             }}
                             name="firstname"
@@ -186,16 +204,19 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                     <TextInput
                                         style={styles.textInput}
                                         onBlur={onBlur}
-                                        onChangeText={onChange}
+                                        onChangeText={(e) => {
+                                            clearErrors();
+                                            onChange(e);
+                                        }}
                                         value={value}
                                         placeholder="Mot de passe"
-                                        secureTextEntry={true}
+                                        secureTextEntry={showPassword}
                                         underlineColorAndroid="transparent"
                                         underlineColor="#ffffff"
                                         theme={{
                                             colors: {
                                                 text: 'white',
-                                                placeholder: '#d3ded6',
+                                                placeholder: '#ccc',
                                                 primary: 'white',
                                             },
                                         }}
@@ -206,9 +227,13 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                         value: true,
                                         message: 'Password is required!',
                                     },
+                                    minLength: {
+                                        value: 8,
+                                        message: 'Password must have more than 8 characters',
+                                    },
                                     pattern: {
-                                        value: passwordRegex,
-                                        message: 'Password must more than 8 characters',
+                                        value: /^[\S]+$/,
+                                        message: 'Password invalid',
                                     },
                                 }}
                                 name="password"
@@ -219,22 +244,41 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                     <Text style={styles.errorText}>{errors.password.message}</Text>
                                 </View>
                             )}
-                            {watchPassword.length < 8  && (
-                                <View style={styles.checkPassText}>
-                                    <Text
+
+                            <View style={styles.checkPassText}>
+                                <TouchableOpacity
+                                    style={{ marginRight: 10 }}
+                                    onPress={() => setShowPassword(!showPassword)}
+                                >
+                                    <AntDesign
+                                        name="eyeo"
                                         style={{
-                                            color: '#ffffff',
-                                            fontSize: height * 0.02,
-                                            textDecorationColor: '#ff2c2c' /*'#ff2c2c'*/,
+                                            // marginTop: width * 0.01,
+                                            alignSelf: 'flex-end',
                                         }}
-                                    >
-                                        Failbe
-                                    </Text>
-                                    <View
-                                        style={{ borderBottomColor: '#ff2c2c', borderBottomWidth: 2 }}
-                                    ></View>
-                                </View>
-                            )}
+                                        size={height * 0.025}
+                                    />
+                                </TouchableOpacity>
+                                {watchPassword.length < 8 && (
+                                    <View>
+                                        <Text
+                                            style={{
+                                                color: '#ffffff',
+                                                fontSize: height * 0.02,
+                                                textDecorationColor: '#ff2c2c' /*'#ff2c2c'*/,
+                                            }}
+                                        >
+                                            Failbe
+                                        </Text>
+                                        <View
+                                            style={{
+                                                borderBottomColor: '#ff2c2c',
+                                                borderBottomWidth: 2,
+                                            }}
+                                        ></View>
+                                    </View>
+                                )}
+                            </View>
                         </View>
                         <CheckBox
                             label="Je certifie atre majeur(e) et j'accepte les Conditions generales d'utilisations"
@@ -266,7 +310,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                     marginBottom: 5,
                                 }}
                             >
-                                <Entypo name="check" size={height * 0.02} color="#ffffff" />
+                                <Feather name="check" size={height * 0.02} color="#ffffff" />
                                 <Text
                                     style={{
                                         marginLeft: 10,
@@ -281,8 +325,8 @@ const SignupScreen: React.FC<Props> = ({}) => {
                         )}
                     </TouchableOpacity>
                 </>
-            </TouchableWithoutFeedback>
-        </LinearGradient>
+            </LinearGradient>
+        </TouchableWithoutFeedback>
     );
 };
 
@@ -290,8 +334,6 @@ const styles = StyleSheet.create({
     textInput: {
         backgroundColor: 'transparent',
         marginHorizontal: 20,
-        // borderBottomWidth: 4,
-        // borderBottomColor: 'white'
     },
     connectButton: {
         backgroundColor: '#ff5978',
@@ -308,11 +350,13 @@ const styles = StyleSheet.create({
     },
     checkPassText: {
         textDecorationLine: 'underline',
+        flexDirection: 'row',
         position: 'absolute',
         right: 20,
         color: '#ffffff',
-        top: height*0.035,
+        top: 30,
         fontSize: height * 0.025,
+        alignItems: 'center',
         textDecorationColor: '#ff2c2c' /*'#ff2c2c'*/,
     },
     errorText: {

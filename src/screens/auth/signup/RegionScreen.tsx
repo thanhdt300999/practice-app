@@ -18,7 +18,8 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
-import globalStyles from './globalStyle'
+import globalStyles from './globalStyle';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 const height: number = Dimensions.get('window').height;
 interface Props {}
 interface region {
@@ -34,8 +35,18 @@ const RegionScreen: React.FC<Props> = ({}) => {
     });
     const navigation = useNavigation();
     const onSubmit = () => {
-        navigation.navigate('City');
-        dispatch(actions.setRegion(region.id));
+        if (region.id !== '') {
+            navigation.navigate('City');
+            dispatch(actions.setRegion(region.id));
+        } else {
+            showMessage({
+                message: 'Le champ est vide',
+                color: 'white',
+                backgroundColor: '#ff2c2c',
+                textStyle: { fontFamily: 'Avenir Next Condensed' },
+                style: { alignItems: 'center' },
+            });
+        }
     };
     React.useEffect(() => {
         dispatch(actions.getRegionsRequest(state.dataPostLogin.country.id));
@@ -94,7 +105,7 @@ const RegionScreen: React.FC<Props> = ({}) => {
                     />
                 )}
             </View>
-            <ButtonNext onPress={onSubmit} disable={region.id === '' ? true : false} />
+            <ButtonNext onPress={onSubmit} disable={false} />
         </LinearGradient>
     );
 };

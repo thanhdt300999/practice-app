@@ -12,13 +12,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch } from 'react-redux';
 import Text from '../../../../assets/AppText';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import { useForm, Controller } from 'react-hook-form';
 import Geolocation from '@react-native-community/geolocation';
 import actions from '../../../redux/actions/signup.actions';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import ButtonNext from '../../../components/button/ButtonNext';
-import globalStyles from './globalStyle'
+import globalStyles from './globalStyle';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 const height: number = Dimensions.get('window').height;
 interface Props {}
 interface origin {
@@ -26,78 +26,37 @@ interface origin {
     name: string;
 }
 const FromScreen: React.FC<Props> = ({}) => {
-    const {
-        control,
-        handleSubmit,
-        formState: { errors, isValid },
-    } = useForm({ mode: 'onBlur' });
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const onSubmit = () => {
         navigation.navigate('Country');
     };
-    const requestLocationPermission = async () => {
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-            );
-
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                Geolocation.getCurrentPosition(
-                    (info) => {
-                        let data = {
-                            latitude: info.coords.latitude,
-                            longitude: info.coords.longitude,
-                        };
-                        dispatch(actions.setGeoLocation(data));
-                        navigation.navigate('City');
-                    },
-                    (error) => console.log(error),
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 1000,
-                        // maximumAge: 10000000,
-                    }
-                );
-                console.log('Location permission granted');
-            } else {
-                console.log('Location permission denied');
-            }
-        } catch (err) {
-            console.warn(err);
-        }
-    };
-    let info1 = {
-        coords: {
-            accuracy: 5,
-            altitude: 5,
-            heading: 0,
-            latitude: 37.421998333333335,
-            longitude: -122.084,
-            speed: 0,
-        },
-        mocked: false,
-        timestamp: 1636099015077,
-    };
-
-    const handleOnPress = () =>  {
-        let data: object = {
-            latitude: info1.coords.latitude,
-            longitude: info1.coords.longitude,
-        };
+    const handleOnPress = () => {
         Geolocation.getCurrentPosition(
             (info) => {
-                console.log(info);
+                let data = {
+                    latitude: info.coords.latitude,
+                    longitude: info.coords.longitude,
+                };
+                setTimeout(() => {
+                    dispatch(actions.setGeoLocation(data));
+                    navigation.navigate('City');
+                }, 1000);
             },
-            (error) => console.log(error),
+            (error) => {
+                showMessage({
+                    message: 'Geolocalisation indisponible',
+                    color: 'white',
+                    backgroundColor: '#ff2c2c',
+                    textStyle: { fontFamily: 'Avenir Next Condensed' },
+                    style: { alignItems: 'center' },
+                });
+            },
             {
                 enableHighAccuracy: true,
-                timeout: 1000,
-                // maximumAge: 10000000,
+                timeout: 999,
             }
         );
-        dispatch(actions.setGeoLocation(data));
-        navigation.navigate('City');
     };
     return (
         <LinearGradient
@@ -133,6 +92,10 @@ const FromScreen: React.FC<Props> = ({}) => {
                     <Text style={{ color: '#fff' }}>Me Geolocaliser ?</Text>
                 </TouchableOpacity>
             </View>
+            <ButtonNext
+                onPress={onSubmit}
+                disable={false}
+            />
         </LinearGradient>
     );
 };

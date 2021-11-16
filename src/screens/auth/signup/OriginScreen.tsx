@@ -9,8 +9,9 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
-import globalStyles from './globalStyle'
-const height: number= Dimensions.get('window').height;
+import { showMessage, hideMessage } from 'react-native-flash-message';
+import globalStyles from './globalStyle';
+const height: number = Dimensions.get('window').height;
 const demoData = [
     { id: '0', name: 'Peu importe' },
     { id: '1', name: 'Algérien' },
@@ -32,8 +33,19 @@ const OriginScreen: React.FC<Props> = ({}) => {
     });
     const navigation = useNavigation();
     const handleSubmit = () => {
-        dispatch(actions.setOrigin(origin.id));
-        navigation.navigate('From');
+        if(origin.id !== '') {
+            dispatch(actions.setOrigin(origin.id));
+            navigation.navigate('From');
+        }else {
+            showMessage({
+                message: 'Le champ est vide',
+                color: 'white',
+                backgroundColor: '#ff2c2c',
+                textStyle: { fontFamily: 'Avenir Next Condensed' },
+                style: { alignItems: 'center' },
+            });
+        }
+       
     };
     return (
         <LinearGradient
@@ -56,7 +68,10 @@ const OriginScreen: React.FC<Props> = ({}) => {
                     data={demoData}
                     renderItem={({ item }) => {
                         return (
-                            <TouchableOpacity style={globalStyles.styleCheckbox} onPress={() => setOrigin(item)}>
+                            <TouchableOpacity
+                                style={globalStyles.styleCheckbox}
+                                onPress={() => setOrigin(item)}
+                            >
                                 <Text style={styles.textCheckBox}>{item.name}</Text>
                                 <View style={styles.radio}>
                                     <RadioButton
@@ -73,7 +88,7 @@ const OriginScreen: React.FC<Props> = ({}) => {
                     keyExtractor={(item) => item.id}
                 />
             </View>
-            <ButtonNext onPress={handleSubmit} disable={origin.id !== '' ? false : true} />
+            <ButtonNext onPress={handleSubmit} disable={false} />
         </LinearGradient>
     );
 };

@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    Dimensions,
+    SafeAreaView,
+    TouchableOpacity,
+    Platform,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
@@ -10,7 +17,8 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
-import globalStyles from './globalStyle'
+import globalStyles from './globalStyle';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 interface Props {}
 const height: number = Dimensions.get('window').height;
 const EntityScreen: React.FC<Props> = ({}) => {
@@ -21,8 +29,19 @@ const EntityScreen: React.FC<Props> = ({}) => {
     const navigation = useNavigation();
     const [gender, setGender] = React.useState('unchecked');
     const onSubmit = () => {
-        navigation.navigate('Birthday');
-        dispatch(actions.setEntity(gender));
+        if(gender === 'unchecked') {
+            showMessage({
+                message: 'Le champ est vide',
+                color: 'white',
+                backgroundColor: '#ff2c2c',
+                textStyle: { fontFamily: 'Avenir Next Condensed' },
+                style: { alignItems: 'center' },
+            });
+        } else {
+            navigation.navigate('Birthday');
+            dispatch(actions.setEntity(gender));
+        }
+       
     };
 
     return (
@@ -42,7 +61,10 @@ const EntityScreen: React.FC<Props> = ({}) => {
                     </View>
                     <Text style={globalStyles.textFormStyle}>Vous etes: </Text>
                 </View>
-                <TouchableOpacity style={globalStyles.styleCheckbox} onPress={() => setGender('Female')}>
+                <TouchableOpacity
+                    style={globalStyles.styleCheckbox}
+                    onPress={() => setGender('Female')}
+                >
                     <Text style={styles.textCheckBox}>Homme</Text>
                     <View style={styles.radio}>
                         <RadioButton
@@ -54,7 +76,10 @@ const EntityScreen: React.FC<Props> = ({}) => {
                         />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={globalStyles.styleCheckbox} onPress={() => setGender('Male')}>
+                <TouchableOpacity
+                    style={globalStyles.styleCheckbox}
+                    onPress={() => setGender('Male')}
+                >
                     <Text style={styles.textCheckBox}>Femme</Text>
                     <RadioButton
                         color="#FFFFFF"
@@ -65,7 +90,7 @@ const EntityScreen: React.FC<Props> = ({}) => {
                     />
                 </TouchableOpacity>
             </View>
-            <ButtonNext onPress={onSubmit} disable={gender === 'unchecked' ? true : false} />
+            <ButtonNext onPress={onSubmit} disable={false} />
         </LinearGradient>
     );
 };

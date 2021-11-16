@@ -6,6 +6,7 @@ INJECTED from /Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidMa
 INJECTED from /Users/dothanh/Desktop/practice-app/android/app/src/main/AndroidManifest.xml:1:1-34:12
 MERGED from [:react-native-async-storage_async-storage] /Users/dothanh/Desktop/practice-app/node_modules/@react-native-async-storage/async-storage/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-community_geolocation] /Users/dothanh/Desktop/practice-app/node_modules/@react-native-community/geolocation/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-masked-view_masked-view] /Users/dothanh/Desktop/practice-app/node_modules/@react-native-masked-view/masked-view/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-safe-area-context] /Users/dothanh/Desktop/practice-app/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] /Users/dothanh/Desktop/practice-app/node_modules/react-native-screens/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-vector-icons] /Users/dothanh/Desktop/practice-app/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-9:12
@@ -158,6 +159,8 @@ MERGED from [:react-native-async-storage_async-storage] /Users/dothanh/Desktop/p
 MERGED from [:react-native-async-storage_async-storage] /Users/dothanh/Desktop/practice-app/node_modules/@react-native-async-storage/async-storage/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-community_geolocation] /Users/dothanh/Desktop/practice-app/node_modules/@react-native-community/geolocation/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-community_geolocation] /Users/dothanh/Desktop/practice-app/node_modules/@react-native-community/geolocation/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-masked-view_masked-view] /Users/dothanh/Desktop/practice-app/node_modules/@react-native-masked-view/masked-view/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-masked-view_masked-view] /Users/dothanh/Desktop/practice-app/node_modules/@react-native-masked-view/masked-view/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] /Users/dothanh/Desktop/practice-app/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] /Users/dothanh/Desktop/practice-app/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-screens] /Users/dothanh/Desktop/practice-app/node_modules/react-native-screens/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:5:5-7:41

@@ -12,6 +12,7 @@ import {
     Platform,
     Dimensions,
     ImageBackground,
+    ActivityIndicator,
 } from 'react-native';
 import Text from '../../../assets/AppText';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,10 +24,10 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import action from '../../redux/actions/home.actions';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import LinearGradient from 'react-native-linear-gradient';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 const height: number = Dimensions.get('window').height;
-const HEADER_MAX_HEIGHT: number = height*0.4;
-const HEADER_MIN_HEIGHT: number = height * 0.1 + 10;
+const HEADER_MAX_HEIGHT: number = height * 1;
+const HEADER_MIN_HEIGHT: number = height * 0.3 + 10;
 const HEADER_SCROLL_DISTANCE: number = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 const width: number = Dimensions.get('window').width; //full width
 const MARGIN: number = width * 0.1;
@@ -59,6 +60,82 @@ const Item = ({ title, url, age, location }) => (
         </View>
     </View>
 );
+const listHeaderComponent = () => (
+    <View style={styles.listHeaderComponent}>
+        <ImageBackground style={styles.image} source={require('../../../image/discovery.jpg')}>
+            <View style={{ marginLeft: 15, marginTop: height * 0.05 }}>
+                <Text
+                    style={{
+                        fontSize: height * 0.05,
+                        color: '#fff',
+                    }}
+                >
+                    Rencontre
+                </Text>
+                <Text style={{ color: '#fff', fontSize: 16 }}>
+                    Découvrez les profils et faites une rencontre !
+                </Text>
+            </View>
+            <View
+                style={{
+                    borderRightWidth: width,
+                    borderRightColor: 'white',
+                    borderTopWidth: 30,
+                    borderTopColor: 'transparent',
+                    opacity: 0.75,
+                    position: 'absolute',
+                    bottom: 0,
+                }}
+            ></View>
+            <View
+                style={{
+                    borderLeftWidth: width,
+                    borderLeftColor: 'white',
+                    borderTopWidth: 30,
+                    borderTopColor: 'transparent',
+                    opacity: 0.75,
+                    position: 'absolute',
+                    bottom: 0,
+                }}
+            ></View>
+        </ImageBackground>
+        <View style={styles.banner}>
+            <Text style={styles.textHeader}>Votre Recherche</Text>
+            <TouchableOpacity style={styles.headerButton}>
+                <Icon name="linechart" color="#ffffff" size={height * 0.03} />
+                <Text style={styles.textButton}>CRITERES</Text>
+                <View style={styles.resetInfo}>
+                    <Text style={styles.resetText}>0</Text>
+                </View>
+            </TouchableOpacity>
+        </View>
+        <View
+            style={{
+                borderBottomWidth: 0.5,
+                borderBottomColor: '#ccc',
+                marginTop: 7,
+                width: width * 0.1,
+            }}
+        ></View>
+    </View>
+);
+const listFooterComponent = () => (
+    <SkeletonPlaceholder>
+        <View style={styles.footerLoading}>
+            <View style={styles.loadingBox}></View>
+            <View style={styles.loadingBox}></View>
+        </View>
+        <View style={styles.footerLoading}>
+            <View style={styles.loadingBox}></View>
+            <View style={styles.loadingBox}></View>
+        </View>
+        <View style={styles.footerLoading}>
+            <View style={styles.loadingBox}></View>
+            <View style={styles.loadingBox}></View>
+        </View>
+    </SkeletonPlaceholder>
+);
+
 const Discovery: React.FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state.home);
@@ -75,69 +152,14 @@ const Discovery: React.FC<Props> = ({}) => {
         extrapolate: 'clamp',
     });
     const renderItem = ({ item }) => {
-        return (
-            <Item url={item.thumbnail} age={item.age} location={item.country} title={item.name} />
-        );
+        if(state.isLoadingGetUsers) { 
+            return null
+        } else {
+            return (
+                <Item url={item.thumbnail} age={item.age} location={item.country} title={item.name} />
+            );
+        } 
     };
-    const listHeaderComponent = () => (
-        <View style={styles.listHeaderComponent}>
-            <ImageBackground style={styles.image} source={require('../../../image/discovery.jpg')}>
-                <View style={{ marginLeft: 15, marginTop: height * 0.05 }}>
-                    <Text
-                        style={{
-                            fontSize: height * 0.05,
-                            color: '#fff',
-                        }}
-                    >
-                        Rencontre
-                    </Text>
-                    <Text style={{ color: '#fff', fontSize: 16 }}>
-                        Découvrez les profils et faites une rencontre !
-                    </Text>
-                </View>
-                <View
-                    style={{
-                        borderRightWidth: width,
-                        borderRightColor: 'white',
-                        borderTopWidth: 30,
-                        borderTopColor: 'transparent',
-                        opacity: 0.75,
-                        position: 'absolute',
-                        bottom: 0,
-                    }}
-                ></View>
-                <View
-                    style={{
-                        borderLeftWidth: width,
-                        borderLeftColor: 'white',
-                        borderTopWidth: 30,
-                        borderTopColor: 'transparent',
-                        opacity: 0.75,
-                        position: 'absolute',
-                        bottom: 0,
-                    }}
-                ></View>
-            </ImageBackground>
-            <View style={styles.banner}>
-                <Text style={styles.textHeader}>Votre Recherche</Text>
-                <TouchableOpacity style={styles.headerButton}>
-                    <Icon name="linechart" color="#ffffff" size={height * 0.03} />
-                    <Text style={styles.textButton}>CRITERES</Text>
-                    <View style={styles.resetInfo}>
-                        <Text style={styles.resetText}>{reset}</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-            <View
-                style={{
-                    borderBottomWidth: 0.5,
-                    borderBottomColor: '#ccc',
-                    marginTop: 7,
-                    width: width * 0.1,
-                }}
-            ></View>
-        </View>
-    );
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     React.useEffect(() => {
         dispatch(action.getUsersRequest());
@@ -156,6 +178,7 @@ const Discovery: React.FC<Props> = ({}) => {
     };
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            <View style={{borderWidth: 2, borderColor: '#000', alignSelf: 'stretch', position: 'absolute'}}></View>
             <View
                 style={{
                     alignItems: 'center',
@@ -165,12 +188,12 @@ const Discovery: React.FC<Props> = ({}) => {
             >
                 <FlatList
                     ListHeaderComponent={listHeaderComponent}
+                    ListFooterComponent={listFooterComponent}
                     numColumns={2}
                     data={state.listUsers}
                     renderItem={renderItem}
                     keyExtractor={(item) => item.uuid.toString()}
                     removeClippedSubviews={true}
-                    // showsVerticalScrollIndicator={false}
                     columnWrapperStyle={{
                         justifyContent: 'space-between',
                         marginHorizontal: MARGIN,
@@ -190,7 +213,7 @@ const Discovery: React.FC<Props> = ({}) => {
                     }}
                     initialNumToRender={400} // Reduce initial render amount
                     onEndReached={onEndReached}
-                    onEndReachedThreshold={1}
+                    onEndReachedThreshold={0.7}
                     maxToRenderPerBatch={10} // Reduce number in each render batch
                     updateCellsBatchingPeriod={200} // Increase time between renders
                 />
@@ -206,10 +229,7 @@ const Discovery: React.FC<Props> = ({}) => {
                             }}
                         >
                             <TouchableOpacity onPress={onReset}>
-                                <AntDesign
-                                    name="reload1"
-                                    size={height * 0.025}
-                                />
+                                <AntDesign name="reload1" size={height * 0.025} />
                             </TouchableOpacity>
                             <Text style={{ color: '#000', fontSize: height * 0.025 }}>Reset</Text>
                         </View>
@@ -254,6 +274,11 @@ const Discovery: React.FC<Props> = ({}) => {
                         </View>
                     </View>
                 </View>
+                {state.isLoading == true && Platform.OS === 'ios' && (
+                    <View style={styles.backgroundLoading}>
+                        <ActivityIndicator color="black" size="small" />
+                    </View>
+                )}
             </Animated.View>
         </SafeAreaView>
     );
@@ -292,7 +317,8 @@ const styles = StyleSheet.create({
     userBox: {
         marginTop: 25,
         borderRadius: 15,
-        paddingVertical: 15,
+        paddingTop: 15,
+        paddingBottom: 10,
         backgroundColor: '#ffffff',
         elevation: 1,
         width: width * 0.35,
@@ -317,19 +343,20 @@ const styles = StyleSheet.create({
         fontSize: height * 0.02,
         color: '#362e2e',
         marginLeft: width * 0.025,
-        marginTop: 10,
+        marginTop: 7,
+        fontWeight: '600',
     },
     userInfo: {
         flexDirection: 'row',
-        marginTop: 10,
+        marginTop: 5,
         marginHorizontal: width * 0.025,
         overflow: 'hidden',
     },
     userAge: {
-        paddingRight: 20,
+        paddingRight: 15,
         color: '#74797f',
         borderRightColor: '#ccc',
-        borderRightWidth: 2,
+        borderRightWidth: 1,
     },
     userLocation: {
         marginLeft: 5,
@@ -357,15 +384,15 @@ const styles = StyleSheet.create({
         right: 0,
         backgroundColor: '#fffff',
         overflow: 'hidden',
-        elevation: 4,
+        elevation: 3,
     },
     bar: {
         backgroundColor: '#ffffff',
-        height: Platform.OS === 'ios' ? height*0.06 : height * 0.08,
+        height: Platform.OS === 'ios' ? height * 0.06 : height * 0.08,
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        elevation: 10,
+        elevation: 5,
     },
     listHeaderComponent: {
         width: width,
@@ -403,6 +430,39 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 4.65,
         elevation: 8,
+    },
+    backgroundLoading: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 1.5,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 2,
+        backgroundColor: '#fff',
+        width: 35,
+        height: 35,
+        position: 'absolute',
+        top: 150,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+        borderRadius: 30,
+    },
+    footerLoading: {
+        flexDirection: 'row',
+        marginHorizontal: width*0.05,
+        justifyContent: 'space-between',
+    },
+    loadingBox: {
+        marginTop: 20,
+        width: width * 0.42,
+        height: height * 0.2,
+        borderWidth: 1,
+        borderColor: '#000',
+        borderRadius: 15,
     },
 });
 

@@ -16,22 +16,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import actions from '../../../redux/actions/signin.actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useNavigation } from '@react-navigation/native';
 const width = Dimensions.get('window').width; //full width
 const height = Dimensions.get('window').height;
 type Props = {
     modalVisible: boolean;
+    onRequestClose: any;
 };
 type PersonData = {
     email: string;
     password: string;
 };
 
-const AuthForm: React.FC<Props> = ({ modalVisible }) => {
+const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
     const state = useSelector((state: RootState) => state.signin);
     const dispatch = useDispatch();
     const [showPassword, setShowPassword] = React.useState<boolean>(false);
     const [error, setError] = React.useState<string>('');
-
+    const navigation = useNavigation()
     const {
         control,
         handleSubmit,
@@ -50,6 +52,13 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
         };
         dispatch(actions.actionLogin(payload));
     };
+    const handleChangeScreen = () => {
+        onRequestClose();
+        navigation.navigate('SignupFlow', { screen: 'Entity' });
+    }
+
+    const passwordRegex = new RegExp('.{8,}');
+
 
     React.useEffect(() => {
         setError(state.error);
@@ -58,7 +67,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
         setError('');
     }, []);
     return (
-        <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+        // <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
             <View>
                 <Text style={styles.loginText}> Connextion</Text>
                 {(error !== '' || errors.email || errors.password) && (
@@ -73,11 +82,17 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                             marginVertical: 10,
                         }}
                     >
-                        {errors.email && <Text style={{ color: '#ff2c2c' }}>Email is required</Text>}
-                        {!errors.email && errors.password && (
-                            <Text style={{ color: '#ff2c2c' }}>Password is required</Text>
+                        {errors.email && (
+                            <Text style={{ color: '#ff2c2c' }}>Email is required</Text>
                         )}
-                        {error !== '' && !errors.email && !errors.password  && <Text style={{ color: '#ff2c2c' }}>Identifiant ou mot de passe incorrect</Text>}
+                        {!errors.email && errors.password && (
+                            <Text style={{ color: '#ff2c2c' }}>{errors.password.message}</Text>
+                        )}
+                        {error !== '' && !errors.email && !errors.password && (
+                            <Text style={{ color: '#ff2c2c' }}>
+                                Identifiant ou mot de passe incorrect
+                            </Text>
+                        )}
                     </View>
                 )}
                 <Controller
@@ -85,13 +100,12 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                     rules={{
                         required: {
                             value: true,
-                            message: 'Field is required!',
+                            message: 'Email is required!',
                         },
                     }}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
                             autoCompleteType={false}
-                           
                             label="Email"
                             style={styles.form}
                             onBlur={onBlur}
@@ -99,11 +113,18 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                             value={value}
                             underlineColor="transparent"
                             outlineColor="#ccc"
-                            theme={{ colors: { placeholder: "#000000", background: '#000', primary: '#000' }, fonts: {
-                                regular: {
-                                  fontFamily: 'Avenir Next Condensed'
-                                }
-                            }}}
+                            theme={{
+                                colors: {
+                                    placeholder: '#000000',
+                                    background: '#000',
+                                    primary: '#000',
+                                },
+                                fonts: {
+                                    regular: {
+                                        fontFamily: 'Avenir Next Condensed',
+                                    },
+                                },
+                            }}
                         />
                     )}
                     name="email"
@@ -116,12 +137,12 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                         rules={{
                             required: {
                                 value: true,
-                                message: 'Field is required!',
+                                message: 'Password is required!',
                             },
-                            // pattern: {
-                            //     value: dateRegex,
-                            //     message: 'Date is invalid',
-                            // },
+                            pattern: {
+                                value: passwordRegex,
+                                message: 'Password must more than 8 characters',
+                            },
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
                             <TextInput
@@ -135,12 +156,19 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                                 underlineColor="transparent"
                                 secureTextEntry={!showPassword}
                                 outlineColor="#ccc"
-                                placeholderTextColor='#000000'
-                                theme={{ colors: { placeholder: "#000000", background: '#000', primary: '#000' }, fonts: {
-                                    regular: {
-                                      fontFamily: 'Avenir Next Condensed'
-                                    }
-                                }}}
+                                placeholderTextColor="#000000"
+                                theme={{
+                                    colors: {
+                                        placeholder: '#000000',
+                                        background: '#000',
+                                        primary: '#000',
+                                    },
+                                    fonts: {
+                                        regular: {
+                                            fontFamily: 'Avenir Next Condensed',
+                                        },
+                                    },
+                                }}
                             />
                         )}
                         name="password"
@@ -154,10 +182,10 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                             paddingTop: width * 0.02,
                             zIndex: 5,
                             top: 10,
-                            height: height * 0.08
+                            height: height * 0.08,
                         }}
                     >
-                        <Text style={{ fontSize: height * 0.015, color: 'green'}}>
+                        <Text style={{ fontSize: height * 0.015, color: 'green' }}>
                             Mot de passe oublie ?
                         </Text>
                         {showEye.length > 0 && (
@@ -176,7 +204,6 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
                     style={styles.buttonStyle}
                     disabled={state.isLoading === true ? true : false}
                     onPress={handleSubmit(onSubmit)}
-                    
                 >
                     {state.isLoading === true ? (
                         <ActivityIndicator color="white" size="large" />
@@ -187,10 +214,14 @@ const AuthForm: React.FC<Props> = ({ modalVisible }) => {
 
                 <Text style={styles.footerText}>
                     Vous n'avez pas de compte? &nbsp;
-                    <Text style={styles.footerSpecialText}>Incrivez vous gratuitement</Text>
+                    <TouchableOpacity
+                        onPress={handleChangeScreen}
+                    >
+                        <Text style={styles.footerSpecialText}>Incrivez vous gratuitement</Text>
+                    </TouchableOpacity>
                 </Text>
             </View>
-        </TouchableWithoutFeedback>
+        // </TouchableWithoutFeedback>
     );
 };
 const styles = StyleSheet.create({
@@ -221,7 +252,7 @@ const styles = StyleSheet.create({
     loginText: {
         fontSize: height * 0.03,
         marginBottom: 10,
-        color: '#000'
+        color: '#000',
     },
     contactText: {
         textDecorationLine: 'underline',
@@ -230,7 +261,7 @@ const styles = StyleSheet.create({
         color: 'gray',
     },
     buttonStyle: {
-        height: height*0.075,
+        height: height * 0.075,
         marginTop: height * 0.03,
         borderRadius: 10,
         flexDirection: 'column',

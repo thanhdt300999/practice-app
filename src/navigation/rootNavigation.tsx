@@ -54,11 +54,6 @@ const RootNavigation = () => {
                         <Stack.Screen name="HomeFlow" component={homeNavigation} />
                     </>
                 )}
-                {/* <Stack.Screen name="ResolveAuth" component={ResolveAuthScreen} />
-                <Stack.Screen name="Signin" component={SigninScreen} />
-             
-                // <Stack.Screen name="HomeFlow" component={homeNavigation} /> */}
-                {/* <Stack.Screen name="ABC" component={message} /> */}
             </Stack.Navigator>
         );
     }

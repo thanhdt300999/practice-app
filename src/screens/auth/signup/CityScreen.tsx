@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, Dimensions, TouchableOpacity, RefreshControl, Platform } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    FlatList,
+    Dimensions,
+    TouchableOpacity,
+    RefreshControl,
+    Platform,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
@@ -10,7 +18,8 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
-import globalStyles from './globalStyle'
+import globalStyles from './globalStyle';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 const height: number = Dimensions.get('window').height;
 interface Props {}
 interface city {
@@ -26,8 +35,18 @@ const CityScreen: React.FC<Props> = ({}) => {
         name: '',
     });
     const handleSubmit = () => {
-        navigation.navigate('Signup');
-        dispatch(actions.setCity(city.id));
+        if (city.id) {
+            navigation.navigate('Signup');
+            dispatch(actions.setCity(city.id));
+        } else {
+            showMessage({
+                message: 'Le champ est vide',
+                color: 'white',
+                backgroundColor: '#ff2c2c',
+                textStyle: { fontFamily: 'Avenir Next Condensed' },
+                style: { alignItems: 'center' },
+            });
+        }
     };
     React.useEffect(() => {
         if (state.dataPostLogin.zipcode) {
@@ -74,7 +93,10 @@ const CityScreen: React.FC<Props> = ({}) => {
                         data={state.listCities}
                         renderItem={({ item }) => {
                             return (
-                                <TouchableOpacity style={globalStyles.styleCheckbox} onPress={() => setCity(item)}>
+                                <TouchableOpacity
+                                    style={globalStyles.styleCheckbox}
+                                    onPress={() => setCity(item)}
+                                >
                                     <Text style={styles.textCheckBox}>{item.name}</Text>
                                     <View style={styles.radio}>
                                         <RadioButton
@@ -93,13 +115,13 @@ const CityScreen: React.FC<Props> = ({}) => {
                             <RefreshControl
                                 colors={['red', 'tomato']}
                                 refreshing={state.isLoading}
-                                progressViewOffset={Platform.OS === "ios" ? null : height*0.1}
+                                progressViewOffset={Platform.OS === 'ios' ? null : height * 0.1}
                             />
                         }
                     />
                 )}
             </View>
-            <ButtonNext onPress={handleSubmit} disable={city.id ? false : true} />
+            <ButtonNext onPress={handleSubmit} disable={false} />
         </LinearGradient>
     );
 };
@@ -112,7 +134,7 @@ const styles = StyleSheet.create({
     },
     radio: {
         alignSelf: 'flex-end',
-    }
+    },
 });
 
 export default CityScreen;

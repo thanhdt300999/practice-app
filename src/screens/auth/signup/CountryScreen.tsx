@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, Dimensions, TouchableOpacity, RefreshControl, Platform } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    FlatList,
+    Dimensions,
+    TouchableOpacity,
+    RefreshControl,
+    Platform,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
@@ -10,7 +18,8 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
-import globalStyles from './globalStyle'
+import globalStyles from './globalStyle';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 const height: number = Dimensions.get('window').height;
 interface Props {}
 interface country {
@@ -37,8 +46,18 @@ const CountryScreen: React.FC<Props> = ({}) => {
         }
     };
     const onSubmit = () => {
-        dispatch(actions.setCountry(country));
-        handleCheckZipCode() ? navigation.navigate('Zipcode') : navigation.navigate('Region');
+        if (country.id !== '') {
+            dispatch(actions.setCountry(country));
+            handleCheckZipCode() ? navigation.navigate('Zipcode') : navigation.navigate('Region');
+        } else {
+            showMessage({
+                message: 'Le champ est vide',
+                color: 'white',
+                backgroundColor: '#ff2c2c',
+                textStyle: { fontFamily: 'Avenir Next Condensed' },
+                style: { alignItems: 'center' },
+            });
+        }
     };
     React.useEffect(() => {
         dispatch(actions.getCountries());
@@ -59,13 +78,25 @@ const CountryScreen: React.FC<Props> = ({}) => {
                         <Entypo name="map" size={height * 0.025} color="#fff" />
                     </View>
                     <Text style={globalStyles.textFormStyle}>Quel est votre pays ?</Text>
-                    <Text style={{alignSelf: 'center', marginTop: 5 , color: '#fff',fontSize: height*0.019}}>Un seul choix possible</Text>
+                    <Text
+                        style={{
+                            alignSelf: 'center',
+                            marginTop: 5,
+                            color: '#fff',
+                            fontSize: height * 0.019,
+                        }}
+                    >
+                        Un seul choix possible
+                    </Text>
                 </View>
                 <FlatList
                     data={state.listCountries}
                     renderItem={({ item }) => {
                         return (
-                            <TouchableOpacity style={globalStyles.styleCheckbox} onPress={() => setCountry(item)}>
+                            <TouchableOpacity
+                                style={globalStyles.styleCheckbox}
+                                onPress={() => setCountry(item)}
+                            >
                                 <Text style={styles.textCheckBox}>{item.name}</Text>
                                 <View style={styles.radio}>
                                     <RadioButton
@@ -84,12 +115,12 @@ const CountryScreen: React.FC<Props> = ({}) => {
                         <RefreshControl
                             colors={['red', 'tomato']}
                             refreshing={state.isLoading}
-                            progressViewOffset={Platform.OS === "ios" ? null : height*0.1}
+                            progressViewOffset={Platform.OS === 'ios' ? null : height * 0.1}
                         />
                     }
                 />
             </View>
-            <ButtonNext onPress={onSubmit} disable={country.id !== '' ? false : true} />
+            <ButtonNext onPress={onSubmit} disable={false} />
         </LinearGradient>
     );
 };

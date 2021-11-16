@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import {
     View,
     StyleSheet,
@@ -7,20 +7,22 @@ import {
     Dimensions,
     Platform,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import { useForm, Controller } from 'react-hook-form';
 import Text from '../../../../assets/AppText';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ButtonBack from '../../../components/button/ButtonBack';
 import ButtonNext from '../../../components/button/ButtonNext';
 import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import actions from '../../../redux/actions/signup.actions';
 import globalStyles from './globalStyle';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 interface Props {}
 const height: number = Dimensions.get('window').height;
 const width: number = Dimensions.get('window').width;
+
 const BirthdayScreen: React.FC<Props> = ({}) => {
     const dispatch = useDispatch();
     const {
@@ -31,21 +33,52 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
         formState: { errors, isValid },
     } = useForm({ mode: 'onBlur' });
     const navigation = useNavigation();
-    const watchDate = watch('date', '');
-    const watchMonth = watch('month', '');
-    const watchYear = watch('year', '');
-    const birthday = getValues();
-    const [showError, setShowError] = React.useState<boolean>(false);
     const dateRegex = new RegExp('^(0?[1-9]|[12][0-9]|3[01])$');
     const monthRegex = new RegExp('^(0?[1-9]|1[012])$');
     const yearRegex = new RegExp('^\\d{4}$');
+    const monthRef = useRef();
+    const yearRef = useRef();
+    const bodyRef = useRef();
+    const currentYear = new Date().getFullYear()
     const onSubmit = () => {
+        const birthday = getValues();
         if (isValid === true && isValidDate(convertBirthday(birthday)) === true) {
-            setShowError(false);
             dispatch(actions.setBirthday(convertBirthday(birthday)));
             navigation.navigate('Origin');
         } else {
-            setShowError(true);
+            if (errors.date) {
+                showMessage({
+                    message: errors.date.message,
+                    color: 'white',
+                    backgroundColor: '#ff2c2c',
+                    textStyle: { fontFamily: 'Avenir Next Condensed' },
+                    style: { alignItems: 'center' },
+                });
+            } else if (errors.month) {
+                showMessage({
+                    message: errors.month.message,
+                    color: 'white',
+                    backgroundColor: '#ff2c2c',
+                    textStyle: { fontFamily: 'Avenir Next Condensed' },
+                    style: { alignItems: 'center' },
+                });
+            } else if (errors.year) {
+                showMessage({
+                    message: errors.year.message,
+                    color: 'white',
+                    backgroundColor: '#ff2c2c',
+                    textStyle: { fontFamily: 'Avenir Next Condensed' },
+                    style: { alignItems: 'center' },
+                });
+            } else if (!isValidDate(convertBirthday(birthday))) {
+                showMessage({
+                    message: 'Vous devez mettre une date valide',
+                    color: 'white',
+                    backgroundColor: '#ff2c2c',
+                    textStyle: { fontFamily: 'Avenir Next Condensed' },
+                    style: { alignItems: 'center' },
+                });
+            }
         }
     };
 
@@ -63,7 +96,6 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
             return value;
         }
     };
-    // console.log(isValidDate(convertBirthday(birthday)))
     //Check yyyy-mm-dd valid
     function isValidDate(dateString) {
         // First check for the pattern
@@ -75,17 +107,15 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
 
         // Parse the date parts to integers
         var parts = dateString.split('-');
-        var day = parseInt(parts[2], 10);
-        var month = parseInt(parts[1], 10);
-        var year = parseInt(parts[0], 10);
-
+        var day: number = parseInt(parts[2], 10);
+        var month: number = parseInt(parts[1], 10);
+        var year: number = parseInt(parts[0], 10);
         // Check the ranges of month and year
         if (year < 1000 || year > 3000 || month == 0 || month > 12) {
             return false;
         }
 
-        var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
+        var monthLength: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         // Adjust for leap years
         if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
             monthLength[1] = 29;
@@ -104,11 +134,11 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
             locations={[0, 1]}
         >
             <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-                <View style={{ height: 550, alignSelf: 'stretch' }}>
+                <View ref={bodyRef} style={{ height: height * 0.8, alignSelf: 'stretch' }}>
                     <ButtonBack onPress={() => navigation.goBack()} />
                     <View style={globalStyles.header}>
                         <View style={globalStyles.iconStyle}>
-                            <Icon name="birthday-cake" size={height * 0.025} color="#fff" />
+                            <FontAwesome name="birthday-cake" size={height * 0.025} color="#fff" />
                         </View>
                         <Text style={globalStyles.textFormStyle}>
                             Quelle est votre date de naissance ?
@@ -121,7 +151,14 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                                 <TextInput
                                     style={styles.textInput}
                                     onBlur={onBlur}
-                                    onChangeText={onChange}
+                                    onChangeText={(e) => {
+                                        if (e.length >= 2) {
+                                            monthRef.current.focus();
+                                        }
+                                        if (e.length <= 2) {
+                                            onChange(e);
+                                        }
+                                    }}
                                     value={value}
                                     placeholder="JJ"
                                     keyboardType="number-pad"
@@ -130,7 +167,7 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                                     theme={{
                                         colors: {
                                             text: 'white',
-                                            placeholder: '#d6d3cb',
+                                            placeholder: '#ccc',
                                             primary: 'white',
                                         },
                                         fonts: {
@@ -145,11 +182,15 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                             rules={{
                                 required: {
                                     value: true,
-                                    message: 'Field is required!',
+                                    message: 'Date is required!',
                                 },
-                                pattern: {
-                                    value: dateRegex,
-                                    message: 'Date is invalid',
+                                max: {
+                                    value: 31,
+                                    message: 'Invalid date',
+                                },
+                                min: {
+                                    value: 1,
+                                    message: 'Invalid date',
                                 },
                             }}
                             name="date"
@@ -161,8 +202,17 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <TextInput
                                     style={styles.textInput}
+                                    ref={monthRef}
                                     onBlur={onBlur}
-                                    onChangeText={onChange}
+                                    onChangeText={(e) => {
+                                        if (e.length >= 2) {
+                                            yearRef.current.focus();
+                                        }
+                                        if(e.length <=2) {
+                                            onChange(e)
+                                        }
+                                        
+                                    }}
                                     value={value}
                                     placeholder="MM"
                                     keyboardType="number-pad"
@@ -172,7 +222,7 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                                     theme={{
                                         colors: {
                                             text: 'white',
-                                            placeholder: '#d6d3cb',
+                                            placeholder: '#ccc',
                                             primary: 'white',
                                         },
                                         fonts: {
@@ -186,26 +236,35 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                             rules={{
                                 required: {
                                     value: true,
-                                    message: 'Field is required!',
+                                    message: 'Month is required!',
                                 },
-                                pattern: {
-                                    value: monthRegex,
-                                    message: 'Month is invalid',
+                                max: {
+                                    value: 12,
+                                    message: 'Invalid month',
+                                },
+                                min: {
+                                    value: 1,
+                                    message: 'Invalid month',
                                 },
                             }}
                             name="month"
                             defaultValue=""
                         />
-                        <View style={{alignSelf: 'center'}}>
-                        <Text style={{ fontSize: height * 0.025, color: '#ccc' }}>/</Text>
+                        <View style={{ alignSelf: 'center' }}>
+                            <Text style={{ fontSize: height * 0.025, color: '#ccc' }}>/</Text>
                         </View>
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <TextInput
                                     style={styles.textInput}
+                                    ref={yearRef}
                                     onBlur={onBlur}
-                                    onChangeText={onChange}
+                                    onChangeText={(e) => {
+                                        if (e.length < 5) {
+                                            onChange(e);
+                                        }
+                                    }}
                                     value={value}
                                     placeholder="AAAA"
                                     keyboardType="number-pad"
@@ -214,7 +273,7 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                                     theme={{
                                         colors: {
                                             text: 'white',
-                                            placeholder: '#d6d3cb',
+                                            placeholder: '#ccc',
                                             primary: 'white',
                                         },
                                         fonts: {
@@ -228,33 +287,24 @@ const BirthdayScreen: React.FC<Props> = ({}) => {
                             rules={{
                                 required: {
                                     value: true,
-                                    message: 'Field is required!',
+                                    message: 'Year is required!',
                                 },
-                                pattern: {
-                                    value: yearRegex,
-                                    message: 'Year is invalid',
+                                max: {
+                                    value: currentYear - 18,
+                                    message: 'Vous devez mettre une date valide',
+                                },
+                                min: {
+                                    value: currentYear - 99,
+                                    message: 'Vous devez mettre une date valide',
                                 },
                             }}
                             name="year"
                             defaultValue=""
                         />
                     </View>
-                    {showError && (
-                        <View style={styles.errorBox}>
-                            <Text style={styles.errorText}>Invalid birthday</Text>
-                        </View>
-                    )}
                 </View>
             </TouchableWithoutFeedback>
-            <ButtonNext
-                onPress={onSubmit}
-                disable={
-                    false
-                    // isValid === true && isValidDate(convertBirthday(birthday)) === true
-                    //     ? false
-                    //     : true
-                }
-            />
+            <ButtonNext onPress={onSubmit} disable={false} />
         </LinearGradient>
     );
 };
@@ -265,13 +315,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: 200,
         justifyContent: 'space-between',
-        height: height*0.055,
+        height: height * 0.055,
         alignItems: 'center',
-        marginTop: 15
+        marginTop: 15,
     },
     textInput: {
         backgroundColor: 'transparent',
-        height: height*0.055
+        height: height * 0.075,
     },
     bottom: {
         flex: 1,

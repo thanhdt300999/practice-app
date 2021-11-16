@@ -45,8 +45,6 @@ const styles = StyleSheet.create({
         marginTop: marginTop,
         alignSelf: 'stretch',
         position: 'absolute',
-        // borderColor: '#000',
-        // borderWidth: 1,
         zIndex: 2,
         flexDirection: 'row',
         marginHorizontal: 30,

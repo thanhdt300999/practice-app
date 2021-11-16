@@ -203,6 +203,12 @@ const signupReducer = (state = initState, { type, payload }) => {
                     geolocation: payload,
                 },
             };
+        case 'GO_BACK':
+            return {
+                ...state,
+                error: '',
+            };
+
         default:
             return state;
     }

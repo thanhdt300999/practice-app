@@ -27,14 +27,17 @@ const SigninScreen: React.FC<Props> = ({}) => {
     const handleNavigate = () => {
         navigation.navigate('SignupFlow', { screen: 'Entity' });
     };
-    const [modalHeight, setModalHeight] = React.useState(height*0.8);
+    const [modalHeight, setModalHeight] = React.useState(height * 0.8);
     const [showButton, setShowButton] = React.useState(true);
+    const [disableClose, setDisableClose] = React.useState(false);
     React.useEffect(() => {
-        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-            setModalHeight(Platform.OS === 'ios' ? height * 0.6 : height * 0.5); // or some other action
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+            setDisableClose(true);
+            setModalHeight(Platform.OS === 'ios' ? height * 0.1 : 0); // or some other action
         });
         const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setModalHeight(height*0.8); // or some other action
+            setModalHeight(height * 0.8);
+            setDisableClose(false);
         });
 
         return () => {
@@ -48,71 +51,77 @@ const SigninScreen: React.FC<Props> = ({}) => {
             clearTimeout(timer);
         };
     }, [modalVisible]);
-    React.useEffect(() => {
-    }, [state.isLoading])
+    React.useEffect(() => {}, [state.isLoading]);
     return (
-        <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-            <View style={styles.container}>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                    }}
-                >
-                    {showButton && (
-                        <IconButton
-                            icon="close"
-                            color="#ffffff"
-                            size={30}
-                            style={{
-                                position: 'absolute',
-                                alignSelf: 'flex-end',
-                                right: 10,
-                                top: height * 0.05,
-                                zIndex: 1000,
-                            }}
-                            onPress={() => setModalVisible(!modalVisible)}
-                        />
-                    )}
+        <View style={styles.container}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                {modalVisible && !disableClose && (
+                    <IconButton
+                        disabled={disableClose}
+                        icon="close"
+                        color="#ffffff"
+                        size={30}
+                        style={{
+                            position: 'absolute',
+                            alignSelf: 'flex-end',
+                            right: 10,
+                            top: Platform.OS === 'android' ? 0 : height * 0.05,
+                            zIndex: 1,
+                        }}
+                        onPress={() => {
+                            setShowButton(false);
+                            setModalVisible(!modalVisible);
+                        }}
+                    />
+                )}
+                <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
                     <View style={styles.centeredView}>
                         <View style={[styles.modalView, { marginTop: modalHeight }]}>
-                            <AuthForm modalVisible={modalVisible} />
+                            <AuthForm
+                                modalVisible={modalVisible}
+                                onRequestClose={() => {
+                                    setModalVisible(!modalVisible);
+                                }}
+                            />
                         </View>
                     </View>
-                </Modal>
-                <ImageBackground
-                    source={require('../../../../image/Capture.png')}
-                    style={styles.image}
-                >
-                    <View style={styles.banner}>
-                        <Image
-                            style={styles.imageBanner}
-                            source={require('../../../../image//logo-large.png')}
-                        />
-                        <Text style={styles.textBanner}>
-                            L'application numero 1 de la rencontre Musulmane et Maghrebine
+                </TouchableWithoutFeedback>
+            </Modal>
+
+            <ImageBackground source={require('../../../../image/Capture.png')} style={styles.image}>
+                <View style={styles.banner}>
+                    <Image
+                        style={styles.imageBanner}
+                        source={require('../../../../image//logo-large.png')}
+                    />
+                    <Text style={styles.textBanner}>
+                        L'application numero 1 de la rencontre Musulmane et Maghrebine
+                    </Text>
+                </View>
+                <View style={styles.footer}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setModalVisible(true);
+                        }}
+                    >
+                        <Text style={styles.textSignin}>SE CONNECTER</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={handleNavigate}>
+                        <Text style={{ color: '#ffffff', fontSize: height * 0.02 }}>
+                            INSCRIPTION GRATUITE
                         </Text>
-                    </View>
-                    <View style={styles.footer}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                setModalVisible(true);
-                            }}
-                        >
-                            <Text style={styles.textSignin}>SE CONNECTER</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={handleNavigate}>
-                            <Text style={{ color: '#ffffff', fontSize: height * 0.02 }}>
-                                INSCRIPTION GRATUITE
-                            </Text>
-                            <Text style={{ color: '#ffffff' }}>EN 1 MIN</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
-            </View>
-        </TouchableWithoutFeedback>
+                        <Text style={{ color: '#ffffff' }}>EN 1 MIN</Text>
+                    </TouchableOpacity>
+                </View>
+            </ImageBackground>
+        </View>
     );
 };
 
@@ -132,9 +141,9 @@ const styles = StyleSheet.create({
     },
     textBanner: {
         color: '#ffffff',
-        fontSize: Platform.OS === 'ios' ? height * 0.025 : height*0.03,
+        fontSize: Platform.OS === 'ios' ? height * 0.025 : height * 0.03,
         textAlign: 'center',
-        width: width*0.8,
+        width: width * 0.8,
     },
     textSignin: {
         color: 'white',
@@ -150,7 +159,7 @@ const styles = StyleSheet.create({
         bottom: 35,
     },
     button: {
-        marginLeft: width*0.15,
+        marginLeft: width * 0.15,
         backgroundColor: '#24cf5f',
         height: height * 0.065,
         borderRadius: 5,
@@ -168,7 +177,8 @@ const styles = StyleSheet.create({
     },
     modalView: {
         backgroundColor: 'white',
-        borderRadius: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
         width: '100%',
         height: '100%',
         padding: 35,
@@ -195,7 +205,7 @@ const styles = StyleSheet.create({
     },
     banner: {
         marginTop: height * 0.45,
-        alignItems: 'center'
+        alignItems: 'center',
     },
 });
 

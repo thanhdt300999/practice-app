@@ -9,7 +9,7 @@ export const MessageIcon = ({ color, focused }) => {
         <View
             style={[
                 styles.parentView,
-                { borderBottomWidth: 2, borderBottomColor: focused ? 'red' : 'transparent' },
+                { borderBottomWidth: 3, borderBottomColor: focused ? 'red' : 'transparent' },
             ]}
         >
             <AntDesign name="message1" size={20} color={color} />
@@ -26,7 +26,7 @@ export const DiscoveryIcon = ({ color, focused }) => {
         <View
             style={[
                 styles.parentView,
-                { borderBottomWidth: 2, borderBottomColor: focused ? 'red' : 'transparent' },
+                { borderBottomWidth: 3, borderBottomColor: focused ? 'red' : 'transparent' },
             ]}
         >
             <Feather name="search" size={20} color={color} />
@@ -38,7 +38,7 @@ export const NotificationIcon = ({ color, focused }) => {
         <View
             style={[
                 styles.parentView,
-                { borderBottomWidth: 2, borderBottomColor: focused ? 'red' : 'transparent' },
+                { borderBottomWidth: 3, borderBottomColor: focused ? 'red' : 'transparent' },
             ]}
         >
             <Ionicons name="notifications-outline" size={20} color={color} />
@@ -50,7 +50,7 @@ export const UserIcon = ({ color, focused }) => {
         <View
             style={[
                 styles.parentView,
-                { borderBottomWidth: 2, borderBottomColor: focused ? 'red' : 'transparent' },
+                { borderBottomWidth: 3, borderBottomColor: focused ? 'red' : 'transparent' },
             ]}
         >
             <AntDesign name="user" size={20} color={color} />
@@ -62,7 +62,7 @@ export const EntityIcon = ({ color, focused }) => {
         <View
             style={[
                 styles.parentView,
-                { borderBottomWidth: 2, borderBottomColor: focused ? 'red' : 'transparent' },
+                { borderBottomWidth: 3, borderBottomColor: focused ? 'red' : 'transparent' },
             ]}
         >
            <FontAwesome name="intersex" size={20} color={color} />
@@ -73,7 +73,7 @@ export const EntityIcon = ({ color, focused }) => {
 const styles = StyleSheet.create({
     parentView: {
         width: 60,
-        height: 40,
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
     },

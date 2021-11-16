@@ -32,5 +32,5 @@ export default StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         paddingVertical: 10,
-    }
+    },
 });

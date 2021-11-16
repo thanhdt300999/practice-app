@@ -19,6 +19,7 @@ import ButtonBack from '../../../components/button/ButtonBack';
 import { TextInput } from 'react-native-paper';
 import ButtonNext from '../../../components/button/ButtonNext';
 import globalStyles from './globalStyle';
+import ErrorBox from '../../../components/error/errorBox';
 const height: number = Dimensions.get('window').height;
 interface Props {}
 interface origin {
@@ -33,7 +34,7 @@ const ZipcodeScreen: React.FC<Props> = ({}) => {
         control,
         handleSubmit,
         formState: { errors, isValid },
-    } = useForm({ mode: 'onBlur' });
+    } = useForm({ mode: 'onSubmit' });
 
     const onSubmit = (data) => {
         dispatch(actions.setZipcode(data.zipcode));
@@ -49,43 +50,57 @@ const ZipcodeScreen: React.FC<Props> = ({}) => {
             angleCenter={{ x: 0.5, y: 0.5 }}
             locations={[0, 1]}
         >
-                <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-                    <View style={{ height: height * 0.8, alignSelf: 'stretch' }}>
-                        <ButtonBack onPress={() => navigation.goBack()} />
-                        <View style={globalStyles.header}>
-                            <View style={globalStyles.iconStyle}>
-                                <Octicons name="file-zip" size={height * 0.03} color="#fff" />
-                            </View>
-                            <Text style={globalStyles.textFormStyle}>Quel est votre code postal ?</Text>
+            <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+                <View style={{ height: height * 0.8, alignSelf: 'stretch' }}>
+                    <ButtonBack onPress={() => navigation.goBack()} />
+                    <View style={globalStyles.header}>
+                        <View style={globalStyles.iconStyle}>
+                            <Octicons name="file-zip" size={height * 0.03} color="#fff" />
                         </View>
-                        <Controller
-                            control={control}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <TextInput
-                                    style={styles.textInput}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    placeholder="Zip code"
-                                    keyboardType="number-pad"
-                                />
-                            )}
-                            rules={{
-                                required: {
-                                    value: true,
-                                    message: 'Field is required!',
-                                },
-                                pattern: {
-                                    value: regex,
-                                    message: 'invalid zipcode',
-                                },
-                            }}
-                            name="zipcode"
-                            defaultValue=""
-                        />
+                        <Text style={globalStyles.textFormStyle}>Quel est votre code postal ?</Text>
                     </View>
-                </TouchableWithoutFeedback>
-                <ButtonNext onPress={handleSubmit(onSubmit)} disable={!isValid} />
+                    <Controller
+                        control={control}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={styles.textInput}
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                                placeholder="Code postal ?"
+                                keyboardType="number-pad"
+                                underlineColor="#ffffff"
+                                theme={{
+                                    colors: {
+                                        text: 'white',
+                                        placeholder: '#d6d3cb',
+                                        primary: 'white',
+                                    },
+                                    fonts: {
+                                        regular: {
+                                            fontFamily: 'Avenir Next Condensed',
+                                        },
+                                    },
+                                }}
+                            />
+                        )}
+                        rules={{
+                            required: {
+                                value: true,
+                                message: 'Field is required!',
+                            },
+                            pattern: {
+                                value: regex,
+                                message: 'Invalid zipcode',
+                            },
+                        }}
+                        name="zipcode"
+                        defaultValue=""
+                    />
+                    {errors.zipcode && <ErrorBox error={errors.zipcode.message} />}
+                </View>
+            </TouchableWithoutFeedback>
+            <ButtonNext onPress={handleSubmit(onSubmit)} />
         </LinearGradient>
     );
 };
