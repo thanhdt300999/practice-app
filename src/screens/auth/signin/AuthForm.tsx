@@ -7,13 +7,14 @@ import {
     Keyboard,
     TouchableWithoutFeedback,
     ActivityIndicator,
+    Platform,
     // Text
 } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import Text from '../../../../assets/AppText';
 import { useForm, Controller } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import actions from '../../../redux/actions/signin.actions';
+import actions from '../../../redux/actions/signin-actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
@@ -66,8 +67,8 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
         setError('');
     }, []);
     return (
-        <View>
-            <Text style={[styles.loginText,{fontFamily: 'AvenirNextCondensed_Bold'}]}> Connextion</Text>
+        <View style={{}}>
+            <Text style={[styles.loginText]}> Connextion</Text>
             {(error !== '' || errors.email || errors.password) && (
                 <View
                     style={{
@@ -77,7 +78,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
                         borderRadius: 10,
                         alignItems: 'center',
                         paddingLeft: 10,
-                        marginVertical: 10,
+                        marginBottom: 10,
                     }}
                 >
                     {errors.email && <Text style={{ color: '#ff2c2c' }}>Email is required</Text>}
@@ -91,43 +92,66 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
                     )}
                 </View>
             )}
-            <Controller
-                control={control}
-                rules={{
-                    required: {
-                        value: true,
-                        message: 'Email is required!',
-                    },
+            <View
+                style={{
+                    overflow: 'hidden',
+                    height: 58,
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                    borderRadius: 10,
+                    borderTopStartRadius: 10,
+                    borderTopEndRadius: 10,
+                    justifyContent: 'center',
                 }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        autoCompleteType={false}
-                        label="Email"
-                        style={styles.form}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        underlineColor="transparent"
-                        outlineColor="#ccc"
-                        theme={{
-                            colors: {
-                                placeholder: '#000000',
-                                background: '#000',
-                                primary: '#000',
-                            },
-                            fonts: {
-                                regular: {
-                                    fontFamily: 'Avenir Next Condensed',
+            >
+                <Controller
+                    control={control}
+                    rules={{
+                        required: {
+                            value: true,
+                            message: 'Email is required!',
+                        },
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            autoCompleteType={false}
+                            label="Email"
+                            style={styles.form}
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            value={value}
+                            // placeholder="Passe"
+                            theme={{
+                                colors: {
+                                    placeholder: '#000000',
+                                    background: '#000',
+                                    primary: '#000',
                                 },
-                            },
-                        }}
-                    />
-                )}
-                name="email"
-                defaultValue=""
-            />
-
-            <View style={{ justifyContent: 'center' }}>
+                                fonts: {
+                                    regular: {
+                                        fontFamily: 'Avenir Next Condensed',
+                                    },
+                                },
+                            }}
+                        />
+                    )}
+                    name="email"
+                    defaultValue=""
+                />
+            </View>
+            <View
+                style={{
+                    overflow: 'hidden',
+                    height: 58,
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                    borderRadius: 10,
+                    borderTopStartRadius: 10,
+                    borderTopEndRadius: 10,
+                    justifyContent: 'center',
+                    marginTop: 10
+                }}
+            >
                 <Controller
                     control={control}
                     rules={{
@@ -149,11 +173,8 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
                             onChangeText={onChange}
                             value={value}
                             autoCapitalize="none"
-                            underlineColor="transparent"
-                            secureTextEntry={!showPassword}
-                            outlineColor="#ccc"
-                            placeholderTextColor="#000000"
-                           
+                            secureTextEntry={!showPassword}         
+                            // placeholder="Passe"
                             theme={{
                                 colors: {
                                     placeholder: '#000000',
@@ -178,7 +199,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
                         paddingRight: 15,
                         paddingTop: width * 0.02,
                         zIndex: 5,
-                        top: 10,
+                        top: 0,
                         height: height * 0.08,
                     }}
                 >
@@ -190,7 +211,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
                             <AntDesign
                                 name="eyeo"
                                 style={{ marginTop: width * 0.01, alignSelf: 'flex-end' }}
-                                size={height * 0.03}
+                                size={20}
                             />
                         </TouchableOpacity>
                     )}
@@ -215,53 +236,42 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                 <Text style={styles.footerText}>Vous n'avez pas de compte? &nbsp;</Text>
                 <TouchableOpacity onPress={handleChangeScreen}>
-                    <Text style={styles.footerSpecialText}>Incrivez vous gratuitement</Text>
+                    <Text style={styles.footerSpecialText}>Incrivez-vous gratuitement</Text>
                 </TouchableOpacity>
             </View>
         </View>
-        // </TouchableWithoutFeedback>
     );
 };
 const styles = StyleSheet.create({
     form: {
         width: width - 30,
-        height: height * 0.08,
+        height: 60,
         backgroundColor: 'transparent',
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 10,
-        borderTopStartRadius: 10,
-        borderTopEndRadius: 10,
         overflow: 'hidden',
-        marginTop: 15
     },
 
     formPassword: {
         width: width - 30,
-        height: height * 0.08,
-        marginTop: 5,
+        height: 60,
         backgroundColor: 'transparent',
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 10,
-        borderTopStartRadius: 10,
-        borderTopEndRadius: 10,
         marginBottom: -2,
-        overflow: 'hidden',    
+        overflow: 'hidden',
     },
     loginText: {
         fontSize: height * 0.034,
-        marginBottom: 0,
+        marginBottom: 15,
         color: '#000',
+        fontFamily:
+            Platform.OS === 'android' ? 'AvenirNextCondensed_Bold' : 'Avenir Next Condensed',
     },
     contactText: {
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 15,
-        marginLeft: 0
+        marginLeft: 0,
     },
     buttonStyle: {
-        height: height * 0.078,
+        height: 55,
         marginTop: height * 0.03,
         borderRadius: 10,
         flexDirection: 'column',
@@ -274,10 +284,11 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     footerText: {
-        fontSize: height * 0.02,
+        fontSize: height * 0.022,
         color: 'grey',
     },
     footerSpecialText: {
+        fontSize: height * 0.022,
         color: '#24cf5f',
         textDecorationLine: 'underline',
     },

@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
-import actions from '../redux/actions/signin.actions'
+import actions from '../redux/actions/signin-actions'
 import { Text } from 'react-native';
 const ResolveAuthScreen = () => {
     const navigation = useNavigation();

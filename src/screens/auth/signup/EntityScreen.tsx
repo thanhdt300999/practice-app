@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import actions from '../../../redux/actions/signup.actions';
+import actions from '../../../redux/actions/signup-actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';

@@ -22,7 +22,7 @@ import { RootState } from '../../redux/config-redux/rootReducer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import action from '../../redux/actions/home.actions';
+import action from '../../redux/actions/home-actions';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 const height: number = Dimensions.get('window').height;
@@ -68,11 +68,12 @@ const listHeaderComponent = () => (
                     style={{
                         fontSize: height * 0.05,
                         color: '#fff',
+                        fontFamily: Platform.OS === 'android' ? 'AvenirNextCondensed_Bold' : 'Avenir Next Condensed Medium'
                     }}
                 >
                     Rencontre
                 </Text>
-                <Text style={{ color: '#fff', fontSize: 16 }}>
+                <Text style={{ color: '#fff', fontSize: 13 }}>
                     Découvrez les profils et faites une rencontre !
                 </Text>
             </View>
@@ -178,7 +179,6 @@ const Discovery: React.FC<Props> = ({}) => {
     };
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <View style={{borderWidth: 2, borderColor: '#000', alignSelf: 'stretch', position: 'absolute'}}></View>
             <View
                 style={{
                     alignItems: 'center',
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
     },
     textHeader: {
         fontSize: height * 0.03,
-
+        fontFamily: Platform.OS === 'android' ? 'AvenirNextCondensed_Bold' : 'Avenir Next Condensed Medium',
         color: '#4a5057',
     },
     textButton: {
@@ -321,11 +321,11 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         backgroundColor: '#ffffff',
         elevation: 1,
-        width: width * 0.38,
+        width: width * 0.4,
     },
     userImage: {
-        width: width * 0.33,
-        height: width * 0.33,
+        width: width * 0.36,
+        height: width * 0.36,
         borderRadius: 10,
     },
     iconOnline: {
@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
         color: '#362e2e',
         marginLeft: width * 0.025,
         marginTop: 7,
-        fontWeight: '600',
+        fontFamily: 'AvenirNextCondensed_Bold'
     },
     userInfo: {
         flexDirection: 'row',
@@ -458,9 +458,8 @@ const styles = StyleSheet.create({
     },
     loadingBox: {
         marginTop: 20,
-        width: width * 0.38,
-        height: width * 0.45,
-        borderWidth: 1,
+        width: width * 0.41,
+        height: width * 0.5,
         borderRadius: 15
     },
 });

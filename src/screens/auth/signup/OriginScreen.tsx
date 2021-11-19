@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
 import Entypo from 'react-native-vector-icons/Entypo';
-import actions from '../../../redux/actions/signup.actions';
+import actions from '../../../redux/actions/signup-actions';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import { RadioButton } from 'react-native-paper';
@@ -72,7 +72,7 @@ const OriginScreen: React.FC<Props> = ({}) => {
                                 style={globalStyles.styleCheckbox}
                                 onPress={() => setOrigin(item)}
                             >
-                                <Text style={styles.textCheckBox}>{item.name}</Text>
+                                <Text style={globalStyles.textCheckbox}>{item.name}</Text>
                                 <View style={styles.radio}>
                                     <RadioButton
                                         color="#FFFFFF"
@@ -95,9 +95,10 @@ const OriginScreen: React.FC<Props> = ({}) => {
 
 const styles = StyleSheet.create({
     textCheckBox: {
-        fontSize: height * 0.02,
+        fontSize: height * 0.022,
         color: '#FFFFFF',
         alignSelf: 'center',
+        fontFamily: Platform.OS === 'android' ? 'AvenirNextCondensed_Bold' : 'Avenir Next Condensed'
     },
     radio: {
         alignSelf: 'flex-end',

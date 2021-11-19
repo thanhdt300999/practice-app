@@ -16,7 +16,7 @@ import ButtonBack from '../../../components/button/ButtonBack';
 import ButtonNext from '../../../components/button/ButtonNext';
 import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import actions from '../../../redux/actions/signup.actions';
+import actions from '../../../redux/actions/signup-actions';
 import globalStyles from './globalStyle';
 import { showMessage, hideMessage } from 'react-native-flash-message';
 interface Props {}

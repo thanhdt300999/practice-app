@@ -8,7 +8,7 @@ import SigninScreen from '../screens/auth/signin/Signin';
 import signupNavigation from './signupNavigation';
 import homeNavigation from './homeNavigation';
 import { useSelector, useDispatch } from 'react-redux';
-import actions from '../redux/actions/signin.actions';
+import actions from '../redux/actions/signin-actions';
 import { RootState } from '../redux/config-redux/rootReducer';
 import FlashMessage from "react-native-flash-message";
 const Stack = createNativeStackNavigator();

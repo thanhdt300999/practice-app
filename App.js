@@ -5,12 +5,14 @@ import redux from './src/redux/config-redux/configureStore';
 import { navigationRef } from './src/navigation/NavigationService';
 import RootNavigation from './src/navigation/rootNavigation'
 import FlashMessage from "react-native-flash-message";
+import { ModalPortal } from 'react-native-modals';
 function App() {
     return (
         <StoreProvider store={redux.store}>
             <NavigationContainer ref={navigationRef}>
                 <RootNavigation />
                 <FlashMessage position="top" />
+                <ModalPortal />
             </NavigationContainer>
         </StoreProvider>
     );

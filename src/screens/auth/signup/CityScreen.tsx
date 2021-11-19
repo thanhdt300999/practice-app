@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
 import Feather from 'react-native-vector-icons/Feather';
-import actions from '../../../redux/actions/signup.actions';
+import actions from '../../../redux/actions/signup-actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
@@ -30,6 +30,7 @@ const CityScreen: React.FC<Props> = ({}) => {
     const state = useSelector((state: RootState) => state.signup);
     const dispatch = useDispatch();
     const navigation = useNavigation();
+    console.log(state.dataPostLogin)
     const [city, setCity] = React.useState<city>({
         id: '',
         name: '',
@@ -54,6 +55,7 @@ const CityScreen: React.FC<Props> = ({}) => {
                 countryId: state.dataPostLogin.country.id,
                 zipcode: state.dataPostLogin.zipcode,
             };
+            console.log("zipcode")
             dispatch(actions.getCitiesByZipcodeRequest(payload));
         }
         if (state.dataPostLogin.region) {
@@ -61,16 +63,23 @@ const CityScreen: React.FC<Props> = ({}) => {
                 countryId: state.dataPostLogin.country.id,
                 regionId: state.dataPostLogin.region,
             };
+            console.log("region")
             dispatch(actions.getCitiesByRegionRequest(payload));
         }
+        
         if (state.dataPostLogin.geolocation) {
             let payload = {
                 latitude: state.dataPostLogin.geolocation.latitude,
                 longitude: state.dataPostLogin.geolocation.longitude,
             };
+            console.log("geo")
             dispatch(actions.getCitiesByGeoRequest(payload));
         }
     }, []);
+    const handleBack = () => {
+        navigation.goBack()
+        dispatch(actions.removeData())
+    }
     return (
         <LinearGradient
             colors={['#FF5978', '#FF59F4']}
@@ -81,7 +90,7 @@ const CityScreen: React.FC<Props> = ({}) => {
             locations={[0, 1]}
         >
             <View style={{ height: height * 0.8, alignSelf: 'stretch' }}>
-                <ButtonBack onPress={() => navigation.goBack()} />
+                <ButtonBack onPress={handleBack} />
                 <View style={globalStyles.header}>
                     <View style={globalStyles.iconStyle}>
                         <Feather name="folder" size={height * 0.025} color="#fff" />
@@ -97,7 +106,7 @@ const CityScreen: React.FC<Props> = ({}) => {
                                     style={globalStyles.styleCheckbox}
                                     onPress={() => setCity(item)}
                                 >
-                                    <Text style={styles.textCheckBox}>{item.name}</Text>
+                                    <Text style={globalStyles.textCheckbox}>{item.name}</Text>
                                     <View style={styles.radio}>
                                         <RadioButton
                                             color="#FFFFFF"
@@ -111,13 +120,13 @@ const CityScreen: React.FC<Props> = ({}) => {
                             );
                         }}
                         keyExtractor={(item) => item.id.toString()}
-                        refreshControl={
-                            <RefreshControl
-                                colors={['red', 'tomato']}
-                                refreshing={state.isLoading}
-                                progressViewOffset={Platform.OS === 'ios' ? null : height * 0.1}
-                            />
-                        }
+                        // refreshControl={
+                        //     <RefreshControl
+                        //         colors={['red', 'tomato']}
+                        //         refreshing={false}
+                        //         progressViewOffset={Platform.OS === 'ios' ? null : height * 0.1}
+                        //     />
+                        // }
                     />
                 )}
             </View>

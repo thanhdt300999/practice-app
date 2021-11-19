@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 import Text from '../../../../assets/AppText';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Geolocation from '@react-native-community/geolocation';
-import actions from '../../../redux/actions/signup.actions';
+import actions from '../../../redux/actions/signup-actions';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
 import ButtonNext from '../../../components/button/ButtonNext';

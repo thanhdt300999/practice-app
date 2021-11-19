@@ -34,7 +34,7 @@ const AppText = ({ style, children }) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: 'Avenir Next Condensed',
+    fontFamily: 'Avenir Next Condensed Medium',
     // fontWeight: 'bold'
   }
 })

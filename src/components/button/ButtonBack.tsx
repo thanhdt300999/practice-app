@@ -68,6 +68,8 @@ const styles = StyleSheet.create({
         fontSize: height * 0.035,
         alignSelf: 'center',
         marginLeft: 60,
+        fontFamily: Platform.OS === 'android' ? 'AvenirNextCondensed_Bold' : 'Avenir Next Condensed',
+        fontWeight: 'normal'
     },
     buttonSignup: {
         alignSelf: 'center',

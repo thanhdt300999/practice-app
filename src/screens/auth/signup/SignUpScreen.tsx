@@ -13,7 +13,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
-import actions from '../../../redux/actions/signup.actions';
+import actions from '../../../redux/actions/signup-actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -71,6 +71,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
         }
     };
     React.useEffect(() => {
+        console.log(state.error)
         state.error !== '' &&
             showMessage({
                 message:
@@ -85,12 +86,12 @@ const SignupScreen: React.FC<Props> = ({}) => {
     return (
         <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
             <LinearGradient
-                colors={['#FF5978', '#FF59F4']}
+                colors={['#FF59F4', '#FF5978']}
                 style={{ flex: 1, backgroundColor: '#FF5978' }}
                 useAngle={true}
-                angle={0}
+                angle={180}
                 angleCenter={{ x: 0.5, y: 0.5 }}
-                locations={[0, 1]}
+                locations={[0,1]}
             >
                 <>
                     <ButtonBack
@@ -246,26 +247,29 @@ const SignupScreen: React.FC<Props> = ({}) => {
                             )}
 
                             <View style={styles.checkPassText}>
-                                <TouchableOpacity
-                                    style={{ marginRight: 10 }}
-                                    onPress={() => setShowPassword(!showPassword)}
-                                >
-                                    <AntDesign
-                                        name="eyeo"
-                                        style={{
-                                            // marginTop: width * 0.01,
-                                            alignSelf: 'flex-end',
-                                        }}
-                                        size={height * 0.025}
-                                    />
-                                </TouchableOpacity>
+                                {watchPassword.length > 0 && (
+                                    <TouchableOpacity
+                                        style={{ marginRight: 10 }}
+                                        onPress={() => setShowPassword(!showPassword)}
+                                    >
+                                        <AntDesign
+                                            name="eyeo"
+                                            style={{
+                                                alignSelf: 'flex-end',
+                                            }}
+                                            size={height * 0.025}
+                                        />
+                                    </TouchableOpacity>
+                                )}
+
                                 {watchPassword.length < 8 && (
                                     <View>
                                         <Text
                                             style={{
                                                 color: '#ffffff',
                                                 fontSize: height * 0.02,
-                                                textDecorationColor: '#ff2c2c' /*'#ff2c2c'*/,
+                                                textDecorationColor: '#ff2c2c',
+                                                fontFamily: Platform.OS === 'android' ? 'AvenirNextCondensed_Bold' : 'Avenir Next Condensed'
                                             }}
                                         >
                                             Failbe
@@ -289,17 +293,17 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                 <View style={[styles.customCheckbox]}>
                                     {first && <Feather name="check" color="#fff" size={25} />}
                                 </View>
-                                    <Text style={[styles.textStyle]}>
-                                        Je certifie atre majeur(e) et j'accepte les{' '}
-                                        <Text
-                                            style={[
-                                                styles.textStyle,
-                                                { textDecorationLine: 'underline' },
-                                            ]}
-                                        >
+                                <Text style={[styles.textStyle]}>
+                                    Je certifie atre majeur(e) et j'accepte les{' '}
+                                    <Text
+                                        style={[
+                                            styles.textStyle,
+                                            { textDecorationLine: 'underline' },
+                                        ]}
+                                    >
                                         Conditions generales d'utilisations
-                                        </Text>
                                     </Text>
+                                </Text>
                             </View>
                         </TouchableOpacity>
                         {/* <CheckBox
@@ -337,8 +341,9 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                     style={{
                                         marginLeft: 10,
                                         textAlign: 'center',
-                                        fontSize: height * 0.02,
+                                        fontSize: height * 0.025,
                                         color: '#ffffff',
+                                   
                                     }}
                                 >
                                     ME CONNECTER
@@ -358,7 +363,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     connectButton: {
-        backgroundColor: '#ff597880',
+        backgroundColor: 'rgba(255, 89, 120, 0.2)',
         height: 50,
         width: width,
         paddingTop: 10,

@@ -3,7 +3,7 @@ import {View, StyleSheet, SafeAreaView, Text} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button} from 'react-native-paper';
-import actions from '../../redux/actions/signin.actions'
+import actions from '../../redux/actions/signin-actions'
 import { useDispatch } from 'react-redux';
 interface Props {}
 

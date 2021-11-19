@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
 import Octicons from 'react-native-vector-icons/Octicons';
 import { useForm, Controller } from 'react-hook-form';
-import actions from '../../../redux/actions/signup.actions';
+import actions from '../../../redux/actions/signup-actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
@@ -108,7 +108,7 @@ const ZipcodeScreen: React.FC<Props> = ({}) => {
 const styles = StyleSheet.create({
     textInput: {
         backgroundColor: 'transparent',
-        marginHorizontal: 20,
+        marginHorizontal: 35,
     },
 });
 

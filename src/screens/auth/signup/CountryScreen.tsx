@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
 import Entypo from 'react-native-vector-icons/Entypo';
-import actions from '../../../redux/actions/signup.actions';
+import actions from '../../../redux/actions/signup-actions';
 import { RootState } from '../../../redux/config-redux/rootReducer';
 import { useNavigation } from '@react-navigation/native';
 import ButtonBack from '../../../components/button/ButtonBack';
@@ -97,7 +97,7 @@ const CountryScreen: React.FC<Props> = ({}) => {
                                 style={globalStyles.styleCheckbox}
                                 onPress={() => setCountry(item)}
                             >
-                                <Text style={styles.textCheckBox}>{item.name}</Text>
+                                <Text style={globalStyles.textCheckbox}>{item.name}</Text>
                                 <View style={styles.radio}>
                                     <RadioButton
                                         color="#FFFFFF"
@@ -111,13 +111,13 @@ const CountryScreen: React.FC<Props> = ({}) => {
                         );
                     }}
                     keyExtractor={(item) => item.id}
-                    refreshControl={
-                        <RefreshControl
-                            colors={['red', 'tomato']}
-                            refreshing={state.isLoading}
-                            progressViewOffset={Platform.OS === 'ios' ? null : height * 0.1}
-                        />
-                    }
+                    // refreshControl={
+                    //     <RefreshControl
+                    //         colors={['red', 'tomato']}
+                    //         refreshing={false}
+                    //         progressViewOffset={Platform.OS === 'ios' ? null : height * 0.1}
+                    //     />
+                    // }
                 />
             </View>
             <ButtonNext onPress={onSubmit} disable={false} />

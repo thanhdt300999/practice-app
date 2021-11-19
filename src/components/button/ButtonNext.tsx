@@ -6,7 +6,7 @@ import { IconButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Entypo';
 interface Props {
     onPress: any;
-    disable: boolean;
+    disable?: boolean;
     style?: Object;
 }
 const height = Dimensions.get("window").height

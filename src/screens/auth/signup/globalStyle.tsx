@@ -33,4 +33,9 @@ export default StyleSheet.create({
         borderBottomColor: '#ccc',
         paddingVertical: 10,
     },
+    textCheckbox: {
+        fontSize: height * 0.025,
+        color: '#FFFFFF',
+        alignSelf: 'center',
+    }
 });

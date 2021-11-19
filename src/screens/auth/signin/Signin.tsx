@@ -27,16 +27,17 @@ const SigninScreen: React.FC<Props> = ({}) => {
     const handleNavigate = () => {
         navigation.navigate('SignupFlow', { screen: 'Entity' });
     };
-    const [modalHeight, setModalHeight] = React.useState(height * 0.7);
+    const [modalHeight, setModalHeight] = React.useState(0);
     const [showButton, setShowButton] = React.useState(true);
     const [disableClose, setDisableClose] = React.useState(false);
     React.useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+            console.log(e.endCoordinates.height)
             setDisableClose(true);
-            setModalHeight(Platform.OS === 'ios' ? height * 0.1 : 0); // or some other action
+            setModalHeight(e.endCoordinates.height); // or some other action
         });
-        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setModalHeight(height * 0.7);
+        const keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', () => {
+            setModalHeight(0);
             setDisableClose(false);
         });
 
@@ -82,15 +83,13 @@ const SigninScreen: React.FC<Props> = ({}) => {
                     />
                 )}
                 <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-                    <View style={styles.centeredView}>
-                        <View style={[styles.modalView, { marginTop: modalHeight }]}>
-                            <AuthForm
-                                modalVisible={modalVisible}
-                                onRequestClose={() => {
-                                    setModalVisible(!modalVisible);
-                                }}
-                            />
-                        </View>
+                    <View style={[styles.modalView, {bottom: Platform.OS === 'ios' ? modalHeight : 0}]}>
+                        <AuthForm
+                            modalVisible={modalVisible}
+                            onRequestClose={() => {
+                                setModalVisible(!modalVisible);
+                            }}
+                        />
                     </View>
                 </TouchableWithoutFeedback>
             </Modal>
@@ -114,10 +113,20 @@ const SigninScreen: React.FC<Props> = ({}) => {
                         <Text style={styles.textSignin}>SE CONNECTER</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={handleNavigate}>
-                        <Text style={{ color: '#ffffff' }}>
+                        <Text
+                            style={{
+                                color: '#ffffff',
+                            }}
+                        >
                             INSCRIPTION GRATUITE
                         </Text>
-                        <Text style={{ color: '#ffffff' }}>EN 1 MIN</Text>
+                        <Text
+                            style={{
+                                color: '#ffffff',
+                            }}
+                        >
+                            EN 1 MIN
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
@@ -141,14 +150,14 @@ const styles = StyleSheet.create({
     },
     textBanner: {
         color: '#ffffff',
-        fontSize: Platform.OS === 'ios' ? height * 0.025 : height * 0.028,
+        fontSize: Platform.OS === 'ios' ? height * 0.023 : height * 0.027,
         textAlign: 'center',
         width: width * 0.8,
     },
     textSignin: {
         color: 'white',
         textDecorationLine: 'underline',
-        fontSize: height * 0.025,
+        fontSize: Platform.OS === 'android' ? 16 : 14,
     },
     footer: {
         flexDirection: 'row',
@@ -157,14 +166,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         bottom: 35,
-        marginHorizontal: 20
+        marginHorizontal: 20,
     },
     button: {
-        marginLeft: width * 0.10,
+        marginLeft: width * 0.1,
         backgroundColor: '#24cf5f',
-        height: height * 0.075,
+        paddingVertical: 7,
         borderRadius: 5,
-        width: width * 0.5,
+        paddingHorizontal: 25,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -172,7 +181,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     centeredView: {
-        flex: 1,
+        // flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -181,9 +190,10 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         width: '100%',
-        height: '100%',
         padding: 35,
         alignItems: 'center',
+        position: 'absolute',
+        bottom: 0
     },
     buttonOpen: {
         backgroundColor: '#F194FF',
