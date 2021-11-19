@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
         color: '#362e2e',
         marginLeft: width * 0.025,
         marginTop: 7,
-        fontFamily: 'AvenirNextCondensed_Bold'
+        fontFamily: Platform.OS === 'android' ?  'AvenirNextCondensed_Bold' : 'Avenir Next Condensed Medium'
     },
     userInfo: {
         flexDirection: 'row',
