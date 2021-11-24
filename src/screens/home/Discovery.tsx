@@ -144,13 +144,18 @@ const Discovery: React.FC<Props> = ({}) => {
         extrapolate: 'clamp',
     });
     const renderItem = ({ item }) => {
-        if(state.isLoadingGetUsers) { 
-            return null
+        if (state.isLoadingGetUsers) {
+            return null;
         } else {
             return (
-                <Item url={item.thumbnail} age={item.age} location={item.country} title={item.name} />
+                <Item
+                    url={item.thumbnail}
+                    age={item.age}
+                    location={item.country}
+                    title={item.name}
+                />
             );
-        } 
+        }
     };
     React.useEffect(() => {
         dispatch(action.getUsersRequest());
@@ -215,12 +220,19 @@ const Discovery: React.FC<Props> = ({}) => {
                                 alignItems: 'center',
                             }}
                         >
-                            <TouchableOpacity style={{marginLeft: 10}} onPress={handleGetUsers}>
+                            <TouchableOpacity style={{ marginLeft: 10 }} onPress={handleGetUsers}>
                                 <AntDesign name="reload1" size={height * 0.025} />
                             </TouchableOpacity>
-                            <Text style={{ color: '#000', fontSize: height * 0.022, marginLeft: 5 }}>Reset</Text>
+                            <Text
+                                style={{ color: '#000', fontSize: height * 0.022, marginLeft: 5 }}
+                            >
+                                Reset
+                            </Text>
                         </View>
-                        <Text style={{ fontSize: height * 0.03, color: '#000', marginLeft: 10 }}> Découvrir </Text>
+                        <Text style={{ fontSize: height * 0.03, color: '#000', marginLeft: 10 }}>
+                            {' '}
+                            Découvrir{' '}
+                        </Text>
                         <View style={{ flexDirection: 'row', marginRight: 30 }}>
                             <View
                                 style={{
@@ -274,11 +286,11 @@ const Discovery: React.FC<Props> = ({}) => {
 const styles = StyleSheet.create({
     image: {
         height: height * 0.285,
-        width: 450
+        width: 450,
     },
     banner: {
         flexDirection: 'row',
-        marginHorizontal: width*0.06,
+        marginHorizontal: width * 0.06,
         marginTop: height * 0.03,
         justifyContent: 'space-between',
     },
@@ -294,7 +306,8 @@ const styles = StyleSheet.create({
     textHeader: {
         marginLeft: 4,
         fontSize: height * 0.03,
-        fontFamily: Platform.OS === 'android' ? 'AvenirNextCondensed_Bold' : 'Avenir Next Condensed Medium',
+        fontFamily:
+            Platform.OS === 'android' ? 'AvenirNextCondensed_Bold' : 'Avenir Next Condensed Medium',
         color: '#4a5057',
     },
     textButton: {
@@ -333,7 +346,8 @@ const styles = StyleSheet.create({
         color: '#362e2e',
         marginLeft: width * 0.025,
         marginTop: 7,
-        fontFamily: Platform.OS === 'android' ?  'AvenirNextCondensed_Bold' : 'Avenir Next Condensed Medium'
+        fontFamily:
+            Platform.OS === 'android' ? 'AvenirNextCondensed_Bold' : 'Avenir Next Condensed Medium',
     },
     userInfo: {
         flexDirection: 'row',
@@ -439,14 +453,14 @@ const styles = StyleSheet.create({
     },
     footerLoading: {
         flexDirection: 'row',
-        marginHorizontal: width*0.07,
+        marginHorizontal: width * 0.07,
         justifyContent: 'space-between',
     },
     loadingBox: {
         marginTop: 20,
         width: width * 0.41,
         height: width * 0.5,
-        borderRadius: 15
+        borderRadius: 15,
     },
 });
 
