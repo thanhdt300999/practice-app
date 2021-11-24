@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, Dimensions, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, FlatList, Dimensions, TouchableOpacity, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../../../assets/AppText';
@@ -49,12 +49,8 @@ const OriginScreen: React.FC<Props> = ({}) => {
     };
     return (
         <LinearGradient
-            colors={['#FF5978', '#FF59F4']}
-            style={{ flex: 1, backgroundColor: '#FF5978' }}
-            useAngle={true}
-            angle={0}
-            angleCenter={{ x: 0.5, y: 0.5 }}
-            locations={[0, 1]}
+            colors={['#FF59F4', '#FF5978']}
+            style={{ flex: 1}}
         >
             <View style={{ height: height * 0.8 }}>
                 <ButtonBack onPress={() => navigation.goBack()} />

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         color: 'white',
         flex: 1,
-        fontSize: Platform.OS === "ios" ? height * 0.016 : height*0.02,
+        fontSize: 13,
     },
     customCheckbox: {
         borderRadius: 8,
@@ -40,10 +40,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    // iconCheckbox: {
-    //     alignSelf: 'stretch',
-    //     // width: 30,
-    //     // height: 30
-    // }
 });
 export default CheckBox;

@@ -16,7 +16,7 @@ export default StyleSheet.create({
         marginBottom: height * 0.03,
     },
     textFormStyle: {
-        fontSize: width * 0.06,
+        fontSize: height * 0.033,
         color: '#FFFFFF',
     },
     header: {

@@ -68,20 +68,20 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
     }, []);
     return (
         <View style={{}}>
-            <Text style={[styles.loginText]}> Connextion</Text>
+            <Text style={[styles.loginText]}> Connexion</Text>
             {(error !== '' || errors.email || errors.password) && (
                 <View
                     style={{
-                        backgroundColor: '#fde9ea',
+                        backgroundColor: '#ffd9db',
                         height: 40,
                         justifyContent: 'center',
                         borderRadius: 10,
                         alignItems: 'center',
                         paddingLeft: 10,
-                        marginBottom: 10,
+                        marginBottom: 15,
                     }}
                 >
-                    {errors.email && <Text style={{ color: '#ff2c2c' }}>Email is required</Text>}
+                    {errors.email && <Text style={{ color: '#ff2c2c'  }}>Email is required</Text>}
                     {!errors.email && errors.password && (
                         <Text style={{ color: '#ff2c2c' }}>{errors.password.message}</Text>
                     )}
@@ -95,7 +95,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
             <View
                 style={{
                     overflow: 'hidden',
-                    height: 58,
+                    height: 68,
                     borderWidth: 1,
                     borderColor: '#ccc',
                     borderRadius: 10,
@@ -142,7 +142,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
             <View
                 style={{
                     overflow: 'hidden',
-                    height: 58,
+                    height: 68,
                     borderWidth: 1,
                     borderColor: '#ccc',
                     borderRadius: 10,
@@ -203,7 +203,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
                         height: height * 0.08,
                     }}
                 >
-                    <Text style={{ fontSize: height * 0.015, color: 'green' }}>
+                    <Text style={{ fontSize: height * 0.015, color: '#24cf5f' }}>
                         Mot de passe oublie ?
                     </Text>
                     {showEye.length > 0 && (
@@ -218,9 +218,9 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
                 </View>
             </View>
             <View style={styles.contactText}>
-                <Text style={{ textDecorationLine: 'underline' }}>Nous contacter </Text>
+                <Text style={{ textDecorationLine: 'underline' }}>Nous contacter</Text>
                 <Text> ou </Text>
-                <Text style={{ textDecorationLine: 'underline' }}>Aida</Text>
+                <Text style={{ textDecorationLine: 'underline' }}>Aide</Text>
             </View>
             <TouchableOpacity
                 style={styles.buttonStyle}
@@ -236,7 +236,7 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                 <Text style={styles.footerText}>Vous n'avez pas de compte? &nbsp;</Text>
                 <TouchableOpacity onPress={handleChangeScreen}>
-                    <Text style={styles.footerSpecialText}>Incrivez-vous gratuitement</Text>
+                    <Text style={styles.footerSpecialText}>Inscrivez-vous gratuitemen</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -244,40 +244,39 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
 };
 const styles = StyleSheet.create({
     form: {
-        width: width - 30,
-        height: 60,
+        width: width - 60,
+        height: 70,
         backgroundColor: 'transparent',
         overflow: 'hidden',
     },
 
     formPassword: {
-        width: width - 30,
-        height: 60,
+        width: width - 60,
+        height: 70,
         backgroundColor: 'transparent',
         marginBottom: -2,
         overflow: 'hidden',
     },
     loginText: {
-        fontSize: height * 0.034,
-        marginBottom: 15,
+        fontSize: height * 0.037,
+        marginBottom: 25,
         color: '#000',
         fontFamily:
-            Platform.OS === 'android' ? 'AvenirNextCondensed_Bold' : 'Avenir Next Condensed',
+            Platform.OS === 'android' ? 'Avenir Next Condensed Medium' : 'Avenir Next Condensed',
     },
     contactText: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 15,
-        marginLeft: 0,
+        marginTop: 5,
     },
     buttonStyle: {
-        height: 55,
-        marginTop: height * 0.03,
+        height: 60,
+        marginTop: 20,
         borderRadius: 10,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#24cf5f',
+        backgroundColor: '#38cf5f',
     },
     buttonText: {
         fontSize: height * 0.025,

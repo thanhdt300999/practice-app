@@ -71,7 +71,7 @@ const SignupScreen: React.FC<Props> = ({}) => {
         }
     };
     React.useEffect(() => {
-        console.log(state.error)
+        console.log(state.error);
         state.error !== '' &&
             showMessage({
                 message:
@@ -85,21 +85,14 @@ const SignupScreen: React.FC<Props> = ({}) => {
     const nameRegex = new RegExp('^[a-zA-Z]{4,15}$');
     return (
         <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-            <LinearGradient
-                colors={['#FF59F4', '#FF5978']}
-                style={{ flex: 1, backgroundColor: '#FF5978' }}
-                useAngle={true}
-                angle={180}
-                angleCenter={{ x: 0.5, y: 0.5 }}
-                locations={[0,1]}
-            >
+            <LinearGradient colors={['#FF59F4', '#FF5978']} style={{ flex: 1 }}>
                 <>
                     <ButtonBack
                         onPress={() => {
                             navigation.goBack();
                             dispatch({ type: 'GO_BACK' });
                         }}
-                        style={{ alignSelf: 'flex-start' }}
+                        style={{ marginTop: 5 }}
                         signup={true}
                     />
                     <View
@@ -125,8 +118,13 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                     theme={{
                                         colors: {
                                             text: 'white',
-                                            placeholder: '#ccc',
+                                            placeholder: '#f7eded',
                                             primary: 'white',
+                                        },
+                                        fonts: {
+                                            regular: {
+                                                fontFamily: 'Avenir Next Condensed',
+                                            },
                                         },
                                     }}
                                 />
@@ -166,8 +164,13 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                     theme={{
                                         colors: {
                                             text: 'white',
-                                            placeholder: '#ccc',
+                                            placeholder: '#f7eded',
                                             primary: 'white',
+                                        },
+                                        fonts: {
+                                            regular: {
+                                                fontFamily: 'Avenir Next Condensed',
+                                            },
                                         },
                                     }}
                                 />
@@ -217,8 +220,13 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                         theme={{
                                             colors: {
                                                 text: 'white',
-                                                placeholder: '#ccc',
+                                                placeholder: '#f7eded',
                                                 primary: 'white',
+                                            },
+                                            fonts: {
+                                                regular: {
+                                                    fontFamily: 'Avenir Next Condensed',
+                                                },
                                             },
                                         }}
                                     />
@@ -269,7 +277,10 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                                 color: '#ffffff',
                                                 fontSize: height * 0.02,
                                                 textDecorationColor: '#ff2c2c',
-                                                fontFamily: Platform.OS === 'android' ? 'AvenirNextCondensed_Bold' : 'Avenir Next Condensed'
+                                                fontFamily:
+                                                    Platform.OS === 'android'
+                                                        ? 'AvenirNextCondensed_Bold'
+                                                        : 'Avenir Next Condensed',
                                             }}
                                         >
                                             Failbe
@@ -306,13 +317,6 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-                        {/* <CheckBox
-                            label="Je certifie atre majeur(e) et j'accepte les Conditions generales d'utilisations"
-                            status={first ? 'checked' : 'unchecked'}
-                            onPress={() => {
-                                setCheckFrist(!first);
-                            }}
-                        /> */}
                         <CheckBox
                             label="Jacceple que mes donnees renseignees, y compris celles facultatives a mon origine, soient accessibles au service client de Mektoube et autres ultisateurs du site dans & hors I'UE conformenent a la charte parivee"
                             status={second ? 'checked' : 'unchecked'}
@@ -343,7 +347,6 @@ const SignupScreen: React.FC<Props> = ({}) => {
                                         textAlign: 'center',
                                         fontSize: height * 0.025,
                                         color: '#ffffff',
-                                   
                                     }}
                                 >
                                     ME CONNECTER
@@ -363,7 +366,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     connectButton: {
-        backgroundColor: 'rgba(255, 89, 120, 0.2)',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
         height: 50,
         width: width,
         paddingTop: 10,
@@ -410,7 +413,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         color: 'white',
         flex: 1,
-        fontSize: Platform.OS === 'ios' ? height * 0.016 : height * 0.02,
+        fontSize: 13,
     },
     customCheckbox: {
         borderRadius: 8,

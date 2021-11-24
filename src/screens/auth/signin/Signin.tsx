@@ -17,12 +17,13 @@ import Text from '../../../../assets/AppText';
 import { useNavigation } from '@react-navigation/native';
 import AuthForm from './AuthForm';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/config-redux/rootReducer';
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 export interface Props {}
 const SigninScreen: React.FC<Props> = ({}) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const state = useSelector((state: any) => state.signin);
+    const state = useSelector((state: RootState) => state.signin);
     const navigation = useNavigation();
     const handleNavigate = () => {
         navigation.navigate('SignupFlow', { screen: 'Entity' });
@@ -46,13 +47,6 @@ const SigninScreen: React.FC<Props> = ({}) => {
             keyboardDidShowListener.remove();
         };
     }, []);
-    React.useEffect(() => {
-        const timer = setTimeout(() => setShowButton(!showButton), 500);
-        return () => {
-            clearTimeout(timer);
-        };
-    }, [modalVisible]);
-    React.useEffect(() => {}, [state.isLoading]);
     return (
         <View style={styles.container}>
             <Modal
@@ -63,9 +57,9 @@ const SigninScreen: React.FC<Props> = ({}) => {
                     setModalVisible(!modalVisible);
                 }}
             >
-                {modalVisible && !disableClose && (
+                {modalVisible && (
                     <IconButton
-                        disabled={disableClose}
+                        // disabled={disableClose}
                         icon="close"
                         color="#ffffff"
                         size={30}
@@ -157,7 +151,7 @@ const styles = StyleSheet.create({
     textSignin: {
         color: 'white',
         textDecorationLine: 'underline',
-        fontSize: Platform.OS === 'android' ? 16 : 14,
+        fontSize: Platform.OS === 'android' ? 16 : 16,
     },
     footer: {
         flexDirection: 'row',
@@ -169,7 +163,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     button: {
-        marginLeft: width * 0.1,
+        marginLeft: width * 0.2,
         backgroundColor: '#24cf5f',
         paddingVertical: 7,
         borderRadius: 5,
