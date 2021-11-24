@@ -43,12 +43,8 @@ const AuthForm: React.FC<Props> = ({ modalVisible, onRequestClose }) => {
     } = useForm<PersonData>({ mode: 'onSubmit' });
     const showEye = watch('password', '');
     const onSubmit = (data) => {
-        let formData = new FormData();
-        formData.append('login', data.email);
-        formData.append('password', data.password);
-        formData.append('validitySeconds', 1000);
         let payload = {
-            data: formData,
+            data: data,
             email: data.email,
         };
         dispatch(actions.actionLogin(payload));

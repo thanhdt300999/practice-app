@@ -76,8 +76,18 @@ function getCitiesByGeo(data) {
 }
 
 function postSignup(data) {
+    const formData = new FormData();
+    formData.append('firstname', data.firstname);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    formData.append('affiliate', data.affiliate);
+    formData.append('mailing', data.mailing);
+    formData.append('birthday', data.birthday);
+    formData.append('gender', data.gender);
+    formData.append('origin', data.origin);
+    formData.append('geoname_id', data.city)
     return api2
-        .post(`/pool/.json?new_key_signup=true`, data)
+        .post(`/pool/.json?new_key_signup=true`, formData)
         .then((response) => {
             return {
                 puk: response.data.CONTENT.AUTH.puk,

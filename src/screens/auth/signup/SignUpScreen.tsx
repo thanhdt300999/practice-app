@@ -49,16 +49,17 @@ const SignupScreen: React.FC<Props> = ({}) => {
     const watchPassword = watch('password', '');
     const onSubmit = (data) => {
         if (first && second) {
-            const formData = new FormData();
-            formData.append('firstname', data.firstname);
-            formData.append('email', data.email);
-            formData.append('password', data.password);
-            formData.append('affiliate', 1);
-            formData.append('mailing', 1);
-            formData.append('birthday', state.dataPostLogin.birthday);
-            formData.append('gender', state.dataPostLogin.gender);
-            formData.append('origin', state.dataPostLogin.origin);
-            formData.append('geoname_id', state.dataPostLogin.city);
+            let formData = {
+                firstname: data.firstname,
+                email: data.email,
+                password: data.password,
+                affiliate: 1,
+                mailing: 1,
+                birthday: state.dataPostLogin.birthday,
+                gender: state.dataPostLogin.gender,
+                origin: state.dataPostLogin.origin,
+                geoname_id: state.dataPostLogin.city
+            }
             dispatch(actions.postSignupRequest(formData));
         } else {
             showMessage({
